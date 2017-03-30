@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {log} from 'util';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+  title = 'Slider Module';
+
+  boxes: number = 10;
+
+  addBox(): void {
+    this.boxes++;
+    console.log('New Box added, now:' + this.boxes);
+  }
 }

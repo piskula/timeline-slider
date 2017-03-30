@@ -1,3 +1,11 @@
 <h1>
   {{title}}
 </h1>
+<div class="timeline-border">
+  <div class="timeline-background">
+    <app-timeline-slider ></app-timeline-slider>
+  </div>
+</div>
+<div>
+  <label>Boxes: </label>{{boxes}}</div>
+<button (click)="addBox()">Add new box</button>

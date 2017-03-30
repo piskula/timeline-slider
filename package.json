@@ -22,7 +22,10 @@
     "@angular/router": "^4.0.0",
     "core-js": "^2.4.1",
     "rxjs": "^5.1.0",
-    "zone.js": "^0.8.4"
+    "zone.js": "^0.8.4",
+
+    "ng2-nouislider": "^1.6.0",
+    "nouislider": "^9.2.0"
   },
   "devDependencies": {
     "@angular/cli": "1.0.0",
