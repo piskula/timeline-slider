@@ -1,5 +1,6 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {TimeFormatter} from './time-formatter/time-formatter.component';
+import {DefaultFormatter, NouisliderComponent} from 'ng2-nouislider';
 
 @Component({
   selector: 'app-timeline-slider',
@@ -9,14 +10,15 @@ import {TimeFormatter} from './time-formatter/time-formatter.component';
 })
 export class TimelineSliderComponent implements OnInit {
 
-  public someRange2: number[] = [27000, 43200];
-  public someRange3: number[] = [27000, 43200];
-  // public someRange3: number[] = [1, 3];
+  @Input() boxes: number;
 
-  someTimeConfig: any = {
+  public upperRange: number[] = [27000, 43200];
+  public someRange3: number[] = [2, 5];
+
+  upperTimelineConfig: any = {
     behaviour: 'drag',
     connect: true,
-    start: this.someRange2,
+    start: this.upperRange,
     step: 60,
     pageSteps: 60,
     range: {
@@ -38,19 +40,13 @@ export class TimelineSliderComponent implements OnInit {
     connect: true,
     start: this.someRange3,
     keyboard: true,  // same as [keyboard]="true"
-    step: 60,
-    pageSteps: 60,  // number of page steps, defaults to 10
-    range: {
-      min: 0,
-      max: 86400
-    },
-    pips: {
-      mode: 'count',
-      density: 2,
-      values: 25,
-      stepped: true,
-      format: new TimeFormatter()
-    }
+    step: 1,
+    // pips: {
+    //   mode: 'count',
+    //   density: 1,
+    //   values: 10,
+    //   stepped: true
+    // }
   };
 
   constructor() { }

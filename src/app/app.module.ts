@@ -6,11 +6,13 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { TimelineSliderComponent } from './timeline-slider/timeline-slider.component';
 import { NouisliderModule } from 'ng2-nouislider';
+import { TimelineScaleComponent } from './timeline-scale/timeline-scale.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TimelineSliderComponent
+    TimelineSliderComponent,
+    TimelineScaleComponent
   ],
   imports: [
     BrowserModule,

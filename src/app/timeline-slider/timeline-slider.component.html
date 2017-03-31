@@ -1,6 +1,11 @@
 <div style="font-family: Arial" class="upperSlider">
-  <nouislider [config]="someTimeConfig" [(ngModel)]="someRange2"></nouislider>
+  <nouislider [config]="upperTimelineConfig" [(ngModel)]="upperRange"></nouislider>
 </div>
 <div>
-  <!--<nouislider [config]="someRange2config" [limit]="86400" [(ngModel)]="someRange3"></nouislider>-->
+  <nouislider #lowerSlider [config]="someRange2config" [min]="0" [max]="boxes" [(ngModel)]="someRange3"></nouislider>
+  <app-timeline-scale [boxes]="boxes"></app-timeline-scale>
 </div>
+<div>
+  <label>Lower range: </label>{{someRange3[0]}} - {{someRange3[1]}}</div>
+<div>
+  <label>Boxes inside: </label>{{boxes}}</div>
