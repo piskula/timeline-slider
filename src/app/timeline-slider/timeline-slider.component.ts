@@ -10,10 +10,12 @@ import {DefaultFormatter, NouisliderComponent} from 'ng2-nouislider';
 })
 export class TimelineSliderComponent implements OnInit {
 
-  @Input() boxes: number;
+  @Input() min: number;
+  @Input() max: number;
+  @Input() step: number;
 
   public upperRange: number[] = [27000, 43200];
-  public someRange3: number[] = [2, 5];
+  public range: number[];
 
   upperTimelineConfig: any = {
     behaviour: 'drag',
@@ -38,20 +40,14 @@ export class TimelineSliderComponent implements OnInit {
   someRange2config: any = {
     behaviour: 'drag',
     connect: true,
-    start: this.someRange3,
-    keyboard: true,  // same as [keyboard]="true"
-    step: 1,
-    // pips: {
-    //   mode: 'count',
-    //   density: 1,
-    //   values: 10,
-    //   stepped: true
-    // }
+    start: this.range,
+    keyboard: true  // same as [keyboard]="true"
   };
 
   constructor() { }
 
   ngOnInit() {
+    this.range = [this.min, this.max];
   }
 
 }

@@ -9,10 +9,15 @@ import {log} from 'util';
 export class AppComponent {
   title = 'Slider Module';
 
-  boxes: number = 10;
+  min = 5;
+  max = 9;
+  step = 2;
 
   addBox(): void {
-    this.boxes++;
-    console.log('New Box added, now:' + this.boxes);
+    this.max += this.step;
+  }
+
+  addBadBox(): void {
+    this.max += 1;
   }
 }

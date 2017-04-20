@@ -7,33 +7,42 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class TimelineScaleComponent implements OnInit {
 
+  @Input() min: number;
+  @Input() step: number;
   numberOfBoxes: number;
-  pipes: number[];
+
+  pipes: Pipe[];
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  @Input('boxes')
-  set boxes(boxes: number) {
-    this.numberOfBoxes = boxes;
+  @Input('max')
+  set max(max: number) {
+    this.numberOfBoxes = (max - this.min) / this.step;
+    // console.error('boxes:' + this.numberOfBoxes);
     this.pipes = [];
-    for (let i = 0; i <= boxes; i++) {
-      this.pipes.push(i * this.getPercentage());
+    for (let i = 0; i <= this.numberOfBoxes; i++) {
+      this.pipes.push(new Pipe(
+        (i * this.getPercentage()) + '%',
+        (this.min + (i * this.step)).toString()
+      ));
     }
-  }
-
-  get boxes(): number {
-    return this.numberOfBoxes;
   }
 
   getPercentage(): number {
     return 100 / this.numberOfBoxes;
   }
 
-  getLeft(item: number): string {
-    return item + '%';
-  }
+}
 
+class Pipe {
+  value: string;
+  title: string;
+
+  constructor(value: string, title: string) {
+    this.value = value;
+    this.title = title;
+  }
 }

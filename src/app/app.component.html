@@ -3,9 +3,16 @@
 </h1>
 <div class="timeline-border">
   <div class="timeline-background">
-    <app-timeline-slider [boxes]="boxes" ></app-timeline-slider>
+    <app-timeline-slider [min]="min" [max]="max" [step]="step" ></app-timeline-slider>
   </div>
 </div>
 <div>
-  <label>Boxes: </label>{{boxes}}</div>
+  <label>Size of element: </label>{{this.step}}</div>
+<div>
+  <label>Start: </label>{{this.min}}</div>
+<div>
+  <label>Elements outside: </label>{{((this.max - this.min) / this.step)}}</div>
+<div>
+  <label>End: </label>{{this.max}} =({{this.step}} * {{((this.max - this.min) / this.step)}} + {{this.min}})</div>
 <button (click)="addBox()">Add new box</button>
+<button (click)="addBadBox()">Add BAD box</button>

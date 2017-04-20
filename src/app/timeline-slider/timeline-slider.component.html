@@ -2,10 +2,10 @@
   <nouislider [config]="upperTimelineConfig" [(ngModel)]="upperRange"></nouislider>
 </div>
 <div>
-  <nouislider #lowerSlider [config]="someRange2config" [min]="0" [max]="boxes" [(ngModel)]="someRange3"></nouislider>
-  <app-timeline-scale [boxes]="boxes"></app-timeline-scale>
+  <nouislider #lowerSlider [config]="someRange2config" [step]="step" [min]="min" [max]="max" [(ngModel)]="range" ></nouislider>
+  <app-timeline-scale [min]="min" [max]="max" [step]="step" ></app-timeline-scale>
 </div>
 <div>
-  <label>Lower range: </label>{{someRange3[0]}} - {{someRange3[1]}}</div>
+  <label>Range: </label>{{range[0]}} - {{range[1]}}</div>
 <div>
-  <label>Boxes inside: </label>{{boxes}}</div>
+  <label>Elements inside: </label>{{((this.max - this.min) / this.step)}}</div>
