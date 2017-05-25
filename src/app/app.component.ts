@@ -9,9 +9,9 @@ import {log} from 'util';
 export class AppComponent {
   title = 'Slider Module';
 
-  min = 5;
-  max = 9;
-  step = 2;
+  min = 7200;
+  max = 18000;
+  step = 3600;
 
   addBox(): void {
     this.max += this.step;

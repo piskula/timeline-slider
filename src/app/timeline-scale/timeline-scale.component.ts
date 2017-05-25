@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {TimeFormatter} from "../timeline-slider/time-formatter/time-formatter.component";
 
 @Component({
   selector: 'app-timeline-scale',
@@ -7,13 +8,17 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class TimelineScaleComponent implements OnInit {
 
-  @Input() min: number;
+  // TODO zmenit input na pole, to by mohlo ist
   @Input() step: number;
-  numberOfBoxes: number;
+  @Input() min: number;
 
+  numberOfBoxes: number;
+  format: TimeFormatter;
   pipes: Pipe[];
 
-  constructor() { }
+  constructor() {
+    this.format = new TimeFormatter();
+  }
 
   ngOnInit() {
   }
@@ -21,14 +26,14 @@ export class TimelineScaleComponent implements OnInit {
   @Input('max')
   set max(max: number) {
     this.numberOfBoxes = (max - this.min) / this.step;
-    // console.error('boxes:' + this.numberOfBoxes);
     this.pipes = [];
     for (let i = 0; i <= this.numberOfBoxes; i++) {
       this.pipes.push(new Pipe(
         (i * this.getPercentage()) + '%',
-        (this.min + (i * this.step)).toString()
+        this.format.to(this.min + (i * this.step))
       ));
     }
+    console.log('refreeeesh');
   }
 
   getPercentage(): number {

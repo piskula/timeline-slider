@@ -1,11 +1,8 @@
-<div style="font-family: Arial" class="upperSlider">
-  <nouislider [config]="upperTimelineConfig" [(ngModel)]="upperRange"></nouislider>
-</div>
+<!--<div style="font-family: Arial" class="upperSlider">-->
+  <!--<nouislider [config]="upperTimelineConfig" [(ngModel)]="upperRange"></nouislider>-->
+<!--</div>-->
 <div>
-  <nouislider #lowerSlider [config]="someRange2config" [step]="step" [min]="min" [max]="max" [(ngModel)]="range" ></nouislider>
+  <nouislider #lowerSlider [config]="upperConfig" [step]="step" [min]="min" [max]="max" [(ngModel)]="range" (change)="handleOnChange()" ></nouislider>
   <app-timeline-scale [min]="min" [max]="max" [step]="step" ></app-timeline-scale>
 </div>
-<div>
-  <label>Range: </label>{{range[0]}} - {{range[1]}}</div>
-<div>
-  <label>Elements inside: </label>{{((this.max - this.min) / this.step)}}</div>
+

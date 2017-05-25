@@ -1,6 +1,7 @@
-import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {TimeFormatter} from './time-formatter/time-formatter.component';
 import {DefaultFormatter, NouisliderComponent} from 'ng2-nouislider';
+import {log} from "util";
 
 @Component({
   selector: 'app-timeline-slider',
@@ -14,30 +15,32 @@ export class TimelineSliderComponent implements OnInit {
   @Input() max: number;
   @Input() step: number;
 
-  public upperRange: number[] = [27000, 43200];
+  @Output() rangeUpdated = new EventEmitter();
+
+  // public upperRange: number[] = [27000, 43200];
   public range: number[];
 
-  upperTimelineConfig: any = {
-    behaviour: 'drag',
-    connect: true,
-    start: this.upperRange,
-    step: 60,
-    pageSteps: 60,
-    range: {
-      min: 0,
-      max: 86400
-    },
-    tooltips: [new TimeFormatter(), new TimeFormatter()],
-    pips: {
-      mode: 'count',
-      density: 2,
-      values: 25,
-      stepped: true,
-      format: new TimeFormatter()
-    }
-  };
+  // upperTimelineConfig: any = {
+  //   behaviour: 'drag',
+  //   connect: true,
+  //   start: this.upperRange,
+  //   step: 60,
+  //   pageSteps: 60,
+  //   range: {
+  //     min: 0,
+  //     max: 86400
+  //   },
+  //   tooltips: [new TimeFormatter(), new TimeFormatter()],
+  //   pips: {
+  //     mode: 'count',
+  //     density: 2,
+  //     values: 25,
+  //     stepped: true,
+  //     format: new TimeFormatter()
+  //   }
+  // };
 
-  someRange2config: any = {
+  upperConfig: any = {
     behaviour: 'drag',
     connect: true,
     start: this.range,
@@ -48,6 +51,11 @@ export class TimelineSliderComponent implements OnInit {
 
   ngOnInit() {
     this.range = [this.min, this.max];
+    this.handleOnChange();
+  }
+
+  handleOnChange() {
+    this.rangeUpdated.emit(this.range);
   }
 
 }

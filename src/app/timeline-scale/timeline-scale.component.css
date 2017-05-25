@@ -17,6 +17,7 @@
   #CCCCCC;
   box-sizing: border-box;
   direction: ltr;
+  font-family: Arial;
 }
 
 .timeline-scale-value {
@@ -26,4 +27,5 @@
   text-align: center;
   box-sizing: border-box;
   transform: translate3d(-50%,50%,0);
+  font-family: Arial;
 }
