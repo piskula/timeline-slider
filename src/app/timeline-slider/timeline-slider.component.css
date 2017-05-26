@@ -1,10 +1,11 @@
 @import "~nouislider/distribute/nouislider.min.css";
 
-.upperSlider {
-  margin-bottom: 4em;
+.format-slider {
+  margin-bottom: 1em;
   margin-top: 1em;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  font-family: Arial;
 }
 
 .noUi-value-horizontal {

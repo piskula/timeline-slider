@@ -21,6 +21,7 @@
 }
 
 .timeline-scale-value {
+  color: #999999;
   margin-top: 8px;
   position: absolute;
   font-size: 12px;

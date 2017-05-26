@@ -12,12 +12,19 @@ export class AppComponent {
   min = 7200;
   max = 18000;
   step = 3600;
+  public outputRange: number[];
 
   addBox(): void {
     this.max += this.step;
   }
 
   addBadBox(): void {
-    this.max += 1;
+    this.max += 1200;
   }
+
+  handleRange(range) {
+    console.log('range come');
+    this.outputRange = range;
+  }
+
 }

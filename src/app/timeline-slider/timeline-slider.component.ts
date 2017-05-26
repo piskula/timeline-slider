@@ -11,46 +11,67 @@ import {log} from "util";
 })
 export class TimelineSliderComponent implements OnInit {
 
-  @Input() min: number;
-  @Input() max: number;
+  _min: number;
+  _max: number;
   @Input() step: number;
+
+  @Input('max')
+  set max(value: number) {
+    this._max = value;
+    if (this.range !== undefined && value < this.range[1]) {
+      // console.log('fireMax');
+      this.range[1] = value;
+      this.handleOnChange();
+    }
+  }
+
+  @Input('min')
+  set min(value: number) {
+    this._min = value;
+    if (this.range !== undefined && value > this.range[0]) {
+      // console.log('fireMin');
+      this.range[0] = value;
+      this.handleOnChange();
+    }
+  }
 
   @Output() rangeUpdated = new EventEmitter();
 
-  // public upperRange: number[] = [27000, 43200];
+  public upperRange: number[] = [27000, 43200];
   public range: number[];
 
-  // upperTimelineConfig: any = {
-  //   behaviour: 'drag',
-  //   connect: true,
-  //   start: this.upperRange,
-  //   step: 60,
-  //   pageSteps: 60,
-  //   range: {
-  //     min: 0,
-  //     max: 86400
-  //   },
-  //   tooltips: [new TimeFormatter(), new TimeFormatter()],
-  //   pips: {
-  //     mode: 'count',
-  //     density: 2,
-  //     values: 25,
-  //     stepped: true,
-  //     format: new TimeFormatter()
-  //   }
-  // };
+  upperTimelineConfig: any = {
+    behaviour: 'drag',
+    connect: true,
+    start: this.upperRange,
+    step: 60,
+    pageSteps: 60,
+    range: {
+      min: 0,
+      max: 86400
+    },
+    tooltips: [new TimeFormatter(), new TimeFormatter()],
+    pips: {
+      mode: 'count',
+      density: 2,
+      values: 25,
+      stepped: true,
+      format: new TimeFormatter()
+    }
+  };
 
   upperConfig: any = {
     behaviour: 'drag',
     connect: true,
     start: this.range,
-    keyboard: true  // same as [keyboard]="true"
+    tooltips: [new TimeFormatter(), new TimeFormatter()],
+    keyboard: false  // same as [keyboard]="true"
   };
 
   constructor() { }
 
   ngOnInit() {
-    this.range = [this.min, this.max];
+    this.range = [this._min, this._max];
     this.handleOnChange();
   }
 

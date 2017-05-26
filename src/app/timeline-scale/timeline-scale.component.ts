@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TimeFormatter} from "../timeline-slider/time-formatter/time-formatter.component";
+import {TimeFormatter} from '../timeline-slider/time-formatter/time-formatter.component';
 
 @Component({
   selector: 'app-timeline-scale',
@@ -8,13 +8,29 @@ import {TimeFormatter} from "../timeline-slider/time-formatter/time-formatter.co
 })
 export class TimelineScaleComponent implements OnInit {
 
-  // TODO zmenit input na pole, to by mohlo ist
-  @Input() step: number;
-  @Input() min: number;
-
+  _min: number;
+  _max: number;
   numberOfBoxes: number;
   format: TimeFormatter;
   pipes: Pipe[];
+
+  @Input() step: number;
+
+  @Input('max')
+  set max(value: number) {
+    this._max = value;
+    if (this._min !== undefined) {
+      this.refreshPipes();
+    }
+  }
+
+  @Input('min')
+  set min(value: number) {
+    this._min = value;
+    if (this._max !== undefined) {
+      this.refreshPipes();
+    }
+  }
 
   constructor() {
     this.format = new TimeFormatter();
@@ -23,17 +39,16 @@ export class TimelineScaleComponent implements OnInit {
   ngOnInit() {
   }
 
-  @Input('max')
-  set max(max: number) {
-    this.numberOfBoxes = (max - this.min) / this.step;
+  refreshPipes() {
+    this.numberOfBoxes = (this._max - this._min) / this.step;
     this.pipes = [];
     for (let i = 0; i <= this.numberOfBoxes; i++) {
       this.pipes.push(new Pipe(
         (i * this.getPercentage()) + '%',
-        this.format.to(this.min + (i * this.step))
+        this.format.to(this._min + (i * this.step))
       ));
     }
-    console.log('refreeeesh');
+
   }
 
   getPercentage(): number {
