@@ -1,8 +1,12 @@
 import {NouiFormatter} from 'ng2-nouislider';
+import * as moment from 'moment';
 
 export class TimeFormatter implements NouiFormatter {
   to(value: number): string {
-    const h = Math.floor(value / 3600);
+    const date = new Date(value * 1000);
+    return moment(date).format('HH:mm');
+
+    /*const h = Math.floor(value / 3600);
     const m = Math.floor(value % 3600 / 60);
     // const s = value - 60 * m - 3600 * h;
     // const values = [h, m, s];
@@ -19,12 +23,12 @@ export class TimeFormatter implements NouiFormatter {
       }
       i++;
     }
-    return timeString;
+    return timeString;*/
   };
 
   from(value: string): number {
     const v = value.split(':').map(parseInt);
-    let time: number = 0;
+    let time = 0;
     time += v[0] * 3600;
     time += v[1] * 60;
     // time += v[2];
