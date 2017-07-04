@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "staging": "timeline-slider",
+    "default": "timeline-slider"
+  }
+}

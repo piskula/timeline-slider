@@ -4,7 +4,7 @@ import * as moment from 'moment';
 export class TimeFormatter implements NouiFormatter {
   to(value: number): string {
     const date = new Date(value * 1000);
-    return moment(date).format('HH:mm');
+    return moment(date).format('HH:mm:ss');
 
     /*const h = Math.floor(value / 3600);
     const m = Math.floor(value % 3600 / 60);
