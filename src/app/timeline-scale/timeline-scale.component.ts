@@ -40,15 +40,20 @@ export class TimelineScaleComponent implements OnInit {
   }
 
   refreshPipes() {
-    const interval = this.getStep();
-    const numberOfBoxes = ((this._max - this._min) / interval) + 1; // / this.step;
-    const percentageLength = 100 / (numberOfBoxes - 1);
+    const pipeInfo = this.getStep();
+    const bigInterval = pipeInfo.bigInterval;
+    const bigIntervalAmount = ((this._max - this._min) / bigInterval) + 1;
+    const allIntervalAmount = ((bigIntervalAmount - 1) * (pipeInfo.smallInterval + 1)) + 1;
+    const smallInterval = bigInterval / (pipeInfo.smallInterval + 1);
+
+    // const numberOfBoxes = ((this._max - this._min) / bigInterval) + 1; // / this.step;
+    const percentageLength = 100 / (allIntervalAmount - 1);
 
     this.pipes = [];
-    for (let i = 0; i <= numberOfBoxes - 1; i++) {
+    for (let i = 0; i <= allIntervalAmount - 1; i++) {
       this.pipes.push(new Pipe(
         (i * percentageLength) + '%',
-        this.getPipeFormatted(this._min + (i * interval), this.getFormat(interval))
+        (i * smallInterval) % bigInterval !== 0 ? '' : this.getPipeFormatted(this._min + (i * smallInterval), pipeInfo.pattern)
       ));
     }
   }
@@ -58,49 +63,44 @@ export class TimelineScaleComponent implements OnInit {
     return moment(date).format(pattern);
   }
 
-  getFormat(step: number): string {
-    switch (step) {
-      case 1:
-      case 2:
-      case 5:
-        return 'ss';
-      case 10:
-      case 20:
-      case 30:
-      case 60:
-      case 90:
-        return 'mm:ss';
-      case 120:
-        return 'HH:mm';
-      default:
-        return '';
-    }
-  }
-
-  getStep(): number {
+  getStep(): PipeInfo {
     const amount = this._max - this._min + 1;
     if (amount <= 11) {          // < 10 seconds  - interval 1 second
-      return 1; // max 11
+      return new PipeInfo(1, 0, 'ss');                              // max 11
     } else if (amount <= 21) {   // < 20 seconds  - interval 2 seconds
-      return 2; // max 11
+      return new PipeInfo(2, 1, 'ss');                              // max 11
     } else if (amount <= 61) {   // < 1 minute    - interval 5 seconds
-      return 5; // max 13
+      return new PipeInfo(6, 5, 'ss');                              // max 13
     } else if (amount <= 121) {  // < 2 minutes   - interval 10 seconds
-      return 10; // max 13
-    } else if (amount <= 301) {  // < 5 minutes   - interval 20 seconds
-      return 20; // max 16
+      return new PipeInfo(10, 1, 'mm:ss');                          // max 13
+    } else if (amount <= 241) {  // < 4 minutes   - interval 15 seconds
+      return new PipeInfo(15, 2, 'mm:ss');                          // max 17
+    } else if (amount <= 301) {  // < 6 minutes   - interval 20 seconds
+      return new PipeInfo(20, 3, 'mm:ss');                          // max 16
     } else if (amount <= 421) {  // < 7 minutes   - interval 30 seconds
-      return 30; // max 15
+      return new PipeInfo(30, 2, 'mm:ss');                          // max 15
     } else if (amount <= 721) {  // < 12 minutes  - interval 1 minute
-      return 60; // max 13
+      return new PipeInfo(60, 5, 'mm:ss');                          // max 13
     } else if (amount <= 901) {  // < 15 minutes  - interval 1m:30s
-      return 90; // max 11
+      return new PipeInfo(90, 2, 'mm:ss');                          // max 11
     } else if (amount <= 1201) { // < 30 minutes  - interval 2 minutes
-      return 120; // max 11
+      return new PipeInfo(120, 3, 'HH:mm'); // max 11
     }
-    return 240;
+    return new PipeInfo(300, 2, 'HH:mm');
   }
 
+}
+
+class PipeInfo {
+  bigInterval: number;
+  smallInterval: number;
+  pattern: string;
+
+  constructor(bigInterval: number, smallInterval: number, pattern: string) {
+    this.bigInterval = bigInterval;
+    this.smallInterval = smallInterval;
+    this.pattern = pattern;
+  }
 }
 
 class Pipe {
