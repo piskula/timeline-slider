@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
-import {TimeFormatter} from './time-formatter/time-formatter.component';
+import {TimeFormatter} from '../../timeline-slider/time-formatter/time-formatter.component';
 import {DefaultFormatter, NouisliderComponent} from 'ng2-nouislider';
 import {log} from "util";
 
@@ -55,6 +55,7 @@ export class TimelineSliderComponent implements OnInit {
   }
 
   handleOnChange() {
+    console.log('handleOnCange emit ' + this.range);
     this.rangeUpdated.emit(this.range);
   }
 

@@ -23,10 +23,12 @@ export class TimelineFrameComponent implements OnInit {
 
   handleUpperRangeUpdated(upperRange) {
     this.upperRange = upperRange;
+    console.log('handleUpperRangeUpdated ' + this.upperRange);
   }
 
   handleLowerRangeUpdated(lowerRange) {
     this.lowerRange = lowerRange;
+    console.log('handleLowerRangeUpdated emit ' + this.lowerRange);
     this.range.emit(lowerRange);
   }
 

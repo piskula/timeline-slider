@@ -12,7 +12,8 @@ export class AppComponent {
   min = 1455195000;
   max = 1455195060;
   step = 20;
-  public outputRange: number[];
+  rangeDown = this.min;
+  rangeUp = this.max;
 
   addBox(): void {
     this.max += this.step;
@@ -23,8 +24,9 @@ export class AppComponent {
   }
 
   handleRange(range) {
-    console.log('range come');
-    this.outputRange = range;
+    this.rangeDown = range[0];
+    this.rangeUp = range[1];
+    console.log('range = ' + this.rangeDown + ' - ' + this.rangeUp);
   }
 
 }

@@ -1,6 +1,3 @@
-<!--<div style="font-family: Arial" class="format-slider">-->
-  <!--<nouislider [config]="upperTimelineConfig" [(ngModel)]="upperRange"></nouislider>-->
-<!--</div>-->
 <div class="format-slider">
   <nouislider [config]="upperConfig" [step]="step" [min]="_min" [max]="_max" [(ngModel)]="range" (change)="handleOnChange()" ></nouislider>
   <app-timeline-scale [min]="_min" [max]="_max" [step]="step" ></app-timeline-scale>

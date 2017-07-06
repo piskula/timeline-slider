@@ -10,7 +10,6 @@
 
 .timeline-scale-marker {
   width: 2px;
-  height: 15px;
   margin-left: -1px;
   position: absolute;
   background-color:
@@ -24,7 +23,7 @@
   color: #999999;
   margin-top: 8px;
   position: absolute;
-  font-size: 12px;
+  font-size: 13px;
   text-align: center;
   box-sizing: border-box;
   transform: translate3d(-50%,50%,0);
