@@ -1,10 +1,10 @@
 <div>
-  <app-timeline-slider [min]="min" [max]="max" [step]="step" (rangeUpdated)="handleUpperRangeUpdated($event)"></app-timeline-slider>
+  <app-timeline-slider [outerRange]="[min, max]" [step]="step" (rangeUpdated)="handleUpperRangeUpdated($event)"></app-timeline-slider>
 </div>
 <div>
   <label>Upper Range: </label>{{upperRange[0]}} - {{upperRange[1]}}</div>
 <div>
-  <app-timeline-slider [min]="upperRange[0]" [max]="upperRange[1]" [step]="step" (rangeUpdated)="handleLowerRangeUpdated($event)" ></app-timeline-slider>
+  <app-timeline-slider [outerRange]="upperRange" [step]="step" (rangeUpdated)="handleLowerRangeUpdated($event)" ></app-timeline-slider>
 </div>
 <div>
   <label>Lower Range: </label>{{lowerRange[0]}} - {{lowerRange[1]}}</div>

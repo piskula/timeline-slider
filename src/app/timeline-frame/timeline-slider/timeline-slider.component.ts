@@ -15,23 +15,23 @@ export class TimelineSliderComponent implements OnInit {
   _max: number;
   @Input() step: number;
 
-  @Input('max')
-  set max(value: number) {
-    this._max = value;
-    if (this.range !== undefined && value < this.range[1]) {
-      // console.log('fireMax');
-      this.range[1] = value;
-      this.handleOnChange();
-    }
-  }
-
-  @Input('min')
-  set min(value: number) {
-    this._min = value;
-    if (this.range !== undefined && value > this.range[0]) {
-      // console.log('fireMin');
-      this.range[0] = value;
-      this.handleOnChange();
+  @Input('outerRange')
+  set outerRange(value: number[]) {
+    this._min = value[0];
+    this._max = value[1];
+    if (this.range !== undefined) {
+      let changed = false;
+      if (value[1] < this.range[1]) {
+        changed = true;
+        this.range[1] = value[1];
+      }
+      if (value[0] > this.range[0]) {
+        changed = true;
+        this.range[0] = value[0];
+      }
+      if (changed) {
+        this.handleOnChange();
+      }
     }
   }
 
