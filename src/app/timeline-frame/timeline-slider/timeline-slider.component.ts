@@ -30,7 +30,8 @@ export class TimelineSliderComponent implements OnInit {
         this.range[0] = value[0];
       }
       if (changed) {
-        this.handleOnChange();
+        console.log('Upper changed lower !!! ' + value);
+        this.rangeUpdated.emit([value[0], value[1]]);
       }
     }
   }

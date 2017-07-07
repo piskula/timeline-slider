@@ -26,7 +26,6 @@ export class AppComponent {
   handleRange(range) {
     this.rangeDown = range[0];
     this.rangeUp = range[1];
-    console.log('range = ' + this.rangeDown + ' - ' + this.rangeUp);
   }
 
 }
