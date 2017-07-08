@@ -31,7 +31,7 @@ export class TimelineSliderComponent implements OnInit {
       }
       if (changed) {
         console.log('Upper changed lower !!! ' + value);
-        this.rangeUpdated.emit([value[0], value[1]]);
+        this.rangeUpdated.emit([this.range[0], this.range[1]]);
       }
     }
   }
