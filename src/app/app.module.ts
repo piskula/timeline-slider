@@ -8,13 +8,15 @@ import { TimelineSliderComponent } from './timeline-frame/timeline-slider/timeli
 import { NouisliderModule } from 'ng2-nouislider';
 import { TimelineScaleComponent } from './timeline-frame/timeline-scale/timeline-scale.component';
 import { TimelineFrameComponent } from './timeline-frame/timeline-frame.component';
+import { TimeLabelComponent } from './timeline-frame/time-label/time-label.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TimelineSliderComponent,
     TimelineScaleComponent,
-    TimelineFrameComponent
+    TimelineFrameComponent,
+    TimeLabelComponent
   ],
   imports: [
     BrowserModule,

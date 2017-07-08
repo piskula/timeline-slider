@@ -1,12 +1,16 @@
-<div>
-  <app-timeline-slider [outerRange]="[min, max]" [step]="step" (rangeUpdated)="handleUpperRangeUpdated($event)"></app-timeline-slider>
+<div class="time-label-div">
+  <app-time-label [timestamp]="max" class="time-label-right"></app-time-label>
+  <app-time-label [timestamp]="min" class="time-label-left"></app-time-label>
 </div>
 <div>
-  <label>Upper Range: </label>{{upperRange[0]}} - {{upperRange[1]}}</div>
+  <app-timeline-slider [outerRange]="[min, max]" [step]="step" (rangeUpdated)="handleUpperRangeUpdated($event)" ></app-timeline-slider>
+</div>
+<!--<div>-->
+  <!--<label>Upper Range: </label>{{upperRange[0]}} - {{upperRange[1]}}</div>-->
 <div>
   <app-timeline-slider [outerRange]="upperRange" [step]="step" (rangeUpdated)="handleLowerRangeUpdated($event)" ></app-timeline-slider>
 </div>
-<div>
-  <label>Lower Range: </label>{{lowerRange[0]}} - {{lowerRange[1]}}</div>
-<div>
-  <label>Elements inside: </label>{{((this.max - this.min) / this.step)}}</div>
+<!--<div>-->
+  <!--<label>Lower Range: </label>{{lowerRange[0]}} - {{lowerRange[1]}}</div>-->
+<!--<div>-->
+  <!--<label>Elements inside: </label>{{((this.max - this.min) / this.step)}}</div>-->

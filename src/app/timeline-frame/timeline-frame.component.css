@@ -1,0 +1,14 @@
+.time-label-left {
+  float: left;
+  display: inline-block;
+}
+
+.time-label-right {
+  float: right;
+  display: inline-block;
+}
+
+.time-label-div {
+  width: auto;
+  height: 50px;
+}
