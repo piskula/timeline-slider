@@ -17,4 +17,4 @@ script:
 
 after_success:
   - firebase use default
-  - firebase deploy --token $FIREBASE_TOKEN
+  - firebase deploy --token $FIREBASE_TOKEN --non-interactive
