@@ -1,4 +1,4 @@
-# Timeline Slider
+# Timeline Slider ![Build Status](https://travis-ci.org/piskula/timeline-slider.svg?branch=master)
 ##### Diploma Thesis on FI MUNI
 Angular2 module for timeline portlet
 
