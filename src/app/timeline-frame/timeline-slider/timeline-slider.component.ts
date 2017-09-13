@@ -1,7 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {TimeFormatter} from '../../timeline-slider/time-formatter/time-formatter.component';
-import {DefaultFormatter, NouisliderComponent} from 'ng2-nouislider';
-import {log} from "util";
 
 @Component({
   selector: 'app-timeline-slider',

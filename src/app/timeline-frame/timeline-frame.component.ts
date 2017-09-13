@@ -8,7 +8,6 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class TimelineFrameComponent implements OnInit {
 
   public upperRange: number[];
-  public lowerRange: number[];
 
   @Input() min: number;
   @Input() max: number;
@@ -27,8 +26,7 @@ export class TimelineFrameComponent implements OnInit {
   }
 
   handleLowerRangeUpdated(lowerRange) {
-    this.lowerRange = lowerRange;
-    console.log('handleLowerRangeUpdated emit ' + this.lowerRange);
+    console.log('handleLowerRangeUpdated emit ' + lowerRange);
     this.range.emit(lowerRange);
   }
 

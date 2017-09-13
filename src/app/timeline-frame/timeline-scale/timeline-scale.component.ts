@@ -12,8 +12,6 @@ export class TimelineScaleComponent implements OnInit {
   _max: number;
   pipes: Pipe[];
 
-  @Input() step: number;
-
   @Input('max')
   set max(value: number) {
     this._max = value;
