@@ -8,22 +8,44 @@
   box-sizing: border-box;
 }
 
+.markerPriority1 {
+  background-color: #888888;
+  height: 15px;
+}
+.markerPriority2 {
+  background-color: #AAAAAA;
+  height: 12px;
+}
+.markerPriority3 {
+  background-color: #CCCCCC;
+  height: 8px;
+}
+
+.valuePriority1 {
+  color: #888888;
+  font-size: 14px;
+}
+.valuePriority2 {
+  color: #AAAAAA;
+  font-size: 12px;
+}
+.valuePriority3 {
+  color: #CCCCCC;
+  font-size: 10px;
+}
+
 .timeline-scale-marker {
   width: 2px;
   margin-left: -1px;
   position: absolute;
-  background-color:
-  #CCCCCC;
   box-sizing: border-box;
   direction: ltr;
   font-family: Arial;
 }
 
 .timeline-scale-value {
-  color: #999999;
   margin-top: 8px;
   position: absolute;
-  font-size: 13px;
   text-align: center;
   box-sizing: border-box;
   transform: translate3d(-50%,50%,0);
