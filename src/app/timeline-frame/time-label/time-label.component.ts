@@ -14,6 +14,13 @@ export class TimeLabelComponent implements OnInit {
   minute: string;
   second: string;
 
+  showDate: boolean;
+
+  @Input('range')
+  set range(value: number) {
+    this.showDate = value >= 14400;
+  }
+
   @Input('timestamp')
   set timestamp(value: number) {
     const date = new Date(value * 1000);

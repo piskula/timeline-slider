@@ -1,6 +1,6 @@
 <div class="time-label-div">
-  <app-time-label [timestamp]="max" class="time-label-right"></app-time-label>
-  <app-time-label [timestamp]="min" class="time-label-left"></app-time-label>
+  <app-time-label [timestamp]="max" [range]="max-min" class="time-label-right"></app-time-label>
+  <app-time-label [timestamp]="min" [range]="max-min" class="time-label-left"></app-time-label>
 </div>
 <div>
   <app-timeline-slider [outerRange]="[min, max]" [step]="step" (rangeUpdated)="handleUpperRangeUpdated($event)" ></app-timeline-slider>

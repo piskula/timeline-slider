@@ -15,11 +15,11 @@ export class AppComponent {
   rangeUp = this.max;
 
   addBox(): void {
-    this.max += this.step;
+    this.max += this.step * 3;
   }
 
-  addBadBox(): void {
-    this.max += 1200;
+  addBigBox(): void {
+    this.max += 3600;
   }
 
   handleRange(range) {

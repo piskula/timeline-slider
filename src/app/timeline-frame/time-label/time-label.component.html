@@ -1,9 +1,9 @@
 <div style="font-family: Arial">
-      <div class="label-item">{{dayOfMonth}}
-</div><div class="label-item">.
-</div><div class="label-item">{{month}}
-</div><div class="label-item">.
-</div><div class="label-item">{{year}}
+      <div class="label-item" *ngIf="showDate">{{dayOfMonth}}
+</div><div class="label-item" *ngIf="showDate">.
+</div><div class="label-item" *ngIf="showDate">{{month}}
+</div><div class="label-item" *ngIf="showDate">.
+</div><div class="label-item" *ngIf="showDate">{{year}}
 </div>
       <div class="label-item">{{hour}}
 </div><div class="label-item">:

@@ -28,7 +28,6 @@ export class TimelineSliderComponent implements OnInit {
         this.range[0] = value[0];
       }
       if (changed) {
-        console.log('Upper changed lower !!! ' + value);
         this.rangeUpdated.emit([this.range[0], this.range[1]]);
       }
     }
@@ -54,7 +53,6 @@ export class TimelineSliderComponent implements OnInit {
   }
 
   handleOnChange() {
-    console.log('handleOnCange emit ' + this.range);
     this.rangeUpdated.emit(this.range);
   }
 
