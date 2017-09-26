@@ -10,29 +10,29 @@ import {NouisliderComponent} from 'ng2-nouislider/src/nouislider';
 })
 export class TimelineSliderLowerComponent implements OnInit {
 
-  mRangeChosen: number[];
-
-  upperConfig: any;
   timeFormatter: TimeFormatter;
-  @Input() step: number;
 
+  @Input() step: number;
   @Input('rangeChosen')
   set rangeChosen(value: number[]) {
     this.mRangeChosen = value;
   }
+
+  mRangeChosen: number[];
   @Output() rangeChosenChange = new EventEmitter();
   @ViewChild(NouisliderComponent) slider: NouisliderComponent;
+
+  lowerConfig: any;
 
   constructor() {
   }
 
   ngOnInit() {
     this.timeFormatter = new TimeFormatter;
-    this.upperConfig = {
+    this.lowerConfig = {
       behaviour: 'drag',
       connect: true,
       start: this.mRangeChosen,
-      margin: this.step,
       tooltips: [this.timeFormatter, this.timeFormatter]
     };
   }

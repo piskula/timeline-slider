@@ -40,8 +40,6 @@ export class TimeLabelComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    console.log('created ' + this.isLeft);
-  }
+  ngOnInit() { }
 
 }
