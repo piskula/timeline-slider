@@ -25,13 +25,13 @@ export class TimeLabelComponent implements OnInit {
   set timestamp(value: number) {
     const date = new Date(value * 1000);
 
-    const hh = date.getHours();
-    const mm = date.getMinutes();
-    const ss = date.getSeconds();
+    const hh = date.getUTCHours();
+    const mm = date.getUTCMinutes();
+    const ss = date.getUTCSeconds();
 
-    this.year = '' + date.getFullYear();
-    this.month = '' + date.getMonth();
-    this.dayOfMonth = '' + date.getDate();
+    this.year = '' + date.getUTCFullYear();
+    this.month = '' + date.getUTCMonth();
+    this.dayOfMonth = '' + date.getUTCDate();
     this.hour =   hh < 10 ? '0' + hh : '' + hh;
     this.minute = mm < 10 ? '0' + mm : '' + mm;
     this.second = ss < 10 ? '0' + ss : '' + ss;

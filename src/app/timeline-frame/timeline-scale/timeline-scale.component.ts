@@ -103,12 +103,11 @@ export class TimelineScaleComponent implements OnInit {
 
   getPipeFormatted(timestamp: number, pattern: string): string {
     const date = new Date(timestamp * 1000);
-    return moment(date).format(pattern);
+    return moment(date).utc().format(pattern);
   }
 
   getStep(): PipeInfo {
     const amount = this._max - this._min + 1;
-    console.log('min ' + this._min + ', max ' + this._max + ', amount ' + amount);
     if (amount <= 11) {          // < 10 seconds  - interval 1 second
       return new PipeInfo(1, 0, null, 'ss\'\'', null);
     } else if (amount <= 21) {   // < 20 seconds  - interval 5 seconds
@@ -133,11 +132,25 @@ export class TimelineScaleComponent implements OnInit {
       return new PipeInfo(600, 1, 4, 'HH:mm', 'mm\'');
     } else if (amount <= 9001) { // < 2h 30m      - interval 30 minutes
       return new PipeInfo(1800, 2, 9, 'HH:mm', 'mm\'');
-    } else if (amount <= 30001) { // < 2h 10m      - interval 1 hour
+    } else if (amount <= 14401) { // < 4h         - interval 1 hour
       return new PipeInfo(3600, 3, 2, 'HH:mm', 'mm\'');
-    }
-    // TODO until years
-    return new PipeInfo(1800, 4, 2, 'HH:mm', null);
+    } else if (amount <= 25201) { // < 7h         - interval 1 hour
+      return new PipeInfo(3600, 1, 1, 'HH:mm', 'HH:mm');
+    } else if (amount <= 50401) { // < 14h        - interval 1 hour
+      return new PipeInfo(3600, 1, 1, 'HH:mm', null);
+    } else if (amount <= 82801) { // < 22h        - interval 6 hour
+      return new PipeInfo(21600, 5, 1, 'HH:mm', 'HH');
+    } else if (amount <= 111601) { // < 31h       - interval 1 day
+      return new PipeInfo(86400, 11, 1, 'DD.MM.', 'HH:mm');
+    } else if (amount <= 208801) { // < 58h       - interval 1 day
+      return new PipeInfo(86400, 5, 3, 'DD.MM.', 'HH:mm');
+    } else if (amount <= 302401) { // < 3,5 day   - interval 1 day
+      return new PipeInfo(86400, 3, 5, 'DD.MM.', 'HH:mm');
+    } else if (amount <= 648000) { // < 7,5 day  - interval 1 day
+      return new PipeInfo(86400, 1, 5, 'DD.MM.', 'HH:mm');
+    } // else if (amount <= 1000001) { // < 4h        - interval 1 day
+      return new PipeInfo(86400, 1, 5, 'DD.MM.', null);
+    // }
   }
 }
 

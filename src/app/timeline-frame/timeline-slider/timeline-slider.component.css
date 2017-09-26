@@ -17,4 +17,5 @@
 
 .noUi-horizontal .noUi-tooltip {
   bottom: -5%;
+  white-space: nowrap;
 }

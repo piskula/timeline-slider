@@ -11,6 +11,7 @@ export class TimelineSliderComponent implements OnInit {
 
   _min: number;
   _max: number;
+  timeFormatter: TimeFormatter;
   @Input() step: number;
 
   @Input('outerRange')
@@ -30,6 +31,7 @@ export class TimelineSliderComponent implements OnInit {
       if (changed) {
         this.rangeUpdated.emit([this.range[0], this.range[1]]);
       }
+      this.timeFormatter.setFormat(this.getFormat(value[1] - value[0]));
     }
   }
 
@@ -37,23 +39,36 @@ export class TimelineSliderComponent implements OnInit {
 
   public range: number[];
 
-  upperConfig: any = {
-    behaviour: 'drag',
-    connect: true,
-    start: this.range,
-    tooltips: [new TimeFormatter(), new TimeFormatter()],
-    keyboard: false  // same as [keyboard]="true"
-  };
+  upperConfig: any;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
     this.range = [this._min, this._max];
+    this.timeFormatter = new TimeFormatter;
+    this.upperConfig = {
+      behaviour: 'drag',
+      connect: true,
+      start: this.range,
+      tooltips: [this.timeFormatter, this.timeFormatter],
+      keyboard: false  // same as [keyboard]="true"
+    };
     this.handleOnChange();
   }
 
   handleOnChange() {
     this.rangeUpdated.emit(this.range);
+  }
+
+  private getFormat(amount: Number): string {
+    console.log('amount: ' + amount);
+    if (amount < 2300) {
+      return 'HH:mm:ss';
+    } else if (amount < 130000) {
+      return 'HH:mm';
+    }
+    return 'DD.MM. HH:mm';
   }
 
 }
