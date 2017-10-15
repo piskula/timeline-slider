@@ -8,23 +8,15 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Slider Module';
 
-  min = 1455195000;
-  max = 1455195060;
+  range = [1455195000, 1455195600];
   step = 20;
-  rangeDown = this.min;
-  rangeUp = this.max;
 
   addBox(): void {
-    this.max += this.step * 3;
+    this.range[1] += this.step * 3;
   }
 
   addBigBox(): void {
-    this.max += 3600;
-  }
-
-  handleRange(range) {
-    this.rangeDown = range[0];
-    this.rangeUp = range[1];
+    this.range[1] += this.step * 3 * 60;
   }
 
 }

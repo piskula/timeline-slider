@@ -1,0 +1,4 @@
+<div class="format-slider">
+  <nouislider [config]="upperConfig" [step]="step" [min]="mRangeChosen[0]" [max]="mRangeChosen[1]" (change)="onChange($event)" [ngModel]="mRangeChosen" ></nouislider>
+  <app-timeline-scale [min]="mRangeChosen[0]" [max]="mRangeChosen[1]"></app-timeline-scale>
+</div>

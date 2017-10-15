@@ -7,25 +7,14 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class TimelineFrameComponent implements OnInit {
 
-  public upperRange: number[];
+  rangeChosen: number[];
 
-  @Input() min: number;
-  @Input() max: number;
+  @Input() range: number[];
   @Input() step: number;
-
-  @Output() range = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
+    this.rangeChosen = this.range;
   }
-
-  handleUpperRangeUpdated(upperRange) {
-    this.upperRange = upperRange;
-  }
-
-  handleLowerRangeUpdated(lowerRange) {
-    this.range.emit(lowerRange);
-  }
-
 }

@@ -19,7 +19,6 @@ export class TimeFormatter implements NouiFormatter {
     let time = 0;
     time += v[0] * 3600;
     time += v[1] * 60;
-    // time += v[2];
     return time;
   }
 
