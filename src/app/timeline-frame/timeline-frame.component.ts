@@ -7,9 +7,13 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class TimelineFrameComponent implements OnInit {
 
-  rangeChosen: number[];
+  public rangeChosen: number[];
+  range: number[];
 
-  @Input() range: number[];
+  @Input('range')
+  set setRange(value) {
+    this.range = [Number(value[0]), Number(value[1])];
+  };
   @Input() step: number;
 
   constructor() { }

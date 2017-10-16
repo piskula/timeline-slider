@@ -1,6 +1,6 @@
 <div class="time-label-div">
-  <app-time-label [timestamp]="max" [range]="max-min" class="time-label-right"></app-time-label>
-  <app-time-label [timestamp]="min" [range]="max-min" class="time-label-left"></app-time-label>
+  <app-time-label [isLeft]="false" [range]="range" class="time-label-right"></app-time-label>
+  <app-time-label [isLeft]="true" [range]="range" class="time-label-left"></app-time-label>
 </div>
 <div>
   <app-timeline-slider-upper [(rangeChosen)]="rangeChosen" [step]="step" [min]="range[0]" [max]="range[1]" ></app-timeline-slider-upper>

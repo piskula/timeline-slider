@@ -6,15 +6,9 @@
     <app-timeline-frame [range]="range" [step]="step" ></app-timeline-frame>
   </div>
 </div>
-<div>
-  <label>Size of element: </label>{{this.step}}</div>
-<div>
-  <label>Start: </label>{{this.min}}</div>
-<div>
-  <label>Elements outside: </label>{{((this.max - this.min) / this.step)}}</div>
-<div>
-  <label>End: </label>{{this.max}} =({{this.step}} * {{((this.max - this.min) / this.step)}} + {{this.min}})</div>
 <button (click)="addBox()">Add new box</button>
 <button (click)="addBigBox()">Add BIG box</button>
 <div>
-  <label>Range: {{this.rangeDown}} - {{this.rangeUp}}</label></div>
+  <label>Whole range: {{range}}</label></div>
+<div>
+  <label>Range chosen: </label>{{frame.rangeChosen}}</div>

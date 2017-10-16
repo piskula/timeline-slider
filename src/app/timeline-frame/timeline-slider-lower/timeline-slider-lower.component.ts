@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {TimeFormatter} from '../../timeline-slider/time-formatter/time-formatter.component';
 import {NouisliderComponent} from 'ng2-nouislider/src/nouislider';
-import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-timeline-slider-lower',

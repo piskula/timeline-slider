@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {timestamp} from "rxjs/operator/timestamp";
 
 @Component({
   selector: 'app-time-label',
@@ -16,14 +17,14 @@ export class TimeLabelComponent implements OnInit {
 
   showDate: boolean;
 
-  @Input('range')
-  set range(value: number) {
-    this.showDate = value >= 14400;
-  }
+  @Input() isLeft: boolean;
 
-  @Input('timestamp')
-  set timestamp(value: number) {
-    const date = new Date(value * 1000);
+  @Input('range')
+  set range(value: number[]) {
+    this.showDate = (value[1] - value[0]) >= 14400;
+    const timestamp = this.isLeft ? value[0] : value[1];
+
+    const date = new Date(timestamp * 1000);
 
     const hh = date.getUTCHours();
     const mm = date.getUTCMinutes();
@@ -40,6 +41,7 @@ export class TimeLabelComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log('created ' + this.isLeft);
   }
 
 }
