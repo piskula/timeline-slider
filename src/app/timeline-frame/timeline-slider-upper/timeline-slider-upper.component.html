@@ -2,9 +2,9 @@
   <nouislider [config]="upperConfig"
               [step]="step"
               [min]="min"
-              [max]="max"
+              [max]="_max"
               [ngModel]="rangeChosen"
               (change)="onChange($event)">
   </nouislider>
-  <app-timeline-scale [min]="min" [max]="max"></app-timeline-scale>
+  <app-timeline-scale [min]="min" [max]="_max"></app-timeline-scale>
 </div>

@@ -8,10 +8,17 @@ import {TimeFormatter} from '../../timeline-slider/time-formatter/time-formatter
 })
 export class TimelineSliderUpperComponent implements OnInit {
 
-  timeFormatter: TimeFormatter;
+  timeFormatter = new TimeFormatter;
 
   @Input() min: number;
-  @Input() max: number;
+
+  _max: number;
+  @Input('max')
+  set max(value: number) {
+    this._max = value;
+    this.timeFormatter.setRange([this.min, value]);
+  }
+
   @Input() step: number;
 
   @Input() rangeChosen: number[];
@@ -23,7 +30,6 @@ export class TimelineSliderUpperComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.timeFormatter = new TimeFormatter;
     this.upperConfig = {
       behaviour: 'drag',
       connect: true,

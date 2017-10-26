@@ -5,10 +5,6 @@ export class TimeFormatter implements NouiFormatter {
 
   format: string;
 
-  public setFormat(format: string) {
-    this.format = format;
-  }
-
   to(value: number): string {
     const date = new Date(value * 1000);
     return moment(date).utc().format(this.format);
@@ -24,5 +20,13 @@ export class TimeFormatter implements NouiFormatter {
 
   constructor () {
     this.format = 'HH:mm:ss';
+  }
+
+  public setRange(range: number[]) {
+    if ((range[1] - range[0]) < 3600) {
+      this.format = 'HH:mm:ss';
+    } else {
+      this.format = 'HH:mm';
+    }
   }
 }
