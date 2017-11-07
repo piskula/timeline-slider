@@ -1,0 +1,10 @@
+.lock-image-div {
+  height: 30px;
+  width: 30px;
+  float: right;
+  cursor: pointer;
+}
+.lock-image-div .lock-image {
+  max-width: 100%;
+  max-height: 100%;
+}

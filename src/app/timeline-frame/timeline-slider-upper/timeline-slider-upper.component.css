@@ -19,3 +19,6 @@
   bottom: -5%;
   white-space: nowrap;
 }
+.timeline-lock {
+  height: 30px;
+}

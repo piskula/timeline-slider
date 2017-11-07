@@ -10,6 +10,7 @@ import { TimelineScaleComponent } from './timeline-frame/timeline-scale/timeline
 import { TimelineFrameComponent } from './timeline-frame/timeline-frame.component';
 import { TimeLabelComponent } from './timeline-frame/time-label/time-label.component';
 import { TimelineSliderUpperComponent } from './timeline-frame/timeline-slider-upper/timeline-slider-upper.component';
+import { TimelineLockComponent } from './timeline-frame/timeline-lock/timeline-lock.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TimelineSliderUpperComponent } from './timeline-frame/timeline-slider-u
     TimelineScaleComponent,
     TimelineFrameComponent,
     TimeLabelComponent,
-    TimelineSliderUpperComponent
+    TimelineSliderUpperComponent,
+    TimelineLockComponent
   ],
   imports: [
     BrowserModule,

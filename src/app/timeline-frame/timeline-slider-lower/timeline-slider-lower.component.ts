@@ -21,7 +21,6 @@ export class TimelineSliderLowerComponent implements OnInit {
 
   mRangeChosen: number[];
   @Output() rangeChosenChange = new EventEmitter();
-  @ViewChild(NouisliderComponent) slider: NouisliderComponent;
 
   lowerConfig: any;
 

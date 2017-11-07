@@ -1,10 +1,14 @@
 <div class="format-slider">
+  <div class="timeline-lock">
+    <app-timeline-lock [isLocked]="isLocked" (isLockedChange)="toggleLocked()"></app-timeline-lock>
+  </div>
   <nouislider [config]="upperConfig"
               [step]="step"
               [min]="min"
               [max]="_max"
               [ngModel]="rangeChosen"
-              (change)="onChange($event)">
+              (change)="onChange($event)"
+              (set)="onSet($event)" >
   </nouislider>
   <app-timeline-scale [min]="min" [max]="_max"></app-timeline-scale>
 </div>

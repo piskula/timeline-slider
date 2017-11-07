@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {timestamp} from "rxjs/operator/timestamp";
 
 @Component({
   selector: 'app-time-label',
