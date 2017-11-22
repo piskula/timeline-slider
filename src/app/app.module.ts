@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { D3SliderDirective } from './slider-directive/slider.directive';
+// import { D3SliderDirective } from 'ng-d3-slider/d3-slider.directive';
+
 import { AppComponent } from './app.component';
 import { TimelineSliderLowerComponent } from './timeline-frame/timeline-slider-lower/timeline-slider-lower.component';
 import { NouisliderModule } from 'ng2-nouislider/src/nouislider';
@@ -20,7 +23,8 @@ import { TimelineLockComponent } from './timeline-frame/timeline-lock/timeline-l
     TimelineFrameComponent,
     TimeLabelComponent,
     TimelineSliderUpperComponent,
-    TimelineLockComponent
+    TimelineLockComponent,
+    D3SliderDirective,
   ],
   imports: [
     BrowserModule,

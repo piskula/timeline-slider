@@ -12,6 +12,12 @@ export class TimelineSliderUpperComponent implements OnInit {
   timeFormatter = new TimeFormatter;
   isLocked = false;
 
+  private stepNorm = 20;
+  private minValue = 100;
+  private maxValue = 200;
+  private valueLeft = 120;
+  private valueRight = 180;
+
   @Input() min: number;
 
   _max: number;
@@ -65,6 +71,18 @@ export class TimelineSliderUpperComponent implements OnInit {
     if (this.isLocked) {
       this.rangeChosenChange.emit([this.rangeChosen[0], this._max]);
     }
+  }
+
+  plusTen() {
+    this.minValue += this.step;
+  }
+
+  minusTen() {
+    this.minValue -= this.step;
+  }
+
+  valueLeftPlus() {
+    this.valueLeft += this.step;
   }
 
 }
