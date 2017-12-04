@@ -1,6 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {TimeFormatter} from '../../timeline-slider/time-formatter/time-formatter.component';
-import {NouisliderComponent} from 'ng2-nouislider/src/nouislider';
+import { Component, OnInit } from '@angular/core';
+import { ShareTimeService } from '../../time-service/share-time.service';
 
 @Component({
   selector: 'app-timeline-slider-upper',
@@ -9,80 +8,29 @@ import {NouisliderComponent} from 'ng2-nouislider/src/nouislider';
 })
 export class TimelineSliderUpperComponent implements OnInit {
 
-  timeFormatter = new TimeFormatter;
-  isLocked = false;
+  step = 20;
 
-  private stepNorm = 20;
-  private minValue = 100;
-  private maxValue = 200;
-  private valueLeft = 120;
-  private valueRight = 180;
+  public min: Number;
+  public max: Number;
+  public rangeChosen: Number[];
 
-  @Input() min: number;
-
-  _max: number;
-  @Input('max')
-  set max(value: number) {
-    this._max = value;
-    this.timeFormatter.setRange([this.min, value]);
-    if (this.isLocked) {
-      this.slider.ngOnChanges({'upperLocked': 1, 'ngModel': 1});
-      this.rangeChosenChange.emit([this.rangeChosen[0], value]);
-    }
-  }
-
-  @Input() step: number;
-
-  @Input() rangeChosen: number[];
-  @Output() rangeChosenChange = new EventEmitter();
-  @ViewChild(NouisliderComponent) slider: NouisliderComponent;
-
-  upperConfig: any;
-
-  constructor() {
-  }
+  constructor(private _timeService: ShareTimeService) { }
 
   ngOnInit() {
-    this.upperConfig = {
-      behaviour: 'drag',
-      connect: true,
-      start: this.rangeChosen,
-      tooltips: [this.timeFormatter, this.timeFormatter]
-    };
+    this.min = this._timeService.getLastMin();
+    this.max = this._timeService.getLastMax();
+    this.rangeChosen = this._timeService.getLastRangeChosen();
+
+    this._timeService.getRangeChosen().subscribe(range => {
+      this.rangeChosen = range;
+    });
+    this._timeService.getMax().subscribe(max => {
+      this.max = max;
+    });
   }
 
-  onChange(value) {
-    console.log('Change: ' + value);
-    if (this.rangeChosen[1] !== value[1]) {
-      this.isLocked = false;
-    }
-    this.rangeChosenChange.emit(value);
-  }
-
-  onSet(value) {
-    console.log('Set ' + value[1] + ',' + this._max + ',' + this.rangeChosen[1]);
-    if (this._max !== value[1] && this._max !== this.rangeChosen[1]) {
-      this.isLocked = false;
-    }
-  }
-
-  toggleLocked() {
-    this.isLocked = !this.isLocked;
-    if (this.isLocked) {
-      this.rangeChosenChange.emit([this.rangeChosen[0], this._max]);
-    }
-  }
-
-  plusTen() {
-    this.minValue += this.step;
-  }
-
-  minusTen() {
-    this.minValue -= this.step;
-  }
-
-  valueLeftPlus() {
-    this.valueLeft += this.step;
+  public onRangeChange(event) {
+    this._timeService.setRangeChosen(event);
   }
 
 }

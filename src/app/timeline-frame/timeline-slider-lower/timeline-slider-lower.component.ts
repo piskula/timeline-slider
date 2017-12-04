@@ -1,43 +1,28 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
-import {TimeFormatter} from '../../timeline-slider/time-formatter/time-formatter.component';
-import {NouisliderComponent} from 'ng2-nouislider/src/nouislider';
+import { Component, OnInit } from '@angular/core';
+import { ShareTimeService } from '../../time-service/share-time.service';
 
 @Component({
   selector: 'app-timeline-slider-lower',
   templateUrl: './timeline-slider-lower.component.html',
-  styleUrls: ['./timeline-slider-lower.component.css'],
-  encapsulation: ViewEncapsulation.None   // because of component @import styling
+  styleUrls: ['./timeline-slider-lower.component.css']
 })
 export class TimelineSliderLowerComponent implements OnInit {
 
-  timeFormatter = new TimeFormatter();
+  public step = 20;
+  public rangeChosen: Number[];
 
-  @Input() step: number;
-  @Input('rangeChosen')
-  set rangeChosen(value: number[]) {
-    this.mRangeChosen = value;
-    this.timeFormatter.setRange(value);
-  }
-
-  mRangeChosen: number[];
-  @Output() rangeChosenChange = new EventEmitter();
-
-  lowerConfig: any;
-
-  constructor() {
-  }
+  constructor(private _timeService: ShareTimeService) { }
 
   ngOnInit() {
-    this.lowerConfig = {
-      behaviour: 'drag',
-      connect: true,
-      start: this.mRangeChosen,
-      tooltips: [this.timeFormatter, this.timeFormatter]
-    };
+    this.rangeChosen = this._timeService.getLastRangeChosen();
+
+    this._timeService.getRangeChosen().subscribe(range => {
+      this.rangeChosen = range;
+    });
   }
 
-  onChange(value) {
-    this.rangeChosenChange.emit(value);
+  public onRangeChange(event) {
+    this._timeService.setRangeChosen(event);
   }
 
 }

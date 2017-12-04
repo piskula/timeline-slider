@@ -1,33 +1,19 @@
 <div class="format-slider">
   <div class="timeline-lock">
-    <app-timeline-lock [isLocked]="isLocked" (isLockedChange)="toggleLocked()"></app-timeline-lock>
+    <app-timeline-lock></app-timeline-lock>
   </div>
-  <nouislider [config]="upperConfig"
-              [step]="step"
-              [min]="min"
-              [max]="_max"
-              [ngModel]="rangeChosen"
-              (change)="onChange($event)"
-              (set)="onSet($event)" >
-  </nouislider>
-  <app-timeline-scale [min]="min" [max]="_max"></app-timeline-scale>
-</div>
 
-<div>
-  <button (click)="plusTen()">+{{step}}</button>
-  <button (click)="minusTen()">-{{step}}</button>
-  <button (click)="valueLeftPlus()">Left + {{step}}</button>
-  Min: {{minValue}}
   <div appD3Slider
        id="slider1"
-       [minValue]="minValue"
-       [maxValue]="maxValue"
-       [length]="300"
-       [step]="stepNorm"
-       [(valueLeft)]="valueLeft"
-       [(valueRight)]="valueRight">
+       [minValue]="min"
+       [maxValue]="max"
+       length="905"
+       [step]="step"
+       [lineWidth]="10"
+       [thumbSize]="8"
+       [rangeChosen]="rangeChosen"
+       (rangeChosenChange)="onRangeChange($event)">
   </div>
-  Max: {{maxValue}}
-  Step: {{step}}
-  Value: {{valueLeft}} - {{valueRight}}
+
+  <app-timeline-scale [min]="min" [max]="max"></app-timeline-scale>
 </div>

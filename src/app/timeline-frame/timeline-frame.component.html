@@ -1,6 +1,6 @@
 <div class="time-label-div">
-  <app-time-label [isLeft]="false" [range]="range" class="time-label-right"></app-time-label>
-  <app-time-label [isLeft]="true" [range]="range" class="time-label-left"></app-time-label>
+  <app-time-label [isLeft]="false" [range]="rangeChosen" class="time-label-right"></app-time-label>
+  <app-time-label [isLeft]="true" [range]="rangeChosen" class="time-label-left"></app-time-label>
 </div>
-<app-timeline-slider-upper [(rangeChosen)]="rangeChosen" [step]="step" [min]="range[0]" [max]="range[1]" ></app-timeline-slider-upper>
-<app-timeline-slider-lower [(rangeChosen)]="rangeChosen" [step]="step" ></app-timeline-slider-lower>
+<app-timeline-slider-upper></app-timeline-slider-upper>
+<app-timeline-slider-lower></app-timeline-slider-lower>

@@ -1,14 +1,12 @@
-<h1>
-  {{title}}
-</h1>
+<h1>Slider Module</h1>
+
 <div class="timeline-border">
   <div class="timeline-background">
-    <app-timeline-frame [range]="range" [step]="step" ></app-timeline-frame>
+    <app-timeline-frame></app-timeline-frame>
   </div>
 </div>
-<button (click)="addBox()">Add new box</button>
-<button (click)="addBigBox()">Add BIG box</button>
+
+<button (click)="addBox()">Add LIVE data</button>
 <div>
-  <label>Whole range: {{range}}</label></div>
-<div>
-  <label>Range chosen: </label>{{frame.rangeChosen}}</div>
+  Value: {{ rangeChosen | async }}
+</div>

@@ -1,4 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit } from '@angular/core';
+
+import { ShareTimeService } from '../time-service/share-time.service';
 
 @Component({
   selector: 'app-timeline-frame',
@@ -7,18 +9,14 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class TimelineFrameComponent implements OnInit {
 
-  public rangeChosen: number[];
-  range: number[];
+  public rangeChosen: Number[];
 
-  @Input('range')
-  set setRange(value) {
-    this.range = [Number(value[0]), Number(value[1])];
-  };
-  @Input() step: number;
-
-  constructor() { }
+  constructor(private _timeService: ShareTimeService) { }
 
   ngOnInit() {
-    this.rangeChosen = this.range;
+    this.rangeChosen = this._timeService.getLastRangeChosen();
+    this._timeService.getRangeChosen().subscribe(range => {
+      this.rangeChosen = range;
+    });
   }
 }

@@ -13,7 +13,8 @@ import { TimelineScaleComponent } from './timeline-frame/timeline-scale/timeline
 import { TimelineFrameComponent } from './timeline-frame/timeline-frame.component';
 import { TimeLabelComponent } from './timeline-frame/time-label/time-label.component';
 import { TimelineSliderUpperComponent } from './timeline-frame/timeline-slider-upper/timeline-slider-upper.component';
-import { TimelineLockComponent } from './timeline-frame/timeline-lock/timeline-lock.component';
+import { TimelineLockComponent } from './timeline-frame/timeline-slider-upper/timeline-lock/timeline-lock.component';
+import {ShareTimeService} from "./time-service/share-time.service";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { TimelineLockComponent } from './timeline-frame/timeline-lock/timeline-l
     HttpModule,
     NouisliderModule
   ],
-  providers: [],
+  providers: [ShareTimeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
