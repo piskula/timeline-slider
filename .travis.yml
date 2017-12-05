@@ -2,7 +2,7 @@
 
 language: node_js
 node_js:
-  - "6.9"
+  - "8"
 
 branches:
   only:
@@ -13,7 +13,7 @@ before_script:
   - npm install -g @angular/cli
 
 script:
-  - ng build --prod
+  - ng build --env=prod
 
 after_success:
   - firebase use default
