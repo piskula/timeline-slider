@@ -1,4 +1,5 @@
-import {Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 
 import { ShareTimeService } from '../time-service/share-time.service';
 
@@ -7,9 +8,11 @@ import { ShareTimeService } from '../time-service/share-time.service';
   templateUrl: './timeline-frame.component.html',
   styleUrls: ['./timeline-frame.component.css']
 })
-export class TimelineFrameComponent implements OnInit {
+export class TimelineFrameComponent implements OnInit, OnDestroy {
 
   public rangeChosen: Number[];
+
+  private range$: Subscription;
 
   constructor(private _timeService: ShareTimeService) { }
 
@@ -18,5 +21,9 @@ export class TimelineFrameComponent implements OnInit {
     this._timeService.getRangeChosen().subscribe(range => {
       this.rangeChosen = range;
     });
+  }
+
+  ngOnDestroy() {
+    this.range$.unsubscribe();
   }
 }

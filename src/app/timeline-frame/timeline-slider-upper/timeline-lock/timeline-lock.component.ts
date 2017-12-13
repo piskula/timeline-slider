@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+
 import { ShareTimeService } from '../../../time-service/share-time.service';
 
 @Component({
@@ -6,16 +8,21 @@ import { ShareTimeService } from '../../../time-service/share-time.service';
   templateUrl: './timeline-lock.component.html',
   styleUrls: ['./timeline-lock.component.css']
 })
-export class TimelineLockComponent implements OnInit {
+export class TimelineLockComponent implements OnInit, OnDestroy {
 
   public isLocked: Boolean;
+  private lock$: Subscription;
 
   constructor(private _timeService: ShareTimeService) { }
 
   ngOnInit() {
-    this._timeService.isLocked().subscribe(x => {
+    this.lock$ = this._timeService.isLocked().subscribe(x => {
       this.isLocked = x;
     });
+  }
+
+  ngOnDestroy() {
+    this.lock$.unsubscribe();
   }
 
   toggleLock() {

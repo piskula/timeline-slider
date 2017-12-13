@@ -3,11 +3,15 @@
        id="slider2"
        [minValue]="rangeChosen[0]"
        [maxValue]="rangeChosen[1]"
-       length="905"
+       length="964"
        [step]="step"
+       color="#DB56C4"
        [rangeChosen]="rangeChosen"
+       [isLowerSlider]="true"
        (rangeChosenChange)="onRangeChange($event)">
   </div>
 
-  <app-timeline-scale [min]="rangeChosen[0]" [max]="rangeChosen[1]"></app-timeline-scale>
+  <div class="scale-margin">
+    <app-timeline-scale [min]="rangeChosen[0]" [max]="rangeChosen[1]"></app-timeline-scale>
+  </div>
 </div>

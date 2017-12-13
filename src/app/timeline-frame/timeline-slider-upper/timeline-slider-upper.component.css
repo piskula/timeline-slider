@@ -1,8 +1,12 @@
 .format-slider {
-  margin: 1em 20px;
+  /*margin: 1em 20px;*/
   font-family: Arial;
 }
 
 .timeline-lock {
   height: 30px;
+}
+
+.scale-margin {
+  margin: 0 30px;
 }

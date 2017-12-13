@@ -1,4 +1,7 @@
 .format-slider {
-  margin: 1em 20px;
   font-family: Arial;
+}
+
+.scale-margin {
+  margin: 0 30px;
 }

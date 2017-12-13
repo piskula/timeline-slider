@@ -7,13 +7,16 @@
        id="slider1"
        [minValue]="min"
        [maxValue]="max"
-       length="905"
+       length="964"
        [step]="step"
-       [lineWidth]="10"
+       [lineWidth]="14"
        [thumbSize]="8"
        [rangeChosen]="rangeChosen"
+       [isLowerSlider]="false"
        (rangeChosenChange)="onRangeChange($event)">
   </div>
 
-  <app-timeline-scale [min]="min" [max]="max"></app-timeline-scale>
+  <div class="scale-margin">
+    <app-timeline-scale [min]="min" [max]="max"></app-timeline-scale>
+  </div>
 </div>

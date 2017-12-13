@@ -10,6 +10,11 @@ import * as d3 from 'd3';
 export class D3SliderDirective implements OnInit, OnChanges {
 
   id: string;
+  sliderTopMargin = 25;
+  sliderSideMargin = 30;
+  tooltipWidth = 48;
+  halfTooltipWidth = 24;
+
   @Input() length: number;
   @Input() maxValue: number;
   @Input() minValue: number;
@@ -23,6 +28,7 @@ export class D3SliderDirective implements OnInit, OnChanges {
   @Input() thumbSize: number;
   @Input() thumbStroke: string;
   @Input() thumbStrokeWidth: number;
+  @Input() isLowerSlider: Boolean;
 
   @Output() rangeChosenChange = new EventEmitter();
   @Input() rangeChosen: number[];
@@ -41,6 +47,7 @@ export class D3SliderDirective implements OnInit, OnChanges {
     this.thumbStroke = 'black';
     this.thumbStrokeWidth = 1;
     this.id = slider.element.nativeElement.id;
+    this.isLowerSlider = true;
   }
 
 
@@ -82,16 +89,16 @@ export class D3SliderDirective implements OnInit, OnChanges {
     d3.select('#' + this.id).selectAll('*').remove();
 
     selection = d3.select('#' + this.id).append('svg')
-      .attr('width', Number(this.length) + 20)
-      .attr('viewBox', '-10,-5,' + (Number(this.length) + 20) + ',30');
+      .attr('width', Number(this.length))
+      .attr('viewBox', '0,0,' + (Number(this.length)) + ',50');
     this.createSlider(selection);
   }
 
 
   createSlider(selection) {
     const that = this;
-    // const direction = this.direction;
-    const width  = this.length;
+
+    const width  = this.length - (this.sliderSideMargin * 2);
     let maxValue = this.maxValue;
     const minValue = this.minValue;
     if (minValue > maxValue) {
@@ -99,8 +106,7 @@ export class D3SliderDirective implements OnInit, OnChanges {
     }
     const valueLeft = this.rangeChosen[0];
     const valueRight = this.rangeChosen[1];
-    // const color = direction === 'RTL' ? this.emptyColor : this.color;
-    // const emptyColor = direction === 'RTL' ? this.color : this.emptyColor;
+
     const color = this.color;
     const emptyColor = this.emptyColor;
 
@@ -114,25 +120,22 @@ export class D3SliderDirective implements OnInit, OnChanges {
       normStep = 1;
     }
 
-    // let normValue = this.getNormValue(valueLeft, minValue, maxValue); // value normalized between 0-1
     let normValueLeft = this.getNormValue(valueLeft, minValue, maxValue); // value normalized between 0-1
     let normValueRight = this.getNormValue(valueRight, minValue, maxValue); // value normalized between 0-1
 
-    // let selectedValue;
     let selectedValueLeft;
     let selectedValueRight;
 
     function dragStartLeft() {
-      valueCircleLeft.attr('r', thumbSize + 1);
+      // valueCircleLeft.attr('r', thumbSize + 1);
     }
 
     function dragStartRight() {
-      valueCircleRight.attr('r', thumbSize + 1);
+      // valueCircleRight.attr('r', thumbSize + 1);
     }
 
     function dragLeft() {
-      // console.log('dragLeft');
-      selectedValueLeft = d3.event['x'];
+      selectedValueLeft = d3.event['x'] - that.sliderSideMargin;
       if (selectedValueLeft < 0) {
         selectedValueLeft = 0;
       } else if (minValue + ((maxValue - minValue) * (selectedValueLeft / width)) > that.rangeChosen[1]) {
@@ -142,16 +145,20 @@ export class D3SliderDirective implements OnInit, OnChanges {
       }
 
       normValueLeft = selectedValueLeft / width;
-      valueCircleLeft.attr('cx', selectedValueLeft);
-      valueLine.attr('x1', selectedValueLeft);
-      emptyLineLeft.attr('x1', 0);
-      emptyLineLeft.attr('x2', selectedValueLeft);
+      if (that.isLowerSlider) {
+        leftHandler.attr('x', that.sliderSideMargin + selectedValueLeft - that.halfTooltipWidth);
+      } else {
+        leftHandler.attr('cx', that.sliderSideMargin + selectedValueLeft);
+      }
+      valueLine.attr('x1', that.sliderSideMargin + selectedValueLeft);
+      emptyLineLeft.attr('x1', that.sliderSideMargin);
+      emptyLineLeft.attr('x2', that.sliderSideMargin + selectedValueLeft);
 
       d3.event.sourceEvent.stopPropagation();
     }
 
     function dragRight() {
-      selectedValueRight = d3.event['x'];
+      selectedValueRight = d3.event['x'] - that.sliderSideMargin;
       if (selectedValueRight > width) {
         selectedValueRight = width;
       } else if (maxValue - ((maxValue - minValue) * (1 - (selectedValueRight / width))) < that.rangeChosen[0] + that.step) {
@@ -161,22 +168,26 @@ export class D3SliderDirective implements OnInit, OnChanges {
       }
 
       normValueRight = selectedValueRight / width;
-      valueCircleRight.attr('cx', selectedValueRight);
-      valueLine.attr('x2', selectedValueRight);
-      emptyLineRight.attr('x1', selectedValueRight);
-      emptyLineRight.attr('x2', width);
+      if (that.isLowerSlider) {
+        rightHandler.attr('x', that.sliderSideMargin + selectedValueRight - that.halfTooltipWidth);
+      } else {
+        rightHandler.attr('cx', that.sliderSideMargin + selectedValueRight);
+      }
+      valueLine.attr('x2', that.sliderSideMargin + selectedValueRight);
+      emptyLineRight.attr('x1', that.sliderSideMargin + selectedValueRight);
+      emptyLineRight.attr('x2', that.sliderSideMargin + width);
 
       d3.event.sourceEvent.stopPropagation();
     }
 
     function dragEndLeft() {
-      valueCircleLeft.attr('r', thumbSize);
+      // valueCircleLeft.attr('r', thumbSize);
       if (eventLeft) {
         eventLeft(normValueLeft);
       }
     }
     function dragEndRight() {
-      valueCircleRight.attr('r', thumbSize);
+      // valueCircleRight.attr('r', thumbSize);
       if (eventRight) {
         eventRight(normValueRight);
       }
@@ -195,58 +206,86 @@ export class D3SliderDirective implements OnInit, OnChanges {
 
     // Line to represent the current value
     const valueLine = selection.append('line')
-      .attr('x1', width * normValueLeft)
-      .attr('x2', width * normValueRight)
-      .attr('y1', 10)
-      .attr('y2', 10)
+      .attr('x1', this.sliderSideMargin + (width * normValueLeft))
+      .attr('x2', this.sliderSideMargin + (width * normValueRight))
+      .attr('y1', this.sliderTopMargin + 10)
+      .attr('y2', this.sliderTopMargin + 10)
       .style('stroke', color)
       .style('stroke-linecap', 'round')
       .style('stroke-width', lineWidth);
 
     // Line to show the remaining left value
     const emptyLineLeft = selection.append('line')
-      .attr('x1', 0)
-      .attr('x2', width * normValueLeft)
-      .attr('y1', 10)
-      .attr('y2', 10)
+      .attr('x1', this.sliderSideMargin)
+      .attr('x2', this.sliderSideMargin + (width * normValueLeft))
+      .attr('y1', this.sliderTopMargin + 10)
+      .attr('y2', this.sliderTopMargin + 10)
       .style('stroke', emptyColor)
       .style('stroke-linecap', 'round')
       .style('stroke-width', lineWidth);
 
     // Line to show the remaining right value
     const emptyLineRight = selection.append('line')
-      .attr('x1', width * normValueRight)
-      .attr('x2', width)
-      .attr('y1', 10)
-      .attr('y2', 10)
+      .attr('x1', this.sliderSideMargin + (width * normValueRight))
+      .attr('x2', this.sliderSideMargin + width)
+      .attr('y1', this.sliderTopMargin + 10)
+      .attr('y2', this.sliderTopMargin + 10)
       .style('stroke', emptyColor)
       .style('stroke-linecap', 'round')
       .style('stroke-width', lineWidth);
 
-    // Draggable circle to represent the left value
-    const valueCircleLeft = selection.append('circle')
-      .attr('cx', width * normValueLeft)
-      .attr('cy', 10)
-      .attr('r', thumbSize)
-      .style('stroke', thumbStroke)
-      .style('stroke-width', thumbStrokeWidth)
-      .style('fill', thumbColor);
+    let leftHandler;
+    let rightHandler;
+    if (this.isLowerSlider) {
+      leftHandler = selection.append('rect')
+        .attr('x', this.sliderSideMargin + (width * normValueLeft) - this.halfTooltipWidth)
+        .attr('y', this.sliderTopMargin)
+        .attr('rx', '0.3em')
+        .attr('ry', '0.3em')
+        .attr('width', this.tooltipWidth)
+        .attr('height', '1.2em')
+        .style('fill', '#FFFFFF')
+        .style('stroke', '#444444')
+        .style('stroke-width', 1);
+      rightHandler = selection.append('rect')
+        .attr('x', this.sliderSideMargin + (width * normValueRight) - this.halfTooltipWidth)
+        .attr('y', this.sliderTopMargin)
+        .attr('rx', '0.3em')
+        .attr('ry', '0.3em')
+        .attr('width', this.tooltipWidth)
+        .attr('height', '1.2em')
+        .style('fill', '#FFFFFF')
+        .style('stroke', '#444444')
+        .style('stroke-width', 1);
+    } else {
+      leftHandler = selection.append('circle')
+        .attr('cx', this.sliderSideMargin + (width * normValueLeft))
+        .attr('cy', this.sliderTopMargin + 10)
+        .attr('r', thumbSize)
+        .style('stroke', thumbStroke)
+        .style('stroke-width', thumbStrokeWidth)
+        .style('fill', thumbColor);
+      rightHandler = selection.append('circle')
+        .attr('cx', this.sliderSideMargin + (width * normValueRight))
+        .attr('cy', this.sliderTopMargin + 10)
+        .attr('r', thumbSize)
+        .style('stroke', thumbStroke)
+        .style('stroke-width', thumbStrokeWidth)
+        .style('fill', thumbColor);
+    }
 
-    // Draggable circle to represent the right value
-    const valueCircleRight = selection.append('circle')
-      .attr('cx', width * normValueRight)
-      .attr('cy', 10)
-      .attr('r', thumbSize)
-      .style('stroke', thumbStroke)
-      .style('stroke-width', thumbStrokeWidth)
-      .style('fill', thumbColor);
+    // const tooltipLeftValue = selection.append('text')
+    //   .attr('x', 4)
+    //   .attr('y', 10)
+    //   .attr('dy', '.35em')
+    //   .text('14:35');
 
-    valueCircleLeft.call(d3.drag()
+    leftHandler.call(d3.drag()
       .on('start', dragStartLeft)
       .on('drag', dragLeft)
       .on('end', dragEndLeft))
       .style('cursor', 'hand');
-    valueCircleRight.call(d3.drag()
+    rightHandler.call(d3.drag()
       .on('start', dragStartRight)
       .on('drag', dragRight)
       .on('end', dragEndRight))
