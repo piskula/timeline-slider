@@ -28,86 +28,11 @@ export class TimelineScaleComponent implements OnInit {
     }
   }
 
-  constructor() {
+  static getStep(max: number, min: number): PipeInfo {
+    return this.getStepForAmount(max - min + 1);
   }
 
-  ngOnInit() {
-  }
-
-  refreshPipes() {
-    const pipeInfo = this.getStep();
-    const bigInterval = pipeInfo.bigInterval;
-    let middleInterval: number;
-    let smallInterval: number;
-
-    if (pipeInfo.smallIntervalAmount) {
-      smallInterval = (bigInterval / (pipeInfo.middleIntervalAmount + 1)) / (pipeInfo.smallIntervalAmount + 1);
-      middleInterval = bigInterval / (pipeInfo.middleIntervalAmount + 1);
-    } else {
-      smallInterval = bigInterval / (pipeInfo.middleIntervalAmount + 1);
-    }
-
-    this.pipes = [];
-
-    const majorMin = this._min % bigInterval === 0 ?
-      this._min :
-      this._min + (bigInterval - (this._min % bigInterval));
-
-    let i = majorMin;
-    while (i <= this._max) {
-      let pipe: string;
-      let priority: number;
-      if (i % bigInterval === 0) {
-        pipe = this.getPipeFormatted(i, pipeInfo.pattern);
-        priority = 1;
-      } else if (middleInterval && i % middleInterval === 0) {
-        pipe = pipeInfo.subPattern ? this.getPipeFormatted(i, pipeInfo.subPattern) : '';
-        priority = 2;
-      } else {
-        pipe = '';
-        priority = 3;
-      }
-
-      this.pipes.push(new Pipe(
-        ((i - this._min) / (this._max - this._min)) * 100 + '%',
-        pipe,
-        priority
-      ));
-      i += smallInterval;
-    }
-
-    i = majorMin - smallInterval;
-    while (i >= this._min) {
-
-      let pipe: string;
-      let priority: number;
-      if (i % bigInterval === 0) {
-        pipe = this.getPipeFormatted(i, pipeInfo.pattern);
-        priority = 1;
-      } else if (middleInterval && i % middleInterval === 0) {
-        pipe = this.getPipeFormatted(i, pipeInfo.subPattern);
-        priority = 2;
-      } else {
-        pipe = '';
-        priority = 3;
-      }
-
-      this.pipes.push(new Pipe(
-        ((i - this._min) / (this._max - this._min)) * 100 + '%',
-        pipe,
-        priority
-      ));
-      i -= smallInterval;
-    }
-  }
-
-  getPipeFormatted(timestamp: number, pattern: string): string {
-    const date = new Date(timestamp * 1000);
-    return moment(date).utc().format(pattern);
-  }
-
-  getStep(): PipeInfo {
-    const amount = this._max - this._min + 1;
+  static getStepForAmount(amount: number): PipeInfo {
     if (amount <= 11) {          // < 10 seconds  - interval 1 second
       return new PipeInfo(1, 0, null, 'ss\'\'', null);
     } else if (amount <= 21) {   // < 20 seconds  - interval 5 seconds
@@ -149,8 +74,91 @@ export class TimelineScaleComponent implements OnInit {
     } else if (amount <= 648000) { // < 7,5 day  - interval 1 day
       return new PipeInfo(86400, 1, 5, 'DD.MM.', 'HH:mm');
     } // else if (amount <= 1000001) { // < 4h        - interval 1 day
-      return new PipeInfo(86400, 1, 5, 'DD.MM.', null);
+    return new PipeInfo(86400, 1, 5, 'DD.MM.', null);
     // }
+  }
+
+  static getPipeFormatted(timestamp: number, pattern: string): string {
+    const date = new Date(timestamp * 1000);
+    return moment(date).utc().format(pattern);
+  }
+
+  public static getPipeTooltip(value: number, max: number, min: number): string {
+    const pattern = this.getStep(max, min).pattern;
+    return this.getPipeFormatted(value, pattern);
+  }
+
+  constructor() {
+  }
+
+  ngOnInit() {
+  }
+
+  refreshPipes() {
+    const pipeInfo = TimelineScaleComponent.getStep(this._max, this._min);
+    const bigInterval = pipeInfo.bigInterval;
+    let middleInterval: number;
+    let smallInterval: number;
+
+    if (pipeInfo.smallIntervalAmount) {
+      smallInterval = (bigInterval / (pipeInfo.middleIntervalAmount + 1)) / (pipeInfo.smallIntervalAmount + 1);
+      middleInterval = bigInterval / (pipeInfo.middleIntervalAmount + 1);
+    } else {
+      smallInterval = bigInterval / (pipeInfo.middleIntervalAmount + 1);
+    }
+
+    this.pipes = [];
+
+    const majorMin = this._min % bigInterval === 0 ?
+      this._min :
+      this._min + (bigInterval - (this._min % bigInterval));
+
+    let i = majorMin;
+    while (i <= this._max) {
+      let pipe: string;
+      let priority: number;
+      if (i % bigInterval === 0) {
+        pipe = TimelineScaleComponent.getPipeFormatted(i, pipeInfo.pattern);
+        priority = 1;
+      } else if (middleInterval && i % middleInterval === 0) {
+        pipe = pipeInfo.subPattern ? TimelineScaleComponent.getPipeFormatted(i, pipeInfo.subPattern) : '';
+        priority = 2;
+      } else {
+        pipe = '';
+        priority = 3;
+      }
+
+      this.pipes.push(new Pipe(
+        ((i - this._min) / (this._max - this._min)) * 100 + '%',
+        pipe,
+        priority
+      ));
+      i += smallInterval;
+    }
+
+    i = majorMin - smallInterval;
+    while (i >= this._min) {
+
+      let pipe: string;
+      let priority: number;
+      if (i % bigInterval === 0) {
+        pipe = TimelineScaleComponent.getPipeFormatted(i, pipeInfo.pattern);
+        priority = 1;
+      } else if (middleInterval && i % middleInterval === 0) {
+        pipe = TimelineScaleComponent.getPipeFormatted(i, pipeInfo.subPattern);
+        priority = 2;
+      } else {
+        pipe = '';
+        priority = 3;
+      }
+
+      this.pipes.push(new Pipe(
+        ((i - this._min) / (this._max - this._min)) * 100 + '%',
+        pipe,
+        priority
+      ));
+      i -= smallInterval;
+    }
   }
 }
 

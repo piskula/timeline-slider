@@ -3,6 +3,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import * as d3 from 'd3';
+import {TimelineScaleComponent} from '../timeline-frame/timeline-scale/timeline-scale.component';
 
 @Directive({
   selector: '[appD3Slider]'
@@ -147,6 +148,8 @@ export class D3SliderDirective implements OnInit, OnChanges {
       normValueLeft = selectedValueLeft / width;
       if (that.isLowerSlider) {
         leftHandler.attr('x', that.sliderSideMargin + selectedValueLeft - that.halfTooltipWidth);
+        leftTooltip.attr('x', that.sliderSideMargin + selectedValueLeft - that.halfTooltipWidth);
+        leftTooltip.text(TimelineScaleComponent.getPipeTooltip(that.getDenormValue(normValueLeft, minValue, maxValue), maxValue, minValue));
       } else {
         leftHandler.attr('cx', that.sliderSideMargin + selectedValueLeft);
       }
@@ -170,6 +173,8 @@ export class D3SliderDirective implements OnInit, OnChanges {
       normValueRight = selectedValueRight / width;
       if (that.isLowerSlider) {
         rightHandler.attr('x', that.sliderSideMargin + selectedValueRight - that.halfTooltipWidth);
+        rightTooltip.attr('x', that.sliderSideMargin + selectedValueRight - that.halfTooltipWidth);
+        rightTooltip.text(TimelineScaleComponent.getPipeTooltip(that.getDenormValue(normValueRight, minValue, maxValue), maxValue, minValue));
       } else {
         rightHandler.attr('cx', that.sliderSideMargin + selectedValueRight);
       }
@@ -236,6 +241,8 @@ export class D3SliderDirective implements OnInit, OnChanges {
 
     let leftHandler;
     let rightHandler;
+    let leftTooltip;
+    let rightTooltip;
     if (this.isLowerSlider) {
       leftHandler = selection.append('rect')
         .attr('x', this.sliderSideMargin + (width * normValueLeft) - this.halfTooltipWidth)
@@ -257,6 +264,22 @@ export class D3SliderDirective implements OnInit, OnChanges {
         .style('fill', '#FFFFFF')
         .style('stroke', '#444444')
         .style('stroke-width', 1);
+      leftTooltip = selection.append('text')
+        .attr('x', this.sliderSideMargin + (width * normValueLeft) - this.halfTooltipWidth)
+        .attr('dx', '1.5em')
+        .attr('y', this.sliderTopMargin)
+        .attr('dy', '1em')
+        .attr('text-anchor', 'middle')
+        .style('pointer-events', 'none')
+        .text(TimelineScaleComponent.getPipeTooltip(that.getDenormValue(normValueLeft, minValue, maxValue), maxValue, minValue));
+      rightTooltip = selection.append('text')
+        .attr('x', this.sliderSideMargin + (width * normValueRight) - this.halfTooltipWidth)
+        .attr('dx', '1.5em')
+        .attr('y', this.sliderTopMargin)
+        .attr('dy', '1em')
+        .attr('text-anchor', 'middle')
+        .style('pointer-events', 'none')
+        .text(TimelineScaleComponent.getPipeTooltip(that.getDenormValue(normValueRight, minValue, maxValue), maxValue, minValue));
     } else {
       leftHandler = selection.append('circle')
         .attr('cx', this.sliderSideMargin + (width * normValueLeft))
