@@ -145,7 +145,7 @@ export class TimelineScaleComponent implements OnInit {
         pipe = TimelineScaleComponent.getPipeFormatted(i, pipeInfo.pattern);
         priority = 1;
       } else if (middleInterval && i % middleInterval === 0) {
-        pipe = TimelineScaleComponent.getPipeFormatted(i, pipeInfo.subPattern);
+        pipe = pipeInfo.subPattern ? TimelineScaleComponent.getPipeFormatted(i, pipeInfo.subPattern) : '';
         priority = 2;
       } else {
         pipe = '';
