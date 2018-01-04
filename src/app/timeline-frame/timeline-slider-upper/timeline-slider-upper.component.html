@@ -3,8 +3,8 @@
     <app-timeline-lock></app-timeline-lock>
   </div>
 
-  <div appD3Slider
-       id="slider1"
+  <div appD3SliderUpper
+       id="sliderUpper"
        [minValue]="min"
        [maxValue]="max"
        length="964"
@@ -12,7 +12,6 @@
        [lineWidth]="14"
        [thumbSize]="8"
        [rangeChosen]="rangeChosen"
-       [isLowerSlider]="false"
        (rangeChosenChange)="onRangeChange($event)">
   </div>
 

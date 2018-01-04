@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 
-import { D3SliderDirective } from './slider-directive/slider.directive';
+import { D3SliderLowerDirective } from './slider-directive/slider-lower.directive';
+import { D3SliderUpperDirective } from './slider-directive/slider-upper.directive';
 
 import { AppComponent } from './app.component';
 import { ShareTimeService } from './time-service/share-time.service';
@@ -23,12 +23,12 @@ import { TimelineLockComponent } from './timeline-frame/timeline-slider-upper/ti
     TimeLabelComponent,
     TimelineSliderUpperComponent,
     TimelineLockComponent,
-    D3SliderDirective,
+    D3SliderLowerDirective,
+    D3SliderUpperDirective,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
   ],
   providers: [ShareTimeService],
   bootstrap: [AppComponent]

@@ -1,13 +1,12 @@
 <div class="format-slider">
-  <div appD3Slider
-       id="slider2"
+  <div appD3SliderLower
+       id="sliderLower"
        [minValue]="rangeChosen[0]"
        [maxValue]="rangeChosen[1]"
        length="964"
        [step]="step"
        color="#DB56C4"
        [rangeChosen]="rangeChosen"
-       [isLowerSlider]="true"
        (rangeChosenChange)="onRangeChange($event)">
   </div>
 
