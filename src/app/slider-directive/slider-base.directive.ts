@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 
 export class D3SliderBaseDirective implements OnChanges {
   id: string;
-  sliderTopMargin = 25;
+  sliderTopMargin = 30;
   sliderSideMargin = 30;
 
   @Input() length: number;
@@ -62,7 +62,7 @@ export class D3SliderBaseDirective implements OnChanges {
 
     selection = d3.select('#' + this.id).append('svg')
       .attr('width', Number(this.length))
-      .attr('viewBox', '0,0,' + (Number(this.length)) + ',50');
+      .attr('viewBox', '0,0,' + (Number(this.length)) + ',55');
 
     this.createSlider(selection);
   }

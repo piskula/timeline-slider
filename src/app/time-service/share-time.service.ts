@@ -9,11 +9,13 @@ export class ShareTimeService {
   private lastMax: Number;
   private lastMin: Number;
   private lastIsLocked: Boolean;
+  private lastIsLockedLeft: Boolean;
 
   private rangeChosen: Subject<Number[]> = new Subject<Number[]>();
   private max: Subject<Number> = new Subject<Number>();
   private min: Subject<Number> = new Subject<Number>();
   private isLockedValue: Subject<Boolean> = new Subject<Boolean>();
+  private isLockedLeftValue: Subject<Boolean> = new Subject<Boolean>();
 
   constructor() { }
 
@@ -38,10 +40,16 @@ export class ShareTimeService {
   }
 
   public setMax(value: Number) {
+    const previousValue = this.lastMax;
     this.lastMax = value;
     this.max.next(value);
     if (this.lastIsLocked) {
-      this.setRangeChosen([this.lastRangeChosen[0], value]);
+      if (this.lastIsLockedLeft) {
+        const diff = value.valueOf() - previousValue.valueOf();
+        this.setRangeChosen([this.lastRangeChosen[0].valueOf() + diff, value]);
+      } else {
+        this.setRangeChosen([this.lastRangeChosen[0], value]);
+      }
     }
   }
 
@@ -66,6 +74,10 @@ export class ShareTimeService {
     return this.isLockedValue.asObservable();
   }
 
+  public isLockedLeft(): Observable<Boolean> {
+    return this.isLockedLeftValue.asObservable();
+  }
+
   public setLocked(value: Boolean) {
     if (value) {
       this.setRangeChosen([this.lastRangeChosen[0], this.lastMax]);
@@ -74,11 +86,24 @@ export class ShareTimeService {
     } else {
       this.lastIsLocked = false;
       this.isLockedValue.next(false);
+      this.setLockedLeft(false);
+    }
+  }
+
+  public setLockedLeft(value: Boolean) {
+    const valueWithRightLock = value && this.getLastIsLocked();
+    if (this.lastIsLockedLeft !== valueWithRightLock) {
+      this.lastIsLockedLeft = valueWithRightLock;
+      this.isLockedLeftValue.next(valueWithRightLock);
     }
   }
 
   public getLastIsLocked(): Boolean {
     return this.lastIsLocked;
+  }
+
+  public getLastIsLockedLeft(): Boolean {
+    return this.lastIsLockedLeft;
   }
 
 }

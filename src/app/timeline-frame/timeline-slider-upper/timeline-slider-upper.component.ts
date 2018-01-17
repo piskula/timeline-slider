@@ -14,9 +14,13 @@ export class TimelineSliderUpperComponent implements OnInit, OnDestroy {
   public min: Number;
   public max: Number;
   public rangeChosen: Number[];
+  public isLockedRight: Boolean;
+  public isLockedLeft: Boolean;
 
   private range$: Subscription;
   private max$: Subscription;
+  private isLockedRight$: Subscription;
+  private isLockedLeft$: Subscription;
 
   constructor(private _timeService: ShareTimeService) { }
 
@@ -24,6 +28,8 @@ export class TimelineSliderUpperComponent implements OnInit, OnDestroy {
     this.min = this._timeService.getLastMin();
     this.max = this._timeService.getLastMax();
     this.rangeChosen = this._timeService.getLastRangeChosen();
+    this.isLockedRight = this._timeService.getLastIsLocked();
+    this.isLockedLeft = this._timeService.getLastIsLockedLeft();
 
     this.range$ = this._timeService.getRangeChosen().subscribe(range => {
       this.rangeChosen = range;
@@ -31,15 +37,26 @@ export class TimelineSliderUpperComponent implements OnInit, OnDestroy {
     this.max$ = this._timeService.getMax().subscribe(max => {
       this.max = max;
     });
+    this.isLockedRight$ = this._timeService.isLocked().subscribe(isLocked => {
+      this.isLockedRight = isLocked;
+    });
+    this.isLockedLeft$ = this._timeService.isLockedLeft().subscribe(isLockedLeft => {
+      this.isLockedLeft = isLockedLeft;
+    });
   }
 
   ngOnDestroy() {
     this.range$.unsubscribe();
     this.max$.unsubscribe();
+    this.isLockedRight$.unsubscribe();
+    this.isLockedLeft$.unsubscribe();
   }
 
-  public onRangeChange(event) {
+  public onRangeChange(event: Number[]) {
     this._timeService.setRangeChosen(event);
   }
 
+  public lockLeftChange(value: boolean) {
+    this._timeService.setLockedLeft(value);
+  }
 }

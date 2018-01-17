@@ -1,7 +1,7 @@
-import {AfterViewChecked, Component, OnInit, ViewChild} from '@angular/core';
-import {TimelineFrameComponent} from './timeline-frame/timeline-frame.component';
-import {ShareTimeService} from "./time-service/share-time.service";
-import {Observable} from "rxjs/Observable";
+import {Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+
+import {ShareTimeService} from './time-service/share-time.service';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
     this._timeService.setMax(1455202200);
     this._timeService.setRangeChosen([1455195000, 1455202200]);
     this._timeService.setLocked(false);
+    this._timeService.setLockedLeft(false);
   }
 
   addBox(): void {

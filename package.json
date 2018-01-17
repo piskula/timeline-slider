@@ -22,6 +22,7 @@
     "@angular/router": "^5.1.1",
     "core-js": "^2.5.3",
     "d3": "^4.12.0",
+    "font-awesome": "^4.7.0",
     "moment": "^2.19.4",
     "rxjs": "^5.5.5",
     "zone.js": "^0.8.18"

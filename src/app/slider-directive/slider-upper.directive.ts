@@ -1,4 +1,4 @@
-import { Directive, ViewContainerRef } from '@angular/core';
+import {Directive, EventEmitter, Input, Output, ViewContainerRef} from '@angular/core';
 import * as d3 from 'd3';
 
 import { D3SliderBaseDirective } from './slider-base.directive';
@@ -7,6 +7,10 @@ import { D3SliderBaseDirective } from './slider-base.directive';
   selector: '[appD3SliderUpper]'
 })
 export class D3SliderUpperDirective extends D3SliderBaseDirective {
+
+  @Input() isLocked: Boolean;
+  @Input() leftLock: Boolean;
+  @Output() leftLockChange = new EventEmitter();
 
   constructor (slider: ViewContainerRef) {
     super();
@@ -23,6 +27,8 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
     this.thumbStroke = 'black';
     this.thumbStrokeWidth = 1;
     this.id = slider.element.nativeElement.id;
+
+    this.isLocked = false;
   }
 
   // Override
@@ -60,6 +66,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
 
       // upper diff
       leftHandler.attr('cx', that.sliderSideMargin + selectedValueLeft);
+      leftLockWrapper.attr('x', 12 + selectedValueLeft);
 
       valueLine.attr('x1', that.sliderSideMargin + selectedValueLeft);
       emptyLineLeft.attr('x1', that.sliderSideMargin);
@@ -144,22 +151,34 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .style('stroke-linecap', 'round')
       .style('stroke-width', this.lineWidth);
 
-    let leftHandler;
-    let rightHandler;
-    leftHandler = selection.append('circle')
+    const leftHandler = selection.append('circle')
       .attr('cx', this.sliderSideMargin + (width * normValueLeft))
       .attr('cy', this.sliderTopMargin + 10)
       .attr('r', this.thumbSize)
       .style('stroke', this.thumbStroke)
       .style('stroke-width', this.thumbStrokeWidth)
       .style('fill', this.thumbColor);
-    rightHandler = selection.append('circle')
+    const rightHandler = selection.append('circle')
       .attr('cx', this.sliderSideMargin + (width * normValueRight))
       .attr('cy', this.sliderTopMargin + 10)
       .attr('r', this.thumbSize)
       .style('stroke', this.thumbStroke)
       .style('stroke-width', this.thumbStrokeWidth)
       .style('fill', this.thumbColor);
+    const leftLockWrapper = selection
+      .append('svg:foreignObject')
+      .attr('x', 12 + (width * normValueLeft))
+      .attr('y', -10)
+      .style('font-size', '2rem');
+    const leftLock = leftLockWrapper
+      .append('xhtml:body')
+      .html(this.leftLock ? '<i class="fa fa-lock"></i>' : '<i class="fa fa-unlock"></i>')
+      .on('click', function () {
+        that.leftLockChange.emit(!that.leftLock);
+      });
+    if (!this.leftLock) {
+      leftLock.style('color', '#BBBBBB');
+    }
 
     leftHandler.call(d3.drag()
       .on('start', dragStartLeft)
