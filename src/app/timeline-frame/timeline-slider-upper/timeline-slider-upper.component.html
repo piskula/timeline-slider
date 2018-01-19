@@ -1,7 +1,4 @@
 <div class="format-slider">
-  <div class="timeline-lock">
-    <app-timeline-lock></app-timeline-lock>
-  </div>
 
   <div appD3SliderUpper
        id="sliderUpper"
@@ -9,22 +6,15 @@
        [maxValue]="max"
        length="964"
        [step]="step"
-       [lineWidth]="14"
-       [thumbSize]="8"
        [rangeChosen]="rangeChosen"
-       [isLocked]="isLockedRight"
-       [leftLock]="isLockedLeft"
+       [isLeftLocked]="isLockedLeft"
+       [isRightLocked]="isLockedRight"
        (leftLockChange)="lockLeftChange($event)"
+       (rightLockChange)="lockRightChange($event)"
        (rangeChosenChange)="onRangeChange($event)">
   </div>
 
   <div class="scale-margin">
     <app-timeline-scale [min]="min" [max]="max"></app-timeline-scale>
-  </div>
-  <div>
-    Left {{isLockedLeft}}
-  </div>
-  <div>
-    Right {{isLockedRight}}
   </div>
 </div>

@@ -59,4 +59,8 @@ export class TimelineSliderUpperComponent implements OnInit, OnDestroy {
   public lockLeftChange(value: boolean) {
     this._timeService.setLockedLeft(value);
   }
+
+  public lockRightChange(value: boolean) {
+    this._timeService.setLocked(value);
+  }
 }

@@ -4,6 +4,10 @@ import * as d3 from 'd3';
 import { TimelineScaleComponent } from '../timeline-frame/timeline-scale/timeline-scale.component';
 import { D3SliderBaseDirective } from './slider-base.directive';
 
+export const COLOR_STROKE = '#DB56C4';
+export const COLOR_EMPTY_STROKE = '#AAAAAA';
+export const LINE_WIDTH = 6;
+
 @Directive({
   selector: '[appD3SliderLower]'
 })
@@ -16,16 +20,7 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
     super();
     this.maxValue = 1;
     this.minValue = 0;
-    this.initialValueLeft = null;
-    this.initialValueRight = null;
     this.step = 1;
-    this.color = '#51CB3F';
-    this.emptyColor = '#AAAAAA';
-    this.thumbColor = 'white';
-    this.lineWidth = 6;
-    this.thumbSize = 6;
-    this.thumbStroke = 'black';
-    this.thumbStrokeWidth = 1;
     this.id = slider.element.nativeElement.id;
   }
 
@@ -107,9 +102,9 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('x2', this.sliderSideMargin + (width * normValueRight))
       .attr('y1', this.sliderTopMargin + 10)
       .attr('y2', this.sliderTopMargin + 10)
-      .style('stroke', this.color)
+      .style('stroke', COLOR_STROKE)
       .style('stroke-linecap', 'round')
-      .style('stroke-width', this.lineWidth);
+      .style('stroke-width', LINE_WIDTH);
 
     // Line to show the remaining left value
     const emptyLineLeft = selection.append('line')
@@ -117,9 +112,9 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('x2', this.sliderSideMargin + (width * normValueLeft))
       .attr('y1', this.sliderTopMargin + 10)
       .attr('y2', this.sliderTopMargin + 10)
-      .style('stroke', this.emptyColor)
+      .style('stroke', COLOR_EMPTY_STROKE)
       .style('stroke-linecap', 'round')
-      .style('stroke-width', this.lineWidth);
+      .style('stroke-width', LINE_WIDTH);
 
     // Line to show the remaining right value
     const emptyLineRight = selection.append('line')
@@ -127,9 +122,9 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('x2', this.sliderSideMargin + width)
       .attr('y1', this.sliderTopMargin + 10)
       .attr('y2', this.sliderTopMargin + 10)
-      .style('stroke', this.emptyColor)
+      .style('stroke', COLOR_EMPTY_STROKE)
       .style('stroke-linecap', 'round')
-      .style('stroke-width', this.lineWidth);
+      .style('stroke-width', LINE_WIDTH);
 
     let leftHandler;
     let rightHandler;

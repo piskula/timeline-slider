@@ -5,41 +5,27 @@ export class D3SliderBaseDirective implements OnChanges {
   id: string;
   sliderTopMargin = 30;
   sliderSideMargin = 30;
+  sliderSideMarginHalf = 12;
 
   @Input() length: number;
   @Input() maxValue: number;
   @Input() minValue: number;
-  @Input() initialValueLeft: number;
-  @Input() initialValueRight: number;
   @Input() step: number;
-  @Input() lineWidth: number;
-  @Input() color: string;
-  @Input() emptyColor: string;
-  @Input() thumbColor: string;
-  @Input() thumbSize: number;
-  @Input() thumbStroke: string;
-  @Input() thumbStrokeWidth: number;
 
-  @Output() rangeChosenChange = new EventEmitter();
   @Input() rangeChosen: number[];
+  @Output() rangeChosenChange = new EventEmitter();
 
   // you must override this method
   createSlider(selection) { }
 
   ngOnChanges(changes: SimpleChanges) {
     let selection;
-    if ((!this.initialValueLeft) || (changes['initialValueLeft'] && changes['initialValueLeft'].firstChange)) {
-      this.initialValueLeft = this.minValue;
-    }
-    if ((!this.initialValueRight) || (changes['initialValueRight'] && changes['initialValueRight'].firstChange)) {
-      this.initialValueRight = this.maxValue;
-    }
 
     if (!this.rangeChosen[1]) {
-      this.rangeChosen[1] = this.initialValueRight;
+      this.rangeChosen[1] = this.minValue;
     }
     if (!this.rangeChosen[0]) {
-      this.rangeChosen[0] = this.initialValueLeft;
+      this.rangeChosen[0] = this.maxValue;
     }
 
     if (changes['maxValue']) {
@@ -82,7 +68,7 @@ export class D3SliderBaseDirective implements OnChanges {
    * @returns {Number}
    */
   getDenormValue(iValue: number): number {
-    return Number((iValue * (this.maxValue - this.minValue) + this.minValue).toFixed(2));
+    return (iValue * (this.maxValue - this.minValue)) - ((iValue * (this.maxValue - this.minValue)) % this.step) + this.minValue;
   }
 
   public getWidth(): number {

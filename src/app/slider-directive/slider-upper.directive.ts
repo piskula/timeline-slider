@@ -3,32 +3,34 @@ import * as d3 from 'd3';
 
 import { D3SliderBaseDirective } from './slider-base.directive';
 
+export const COLOR_STROKE = '#51CB3F';
+export const COLOR_EMPTY_STROKE = '#AAAAAA';
+export const COLOR_THUMB = '#FFFFFF';
+export const COLOR_THUMB_STROKE = '#000000';
+export const LINE_WIDTH = 6;
+export const THUMB_SIZE = 8;
+export const THUMB_ON_CLICK_PLUS_SIZE = 2;
+export const THUMB_STROKE_WIDTH = 1;
+
 @Directive({
   selector: '[appD3SliderUpper]'
 })
 export class D3SliderUpperDirective extends D3SliderBaseDirective {
 
-  @Input() isLocked: Boolean;
-  @Input() leftLock: Boolean;
+  @Input() isRightLocked: Boolean;
+  @Input() isLeftLocked: Boolean;
+  @Output() rightLockChange = new EventEmitter();
   @Output() leftLockChange = new EventEmitter();
 
   constructor (slider: ViewContainerRef) {
     super();
     this.maxValue = 1;
     this.minValue = 0;
-    this.initialValueLeft = null;
-    this.initialValueRight = null;
     this.step = 1;
-    this.color = '#51CB3F';
-    this.emptyColor = '#AAAAAA';
-    this.thumbColor = 'white';
-    this.lineWidth = 6;
-    this.thumbSize = 6;
-    this.thumbStroke = 'black';
-    this.thumbStrokeWidth = 1;
     this.id = slider.element.nativeElement.id;
 
-    this.isLocked = false;
+    this.isLeftLocked = false;
+    this.isRightLocked = false;
   }
 
   // Override
@@ -45,28 +47,40 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
     let selectedValueRight;
 
     function dragStartLeft() {
-      leftHandler.attr('r', that.thumbSize + 2);
+      leftHandler.attr('r', THUMB_SIZE + THUMB_ON_CLICK_PLUS_SIZE);
     }
 
     function dragStartRight() {
-      rightHandler.attr('r', that.thumbSize + 2);
+      rightHandler.attr('r', THUMB_SIZE + THUMB_ON_CLICK_PLUS_SIZE);
     }
 
     function dragLeft() {
-      selectedValueLeft = d3.event['x'] - that.sliderSideMargin;
-      if (selectedValueLeft < 0) {
-        selectedValueLeft = 0;
-      } else if (that.minValue + ((that.maxValue - that.minValue) * (selectedValueLeft / width)) > that.rangeChosen[1]) {
-        return;
+      const _normValue = (d3.event['x'] - that.sliderSideMargin) / width;
+      let denormLeft = that.getDenormValue(_normValue);
+
+      // if left handler is outside area
+      if (denormLeft < that.minValue) {
+        denormLeft = that.minValue;
+
       } else {
-        selectedValueLeft = selectedValueLeft - (selectedValueLeft % normStep);
+        // if left handler is after right one
+        if (denormLeft + that.step >= that.rangeChosen[1]) {
+          denormLeft = that.rangeChosen[1] - that.step;
+        }
       }
 
-      normValueLeft = selectedValueLeft / width;
+      // if drag is too small to change value, do not emit the same multiple times
+      if (denormLeft === that.getDenormValue(normValueLeft)) {
+        return;
+      }
 
-      // upper diff
+      // update value
+      normValueLeft = that.getNormValue(denormLeft);
+      selectedValueLeft = normValueLeft * width;
+
+      // re-render handler and related elements
       leftHandler.attr('cx', that.sliderSideMargin + selectedValueLeft);
-      leftLockWrapper.attr('x', 12 + selectedValueLeft);
+      leftLockWrapper.attr('x', that.sliderSideMarginHalf + selectedValueLeft);
 
       valueLine.attr('x1', that.sliderSideMargin + selectedValueLeft);
       emptyLineLeft.attr('x1', that.sliderSideMargin);
@@ -76,19 +90,34 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
     }
 
     function dragRight() {
-      selectedValueRight = d3.event['x'] - that.sliderSideMargin;
-      if (selectedValueRight > width) {
-        selectedValueRight = width;
-      } else if (that.maxValue - ((that.maxValue - that.minValue) * (1 - (selectedValueRight / width))) < that.rangeChosen[0] + that.step) {
-          return;
+      const _normValue = (d3.event['x'] - that.sliderSideMargin) / width;
+      let denormRight = that.getDenormValue(_normValue);
+
+      // if right handler is outside area
+      if (denormRight > that.maxValue) {
+        denormRight = that.maxValue;
+
       } else {
-        selectedValueRight = selectedValueRight - (selectedValueRight % normStep);
+        // if right handler is before left one
+        if (denormRight - that.step <= that.rangeChosen[0]) {
+          denormRight = that.rangeChosen[0] + that.step;
+        }
       }
 
-      normValueRight = selectedValueRight / width;
+      // if drag is too small to change value, do not emit the same multiple times
+      if (denormRight === that.getDenormValue(normValueRight)) {
+        return;
+      }
 
-      // upper diff
+      // update value
+      normValueRight = that.getNormValue(denormRight);
+      selectedValueRight = that.getNormValue(denormRight) * width;
+
+      // re-render handler and related elements
       rightHandler.attr('cx', that.sliderSideMargin + selectedValueRight);
+      rightLockWrapper
+        .attr('x', that.sliderSideMarginHalf + selectedValueRight)
+        .style('display', normValueRight === 1 ? 'inherit' : 'none');
 
       valueLine.attr('x2', that.sliderSideMargin + selectedValueRight);
       emptyLineRight.attr('x1', that.sliderSideMargin + selectedValueRight);
@@ -127,9 +156,9 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .attr('x2', this.sliderSideMargin + (width * normValueRight))
       .attr('y1', this.sliderTopMargin + 10)
       .attr('y2', this.sliderTopMargin + 10)
-      .style('stroke', this.color)
+      .style('stroke', COLOR_STROKE)
       .style('stroke-linecap', 'round')
-      .style('stroke-width', this.lineWidth);
+      .style('stroke-width', LINE_WIDTH);
 
     // Line to show the remaining left value
     const emptyLineLeft = selection.append('line')
@@ -137,9 +166,9 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .attr('x2', this.sliderSideMargin + (width * normValueLeft))
       .attr('y1', this.sliderTopMargin + 10)
       .attr('y2', this.sliderTopMargin + 10)
-      .style('stroke', this.emptyColor)
+      .style('stroke', COLOR_EMPTY_STROKE)
       .style('stroke-linecap', 'round')
-      .style('stroke-width', this.lineWidth);
+      .style('stroke-width', LINE_WIDTH);
 
     // Line to show the remaining right value
     const emptyLineRight = selection.append('line')
@@ -147,37 +176,55 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .attr('x2', this.sliderSideMargin + width)
       .attr('y1', this.sliderTopMargin + 10)
       .attr('y2', this.sliderTopMargin + 10)
-      .style('stroke', this.emptyColor)
+      .style('stroke', COLOR_EMPTY_STROKE)
       .style('stroke-linecap', 'round')
-      .style('stroke-width', this.lineWidth);
+      .style('stroke-width', LINE_WIDTH);
 
     const leftHandler = selection.append('circle')
       .attr('cx', this.sliderSideMargin + (width * normValueLeft))
       .attr('cy', this.sliderTopMargin + 10)
-      .attr('r', this.thumbSize)
-      .style('stroke', this.thumbStroke)
-      .style('stroke-width', this.thumbStrokeWidth)
-      .style('fill', this.thumbColor);
+      .attr('r', THUMB_SIZE)
+      .style('stroke', COLOR_THUMB_STROKE)
+      .style('stroke-width', THUMB_STROKE_WIDTH)
+      .style('fill', COLOR_THUMB);
     const rightHandler = selection.append('circle')
       .attr('cx', this.sliderSideMargin + (width * normValueRight))
       .attr('cy', this.sliderTopMargin + 10)
-      .attr('r', this.thumbSize)
-      .style('stroke', this.thumbStroke)
-      .style('stroke-width', this.thumbStrokeWidth)
-      .style('fill', this.thumbColor);
+      .attr('r', THUMB_SIZE)
+      .style('stroke', COLOR_THUMB_STROKE)
+      .style('stroke-width', THUMB_STROKE_WIDTH)
+      .style('fill', COLOR_THUMB);
+
     const leftLockWrapper = selection
       .append('svg:foreignObject')
       .attr('x', 12 + (width * normValueLeft))
       .attr('y', -10)
-      .style('font-size', '2rem');
+      .style('font-size', '2rem')
+      .style('display', that.isRightLocked ? 'inherit' : 'none');
     const leftLock = leftLockWrapper
       .append('xhtml:body')
-      .html(this.leftLock ? '<i class="fa fa-lock"></i>' : '<i class="fa fa-unlock"></i>')
+      .html(this.isLeftLocked ? '<i class="fa fa-lock"></i>' : '<i class="fa fa-unlock"></i>')
       .on('click', function () {
-        that.leftLockChange.emit(!that.leftLock);
+        that.leftLockChange.emit(!that.isLeftLocked);
       });
-    if (!this.leftLock) {
+    if (!this.isLeftLocked) {
       leftLock.style('color', '#BBBBBB');
+    }
+
+    const rightLockWrapper = selection
+      .append('svg:foreignObject')
+      .attr('x', 12 + (width * normValueRight))
+      .attr('y', -10)
+      .style('font-size', '2rem')
+      .style('display', normValueRight === 1 ? 'inherit' : 'none');
+    const rightLock = rightLockWrapper
+      .append('xhtml:body')
+      .html(this.isRightLocked ? '<i class="fa fa-lock"></i>' : '<i class="fa fa-unlock"></i>')
+      .on('click', function () {
+        that.rightLockChange.emit(!that.isRightLocked);
+      });
+    if (!this.isRightLocked) {
+      rightLock.style('color', '#BBBBBB');
     }
 
     leftHandler.call(d3.drag()
