@@ -42,6 +42,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
 
     let normValueLeft = this.getNormValue(this.rangeChosen[0]); // value normalized between 0-1
     let normValueRight = this.getNormValue(this.rangeChosen[1]); // value normalized between 0-1
+    let denormValueDrag;
 
     let selectedValueLeft;
     let selectedValueRight;
@@ -126,6 +127,58 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       d3.event.sourceEvent.stopPropagation();
     }
 
+    function drag() {
+      const _normValue = (d3.event['x'] - that.sliderSideMargin) / width;
+      const _denormValue = that.getDenormValue(_normValue);
+      if (!denormValueDrag) {
+        denormValueDrag = _denormValue;
+      }
+
+      const denormDiff = _denormValue - denormValueDrag;
+      let denormLeft = that.rangeChosen[0] + denormDiff;
+      let denormRight = that.rangeChosen[1] + denormDiff;
+
+      if (denormRight > that.maxValue) {
+        denormLeft = that.rangeChosen[0] + (that.maxValue - that.rangeChosen[1]);
+        denormRight = that.maxValue;
+      } else if (denormLeft < that.minValue) {
+        denormLeft = that.minValue;
+        denormRight = that.rangeChosen[1] - (that.rangeChosen[0] - that.minValue);
+      }
+
+      // if drag is too small to change value, do not emit the same multiple times
+      if (denormLeft === that.getDenormValue(normValueLeft)) {
+        return;
+      }
+
+      // update value
+      normValueRight = that.getNormValue(denormRight);
+      selectedValueRight = that.getNormValue(denormRight) * width;
+      normValueLeft = that.getNormValue(denormLeft);
+      selectedValueLeft = normValueLeft * width;
+
+      leftHandler.attr('cx', that.sliderSideMargin + selectedValueLeft);
+      leftLockWrapper
+        .attr('x', that.sliderSideMarginHalf + selectedValueLeft)
+        .style('display', normValueRight === 1 && that.isRightLocked ? 'inherit' : 'none');
+      rightHandler.attr('cx', that.sliderSideMargin + selectedValueRight);
+      rightLockWrapper
+        .attr('x', that.sliderSideMarginHalf + selectedValueRight)
+        .style('display', normValueRight === 1 ? 'inherit' : 'none');
+
+      emptyLineLeft
+        .attr('x1', that.sliderSideMargin)
+        .attr('x2', that.sliderSideMargin + selectedValueLeft);
+      valueLine
+        .attr('x1', that.sliderSideMargin + selectedValueLeft)
+        .attr('x2', that.sliderSideMargin + selectedValueRight);
+      emptyLineRight
+        .attr('x1', that.sliderSideMargin + selectedValueRight)
+        .attr('x2', that.sliderSideMargin + width);
+
+      d3.event.sourceEvent.stopPropagation();
+    }
+
     function dragEndLeft() {
       leftHandler.attr('r', this.thumbSize);
       if (eventLeft) {
@@ -139,14 +192,11 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       }
     }
 
-    function dragStart() {
-      console.log('dragStart');
-    }
-    function drag() {
-      console.log('drag');
-    }
     function dragEnd() {
-      console.log('dragEnd');
+      denormValueDrag = null;
+      if (eventDrag) {
+        eventDrag(normValueLeft, normValueRight);
+      }
     }
 
 
@@ -200,6 +250,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .attr('x', 12 + (width * normValueLeft))
       .attr('y', -10)
       .style('font-size', '2rem')
+      .style('cursor', 'pointer')
       .style('display', that.isRightLocked ? 'inherit' : 'none');
     const leftLock = leftLockWrapper
       .append('xhtml:body')
@@ -216,6 +267,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .attr('x', 12 + (width * normValueRight))
       .attr('y', -10)
       .style('font-size', '2rem')
+      .style('cursor', 'pointer')
       .style('display', normValueRight === 1 ? 'inherit' : 'none');
     const rightLock = rightLockWrapper
       .append('xhtml:body')
@@ -238,7 +290,6 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .on('end', dragEndRight))
       .style('cursor', 'hand');
     valueLine.call(d3.drag()
-      .on('start', dragStart)
       .on('drag', drag)
       .on('end', dragEnd))
       .style('cursor', 'e-resize');
@@ -253,6 +304,11 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       that.rangeChosenChange.emit([that.rangeChosen[0], that.rangeChosen[1]]);
     }
 
+    function eventDrag(iNewValueLeft, iNewValueRight) {
+      that.rangeChosen[0] = that.getDenormValue(iNewValueLeft);
+      that.rangeChosen[1] = that.getDenormValue(iNewValueRight);
+      that.rangeChosenChange.emit([that.rangeChosen[0], that.rangeChosen[1]]);
+    }
   }
 
 }
