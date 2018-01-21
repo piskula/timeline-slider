@@ -1,11 +1,16 @@
 import {EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import * as d3 from 'd3';
 
+export const COLOR_EMPTY_STROKE = '#AAAAAA';
+export const COLOR_THUMB = '#FFFFFF';
+export const COLOR_THUMB_STROKE = '#444444';
+
 export class D3SliderBaseDirective implements OnChanges {
-  id: string;
-  sliderTopMargin = 30;
-  sliderSideMargin = 30;
-  sliderSideMarginHalf = 12;
+  public id: string;
+  public sliderTopMargin = 30;
+  public sliderSideMargin = 30;
+  public height = 55;
+  public sliderSideMarginHalf = 12;
 
   @Input() length: number;
   @Input() maxValue: number;
@@ -48,7 +53,7 @@ export class D3SliderBaseDirective implements OnChanges {
 
     selection = d3.select('#' + this.id).append('svg')
       .attr('width', Number(this.length))
-      .attr('viewBox', '0,0,' + (Number(this.length)) + ',55');
+      .attr('viewBox', '0,0,' + (Number(this.length)) + ',' + this.height);
 
     this.createSlider(selection);
   }

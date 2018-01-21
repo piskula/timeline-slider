@@ -2,25 +2,31 @@ import { Directive, ViewContainerRef } from '@angular/core';
 import * as d3 from 'd3';
 
 import { TimelineScaleComponent } from '../timeline-frame/timeline-scale/timeline-scale.component';
-import { D3SliderBaseDirective } from './slider-base.directive';
+import {
+  COLOR_EMPTY_STROKE,
+  COLOR_THUMB,
+  COLOR_THUMB_STROKE,
+  D3SliderBaseDirective
+} from './slider-base.directive';
 
 export const COLOR_STROKE = '#DB56C4';
-export const COLOR_EMPTY_STROKE = '#AAAAAA';
-export const LINE_WIDTH = 6;
+export const LINE_WIDTH = 12;
 
 @Directive({
   selector: '[appD3SliderLower]'
 })
 export class D3SliderLowerDirective extends D3SliderBaseDirective {
 
-  tooltipWidth = 48;
-  halfTooltipWidth = 24;
+  tooltipWidth = 54;
+  halfTooltipWidth = 27;
 
   constructor (slider: ViewContainerRef) {
     super();
     this.maxValue = 1;
     this.minValue = 0;
     this.step = 1;
+    this.sliderTopMargin = 20;
+    this.height = 45;
     this.id = slider.element.nativeElement.id;
   }
 
@@ -29,7 +35,6 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
     const that = this;
 
     const width  = this.getWidth();
-    const normStep = this.getNormStep();
 
     let normValueLeft = this.getNormValue(this.rangeChosen[0]); // value normalized between 0-1
     let normValueRight = this.getNormValue(this.rangeChosen[1]); // value normalized between 0-1
@@ -38,49 +43,75 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
     let selectedValueRight;
 
     function dragLeft() {
-      selectedValueLeft = d3.event['x'] - that.sliderSideMargin;
-      if (selectedValueLeft < 0) {
-        selectedValueLeft = 0;
-      } else if (that.minValue + ((that.maxValue - that.minValue) * (selectedValueLeft / width)) > that.rangeChosen[1]) {
-        return;
+      const _normValue = (d3.event['x'] - that.sliderSideMargin) / width;
+      let denormLeft = that.getDenormValue(_normValue);
+
+      // if left handler is outside area
+      if (denormLeft < that.minValue) {
+        denormLeft = that.minValue;
+
       } else {
-        selectedValueLeft = selectedValueLeft - (selectedValueLeft % normStep);
+        // if left handler is after right one
+        if (denormLeft + that.step >= that.rangeChosen[1]) {
+          denormLeft = that.rangeChosen[1] - that.step;
+        }
       }
 
-      normValueLeft = selectedValueLeft / width;
+      // if drag is too small to change value, do not emit the same multiple times
+      if (denormLeft === that.getDenormValue(normValueLeft)) {
+        return;
+      }
 
-      // lower diff
+      // update value
+      normValueLeft = that.getNormValue(denormLeft);
+      selectedValueLeft = normValueLeft * width;
+
+      // re-render handler and related elements
       leftHandler.attr('x', that.sliderSideMargin + selectedValueLeft - that.halfTooltipWidth);
-      leftTooltip.attr('x', that.sliderSideMargin + selectedValueLeft - that.halfTooltipWidth);
-      leftTooltip.text(TimelineScaleComponent.getPipeTooltip(that.getDenormValue(normValueLeft), that.maxValue, that.minValue));
-
+      leftTooltip
+        .attr('x', that.sliderSideMargin + selectedValueLeft - that.halfTooltipWidth)
+        .text(TimelineScaleComponent.getPipeTooltip(that.getDenormValue(normValueLeft), that.maxValue, that.minValue));
       valueLine.attr('x1', that.sliderSideMargin + selectedValueLeft);
-      emptyLineLeft.attr('x1', that.sliderSideMargin);
-      emptyLineLeft.attr('x2', that.sliderSideMargin + selectedValueLeft);
+      emptyLineLeft
+        .attr('x1', that.sliderSideMargin)
+        .attr('x2', that.sliderSideMargin + selectedValueLeft);
 
       d3.event.sourceEvent.stopPropagation();
     }
 
     function dragRight() {
-      selectedValueRight = d3.event['x'] - that.sliderSideMargin;
-      if (selectedValueRight > width) {
-        selectedValueRight = width;
-      } else if (that.maxValue - ((that.maxValue - that.minValue) * (1 - (selectedValueRight / width))) < that.rangeChosen[0] + that.step) {
-          return;
+      const _normValue = (d3.event['x'] - that.sliderSideMargin) / width;
+      let denormRight = that.getDenormValue(_normValue);
+
+      // if right handler is outside area
+      if (denormRight > that.maxValue) {
+        denormRight = that.maxValue;
+
       } else {
-        selectedValueRight = selectedValueRight - (selectedValueRight % normStep);
+        // if right handler is before left one
+        if (denormRight - that.step <= that.rangeChosen[0]) {
+          denormRight = that.rangeChosen[0] + that.step;
+        }
       }
 
-      normValueRight = selectedValueRight / width;
+      // if drag is too small to change value, do not emit the same multiple times
+      if (denormRight === that.getDenormValue(normValueRight)) {
+        return;
+      }
 
-      // lower diff
+      // update value
+      normValueRight = that.getNormValue(denormRight);
+      selectedValueRight = that.getNormValue(denormRight) * width;
+
+      // re-render handler and related elements
       rightHandler.attr('x', that.sliderSideMargin + selectedValueRight - that.halfTooltipWidth);
-      rightTooltip.attr('x', that.sliderSideMargin + selectedValueRight - that.halfTooltipWidth);
-      rightTooltip.text(TimelineScaleComponent.getPipeTooltip(that.getDenormValue(normValueRight), that.maxValue, that.minValue));
-
+      rightTooltip
+        .attr('x', that.sliderSideMargin + selectedValueRight - that.halfTooltipWidth)
+        .text(TimelineScaleComponent.getPipeTooltip(that.getDenormValue(normValueRight), that.maxValue, that.minValue));
       valueLine.attr('x2', that.sliderSideMargin + selectedValueRight);
-      emptyLineRight.attr('x1', that.sliderSideMargin + selectedValueRight);
-      emptyLineRight.attr('x2', that.sliderSideMargin + width);
+      emptyLineRight
+        .attr('x1', that.sliderSideMargin + selectedValueRight)
+        .attr('x2', that.sliderSideMargin + width);
 
       d3.event.sourceEvent.stopPropagation();
     }
@@ -137,8 +168,8 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('ry', '0.3em')
       .attr('width', this.tooltipWidth)
       .attr('height', '1.2em')
-      .style('fill', '#FFFFFF')
-      .style('stroke', '#444444')
+      .style('fill', COLOR_THUMB)
+      .style('stroke', COLOR_THUMB_STROKE)
       .style('stroke-width', 1);
     rightHandler = selection.append('rect')
       .attr('x', this.sliderSideMargin + (width * normValueRight) - this.halfTooltipWidth)
@@ -147,12 +178,12 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('ry', '0.3em')
       .attr('width', this.tooltipWidth)
       .attr('height', '1.2em')
-      .style('fill', '#FFFFFF')
-      .style('stroke', '#444444')
+      .style('fill', COLOR_THUMB)
+      .style('stroke', COLOR_THUMB_STROKE)
       .style('stroke-width', 1);
     leftTooltip = selection.append('text')
       .attr('x', this.sliderSideMargin + (width * normValueLeft) - this.halfTooltipWidth)
-      .attr('dx', '1.5em')
+      .attr('dx', '1.6em')
       .attr('y', this.sliderTopMargin)
       .attr('dy', '1em')
       .attr('text-anchor', 'middle')
@@ -160,7 +191,7 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .text(TimelineScaleComponent.getPipeTooltip(that.getDenormValue(normValueLeft), this.maxValue, this.minValue));
     rightTooltip = selection.append('text')
       .attr('x', this.sliderSideMargin + (width * normValueRight) - this.halfTooltipWidth)
-      .attr('dx', '1.5em')
+      .attr('dx', '1.6em')
       .attr('y', this.sliderTopMargin)
       .attr('dy', '1em')
       .attr('text-anchor', 'middle')

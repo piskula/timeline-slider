@@ -1,13 +1,16 @@
 import {Directive, EventEmitter, Input, Output, ViewContainerRef} from '@angular/core';
 import * as d3 from 'd3';
 
-import { D3SliderBaseDirective } from './slider-base.directive';
+import {
+  COLOR_EMPTY_STROKE,
+  COLOR_THUMB,
+  COLOR_THUMB_STROKE,
+  D3SliderBaseDirective
+} from './slider-base.directive';
 
 export const COLOR_STROKE = '#51CB3F';
-export const COLOR_EMPTY_STROKE = '#AAAAAA';
-export const COLOR_THUMB = '#FFFFFF';
-export const COLOR_THUMB_STROKE = '#000000';
-export const LINE_WIDTH = 6;
+export const LINE_WIDTH = 12;
+export const LINE_EMPTY_WIDTH = 9;
 export const THUMB_SIZE = 8;
 export const THUMB_ON_CLICK_PLUS_SIZE = 2;
 export const THUMB_STROKE_WIDTH = 1;
@@ -38,7 +41,6 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
     const that = this;
 
     const width  = this.getWidth();
-    const normStep = this.getNormStep();
 
     let normValueLeft = this.getNormValue(this.rangeChosen[0]); // value normalized between 0-1
     let normValueRight = this.getNormValue(this.rangeChosen[1]); // value normalized between 0-1
@@ -82,10 +84,10 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       // re-render handler and related elements
       leftHandler.attr('cx', that.sliderSideMargin + selectedValueLeft);
       leftLockWrapper.attr('x', that.sliderSideMarginHalf + selectedValueLeft);
-
       valueLine.attr('x1', that.sliderSideMargin + selectedValueLeft);
-      emptyLineLeft.attr('x1', that.sliderSideMargin);
-      emptyLineLeft.attr('x2', that.sliderSideMargin + selectedValueLeft);
+      emptyLineLeft
+        .attr('x1', that.sliderSideMargin)
+        .attr('x2', that.sliderSideMargin + selectedValueLeft);
 
       d3.event.sourceEvent.stopPropagation();
     }
@@ -119,10 +121,10 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       rightLockWrapper
         .attr('x', that.sliderSideMarginHalf + selectedValueRight)
         .style('display', normValueRight === 1 ? 'inherit' : 'none');
-
       valueLine.attr('x2', that.sliderSideMargin + selectedValueRight);
-      emptyLineRight.attr('x1', that.sliderSideMargin + selectedValueRight);
-      emptyLineRight.attr('x2', that.sliderSideMargin + width);
+      emptyLineRight
+        .attr('x1', that.sliderSideMargin + selectedValueRight)
+        .attr('x2', that.sliderSideMargin + width);
 
       d3.event.sourceEvent.stopPropagation();
     }
@@ -218,7 +220,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .attr('y2', this.sliderTopMargin + 10)
       .style('stroke', COLOR_EMPTY_STROKE)
       .style('stroke-linecap', 'round')
-      .style('stroke-width', LINE_WIDTH);
+      .style('stroke-width', LINE_EMPTY_WIDTH);
 
     // Line to show the remaining right value
     const emptyLineRight = selection.append('line')
@@ -228,7 +230,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .attr('y2', this.sliderTopMargin + 10)
       .style('stroke', COLOR_EMPTY_STROKE)
       .style('stroke-linecap', 'round')
-      .style('stroke-width', LINE_WIDTH);
+      .style('stroke-width', LINE_EMPTY_WIDTH);
 
     const leftHandler = selection.append('circle')
       .attr('cx', this.sliderSideMargin + (width * normValueLeft))
@@ -259,7 +261,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
         that.leftLockChange.emit(!that.isLeftLocked);
       });
     if (!this.isLeftLocked) {
-      leftLock.style('color', '#BBBBBB');
+      leftLock.style('color', COLOR_EMPTY_STROKE);
     }
 
     const rightLockWrapper = selection
@@ -276,7 +278,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
         that.rightLockChange.emit(!that.isRightLocked);
       });
     if (!this.isRightLocked) {
-      rightLock.style('color', '#BBBBBB');
+      rightLock.style('color', COLOR_EMPTY_STROKE);
     }
 
     leftHandler.call(d3.drag()
