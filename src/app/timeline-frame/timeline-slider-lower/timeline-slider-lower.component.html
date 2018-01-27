@@ -1,9 +1,8 @@
-<div class="format-slider">
+<div>
   <div appD3SliderLower
        id="sliderLower"
        [minValue]="rangeChosen[0]"
        [maxValue]="rangeChosen[1]"
-       length="964"
        [step]="step"
        [rangeChosen]="rangeChosen"
        (rangeChosenChange)="onRangeChange($event)">

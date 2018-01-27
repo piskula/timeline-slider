@@ -25,8 +25,8 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
     this.maxValue = 1;
     this.minValue = 0;
     this.step = 1;
-    this.sliderTopMargin = 20;
-    this.height = 45;
+    this.sliderTopMargin = 15;
+    this.height = 40;
     this.id = slider.element.nativeElement.id;
   }
 

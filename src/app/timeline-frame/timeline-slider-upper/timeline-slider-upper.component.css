@@ -1,8 +1,4 @@
-.format-slider {
-  /*margin: 1em 20px;*/
-  font-family: Arial;
-}
-
 .scale-margin {
-  margin: 0 30px;
+  /*in SVG this is according to sliderMargin*/
+  margin: 0 3%;
 }

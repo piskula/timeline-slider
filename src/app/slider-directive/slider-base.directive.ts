@@ -9,10 +9,9 @@ export class D3SliderBaseDirective implements OnChanges {
   public id: string;
   public sliderTopMargin = 30;
   public sliderSideMargin = 30;
-  public height = 55;
+  public height = 50;
   public sliderSideMarginHalf = 12;
 
-  @Input() length: number;
   @Input() maxValue: number;
   @Input() minValue: number;
   @Input() step: number;
@@ -52,8 +51,10 @@ export class D3SliderBaseDirective implements OnChanges {
     d3.select('#' + this.id).selectAll('*').remove();
 
     selection = d3.select('#' + this.id).append('svg')
-      .attr('width', Number(this.length))
-      .attr('viewBox', '0,0,' + (Number(this.length)) + ',' + this.height);
+      // .attr('width', '100%')
+      // .attr('height', '3rem')
+      // .attr('preserveAspectRatio', 'xMinYMid slice')
+      .attr('viewBox', '0,0,1000,' + this.height);
 
     this.createSlider(selection);
   }
@@ -77,7 +78,7 @@ export class D3SliderBaseDirective implements OnChanges {
   }
 
   public getWidth(): number {
-    return this.length - (this.sliderSideMargin * 2);
+    return 1000 - (this.sliderSideMargin * 2);
   }
 
   public getNormStep(): number {

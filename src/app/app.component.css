@@ -1,9 +1,10 @@
 .timeline-border {
-  margin: auto; width: 1000px;
+  margin: auto;
+  width: 80%;
+  min-width: 40rem;
+  font-family: Arial;
 }
 .timeline-background {
-  margin: 10px;
-  padding: 8px;
   background-color: #eeeeee;
   border-radius: 8px;
 }

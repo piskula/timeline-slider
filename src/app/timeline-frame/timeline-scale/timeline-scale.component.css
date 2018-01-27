@@ -1,6 +1,6 @@
 .timeline-scale {
   padding: 0;
-  height: 40px;
+  height: 1.5rem;
   top: 100%;
   left: 0;
   width: 100%;
@@ -10,45 +10,43 @@
 
 .markerPriority1 {
   background-color: #888888;
-  height: 15px;
+  height: .625rem;
 }
 .markerPriority2 {
   background-color: #AAAAAA;
-  height: 12px;
+  height: .5rem;
 }
 .markerPriority3 {
   background-color: #CCCCCC;
-  height: 8px;
+  height: .325rem;
 }
 
 .valuePriority1 {
   color: #888888;
-  font-size: 14px;
+  font-size: .9rem;
 }
 .valuePriority2 {
   color: #AAAAAA;
-  font-size: 12px;
+  font-size: .75rem;
 }
 .valuePriority3 {
   color: #CCCCCC;
-  font-size: 10px;
+  font-size: .625rem;
 }
 
 .timeline-scale-marker {
-  width: 2px;
-  margin-left: -1px;
+  width: .125rem;
   position: absolute;
   box-sizing: border-box;
   direction: ltr;
-  font-family: Arial;
 }
 
 .timeline-scale-value {
-  margin-top: 8px;
+  margin-top: .125rem;
+  margin-left: .075rem;
   position: absolute;
   text-align: center;
   box-sizing: border-box;
   transform: translate3d(-50%,50%,0);
-  font-family: Arial;
   white-space: nowrap;
 }

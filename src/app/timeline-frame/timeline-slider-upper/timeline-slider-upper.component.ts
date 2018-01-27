@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
 import { ShareTimeService } from '../../time-service/share-time.service';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: './timeline-slider-upper.component.html',
   styleUrls: ['./timeline-slider-upper.component.css']
 })
-export class TimelineSliderUpperComponent implements OnInit, OnDestroy {
+export class TimelineSliderUpperComponent implements AfterViewInit, OnInit, OnDestroy {
 
   step = 20;
 
@@ -22,7 +22,15 @@ export class TimelineSliderUpperComponent implements OnInit, OnDestroy {
   private isLockedRight$: Subscription;
   private isLockedLeft$: Subscription;
 
-  constructor(private _timeService: ShareTimeService) { }
+  el: ElementRef;
+  constructor(el: ElementRef,
+              private _timeService: ShareTimeService) {
+    this.el = el;
+  }
+
+  ngAfterViewInit(): void {
+    console.log(this.el);
+  }
 
   ngOnInit() {
     this.min = this._timeService.getLastMin();
