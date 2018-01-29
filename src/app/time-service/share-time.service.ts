@@ -8,13 +8,13 @@ export class ShareTimeService {
   private lastRangeChosen: Number[];
   private lastMax: Number;
   private lastMin: Number;
-  private lastIsLocked: Boolean;
+  private lastIsLockedRight: Boolean;
   private lastIsLockedLeft: Boolean;
 
   private rangeChosen: Subject<Number[]> = new Subject<Number[]>();
   private max: Subject<Number> = new Subject<Number>();
   private min: Subject<Number> = new Subject<Number>();
-  private isLockedValue: Subject<Boolean> = new Subject<Boolean>();
+  private isLockedRightValue: Subject<Boolean> = new Subject<Boolean>();
   private isLockedLeftValue: Subject<Boolean> = new Subject<Boolean>();
 
   constructor() { }
@@ -24,8 +24,8 @@ export class ShareTimeService {
   }
 
   public setRangeChosen(value: Number[]) {
-    if (this.lastIsLocked && value[1] !== this.lastMax) {
-      this.setLocked(false);
+    if (this.lastIsLockedRight && value[1] !== this.lastMax) {
+      this.setLockedRight(false);
     }
     this.lastRangeChosen = value;
     this.rangeChosen.next(value);
@@ -43,12 +43,12 @@ export class ShareTimeService {
     const previousValue = this.lastMax;
     this.lastMax = value;
     this.max.next(value);
-    if (this.lastIsLocked) {
+    if (this.lastIsLockedRight) {
       if (this.lastIsLockedLeft) {
+        this.setRangeChosen([this.lastRangeChosen[0], value]);
+      } else {
         const diff = value.valueOf() - previousValue.valueOf();
         this.setRangeChosen([this.lastRangeChosen[0].valueOf() + diff, value]);
-      } else {
-        this.setRangeChosen([this.lastRangeChosen[0], value]);
       }
     }
   }
@@ -70,28 +70,29 @@ export class ShareTimeService {
     return this.lastMin;
   }
 
-  public isLocked(): Observable<Boolean> {
-    return this.isLockedValue.asObservable();
+  public isLockedRight(): Observable<Boolean> {
+    return this.isLockedRightValue.asObservable();
   }
 
   public isLockedLeft(): Observable<Boolean> {
     return this.isLockedLeftValue.asObservable();
   }
 
-  public setLocked(value: Boolean) {
-    if (value) {
+  public setLockedRight(isRightLocked: Boolean) {
+    if (isRightLocked) {
       this.setRangeChosen([this.lastRangeChosen[0], this.lastMax]);
-      this.lastIsLocked = true;
-      this.isLockedValue.next(true);
+      this.lastIsLockedRight = true;
+      this.isLockedRightValue.next(true);
+      this.setLockedLeft(true);
     } else {
-      this.lastIsLocked = false;
-      this.isLockedValue.next(false);
+      this.lastIsLockedRight = false;
+      this.isLockedRightValue.next(false);
       this.setLockedLeft(false);
     }
   }
 
-  public setLockedLeft(value: Boolean) {
-    const valueWithRightLock = value && this.getLastIsLocked();
+  public setLockedLeft(isLeftLocked: Boolean) {
+    const valueWithRightLock = isLeftLocked && this.getLastIsLocked();
     if (this.lastIsLockedLeft !== valueWithRightLock) {
       this.lastIsLockedLeft = valueWithRightLock;
       this.isLockedLeftValue.next(valueWithRightLock);
@@ -99,7 +100,7 @@ export class ShareTimeService {
   }
 
   public getLastIsLocked(): Boolean {
-    return this.lastIsLocked;
+    return this.lastIsLockedRight;
   }
 
   public getLastIsLockedLeft(): Boolean {

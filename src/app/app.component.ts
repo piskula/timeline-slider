@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
     this._timeService.setMin(1455195000);
     this._timeService.setMax(1455202200);
     this._timeService.setRangeChosen([1455195000, 1455202200]);
-    this._timeService.setLocked(false);
+    this._timeService.setLockedRight(false);
     this._timeService.setLockedLeft(false);
   }
 

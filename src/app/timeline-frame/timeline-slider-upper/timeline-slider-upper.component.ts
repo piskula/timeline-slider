@@ -45,7 +45,7 @@ export class TimelineSliderUpperComponent implements AfterViewInit, OnInit, OnDe
     this.max$ = this._timeService.getMax().subscribe(max => {
       this.max = max;
     });
-    this.isLockedRight$ = this._timeService.isLocked().subscribe(isLocked => {
+    this.isLockedRight$ = this._timeService.isLockedRight().subscribe(isLocked => {
       this.isLockedRight = isLocked;
     });
     this.isLockedLeft$ = this._timeService.isLockedLeft().subscribe(isLockedLeft => {
@@ -69,6 +69,6 @@ export class TimelineSliderUpperComponent implements AfterViewInit, OnInit, OnDe
   }
 
   public lockRightChange(value: boolean) {
-    this._timeService.setLocked(value);
+    this._timeService.setLockedRight(value);
   }
 }
