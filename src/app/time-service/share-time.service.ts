@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 @Injectable()
@@ -19,8 +18,8 @@ export class ShareTimeService {
 
   constructor() { }
 
-  public getRangeChosen(): Observable<Number[]> {
-    return this.rangeChosen.asObservable();
+  public getRangeChosen(): Subject<Number[]> {
+    return this.rangeChosen;
   }
 
   public setRangeChosen(value: Number[]) {
@@ -35,8 +34,8 @@ export class ShareTimeService {
     return this.lastRangeChosen;
   }
 
-  public getMax(): Observable<Number> {
-    return this.max.asObservable();
+  public getMax(): Subject<Number> {
+    return this.max;
   }
 
   public setMax(value: Number) {
@@ -57,8 +56,8 @@ export class ShareTimeService {
     return this.lastMax;
   }
 
-  public getMin(): Observable<Number> {
-    return this.min.asObservable();
+  public getMin(): Subject<Number> {
+    return this.min;
   }
 
   public setMin(value: Number) {
@@ -70,12 +69,12 @@ export class ShareTimeService {
     return this.lastMin;
   }
 
-  public isLockedRight(): Observable<Boolean> {
-    return this.isLockedRightValue.asObservable();
+  public isLockedRight(): Subject<Boolean> {
+    return this.isLockedRightValue;
   }
 
-  public isLockedLeft(): Observable<Boolean> {
-    return this.isLockedLeftValue.asObservable();
+  public isLockedLeft(): Subject<Boolean> {
+    return this.isLockedLeftValue;
   }
 
   public setLockedRight(isRightLocked: Boolean) {

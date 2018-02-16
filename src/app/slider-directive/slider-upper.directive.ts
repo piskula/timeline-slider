@@ -25,12 +25,12 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
   @Output() rightLockChange = new EventEmitter();
   @Output() leftLockChange = new EventEmitter();
 
-  constructor (slider: ViewContainerRef) {
+  constructor () {
     super();
     this.maxValue = 1;
     this.minValue = 0;
     this.step = 1;
-    this.id = slider.element.nativeElement.id;
+    this.id = 'sliderUpper';
 
     this.isLeftLocked = false;
     this.isRightLocked = false;

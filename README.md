@@ -1,6 +1,6 @@
 # Timeline Slider ![Build Status](https://travis-ci.org/piskula/timeline-slider.svg?branch=master)
 ##### Diploma Thesis on FI MUNI
-Angular2 module for timeline portlet
+Angular (Angular5) module for timeline portlet
 
 You can try actual state [online here](https://timeline-slider.firebaseapp.com/).
 
@@ -13,11 +13,17 @@ Then run `ng serve` for a dev server. Navigate to [localhost:4200](http://localh
 reload if you change any of the source files.
 
 ## Architecture
-Actual version of timeline-slider uses [ShareTimeService](src/app/time-service/share-time.service.ts) as Injectable
+Actual version of timeline-slider uses [ShareTimeService](src/app/time-service/share-time.service.ts) as *Injectable*
 service through whole application, so each part can modify all important states directly:
 - min max range
 - actual chosen values
 - locker flag
+
+Both slider parts use SVG images, which are rendered inside \<div\> thanks to my own [directive](src/app/slider-directive). This is
+much more simple solution as [previous](#previous-version-i), where I was trying to use [ng2-nouislider](https://github.com/tb/ng2-nouislider).
+![Components of portlet](https://docs.google.com/uc?id=1Tbpjy5jlqR5IfpGamSdBeTQ6iAdtoXzK)
+
+<a name="previous-version-i"/>
 
 #### Previous version I.
 On this diagram all arrows are used to denote binding. Simple arrow denotes one-way binding, two-way arrow

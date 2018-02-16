@@ -20,14 +20,14 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
   tooltipWidth = 54;
   halfTooltipWidth = 27;
 
-  constructor (slider: ViewContainerRef) {
+  constructor () {
     super();
     this.maxValue = 1;
     this.minValue = 0;
     this.step = 1;
     this.sliderTopMargin = 15;
     this.height = 40;
-    this.id = slider.element.nativeElement.id;
+    this.id = 'sliderLower';
   }
 
   // Override
