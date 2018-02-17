@@ -7,8 +7,8 @@ export class ShareTimeService {
   private lastRangeChosen: Number[];
   private lastMax: Number;
   private lastMin: Number;
-  private lastIsLockedRight: Boolean;
-  private lastIsLockedLeft: Boolean;
+  private lastIsLockedRight: Boolean = false;
+  private lastIsLockedLeft: Boolean = false;
 
   private rangeChosen: Subject<Number[]> = new Subject<Number[]>();
   private max: Subject<Number> = new Subject<Number>();

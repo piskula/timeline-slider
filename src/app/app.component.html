@@ -1,12 +1,19 @@
 <h1>Slider Module</h1>
 
 <div class="timeline-border">
-  <div class="timeline-background">
-    <app-timeline-frame></app-timeline-frame>
+  <div class="timeline-background" *ngIf="initialized">
+    <app-timeline-frame *ngIf="!error"></app-timeline-frame>
+    <div *ngIf="!!error">
+      Error occurred: {{ error }}
+      <button type="button" (click)="initializeTimeline()">Refresh</button>
+    </div>
+  </div>
+
+  <div class="timeline-background" *ngIf="!initialized">
+    Initializing
   </div>
 </div>
 
-<button (click)="addBox()">Add LIVE data</button>
 <div>
   Value: {{ rangeChosen | async }}
 </div>
