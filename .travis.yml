@@ -16,5 +16,5 @@ script:
   - ng build --env=prod
 
 after_success:
-  - firebase use default
-  - firebase deploy --token $FIREBASE_TOKEN --non-interactive
+  #- firebase use default
+  #- firebase deploy --token $FIREBASE_TOKEN --non-interactive
