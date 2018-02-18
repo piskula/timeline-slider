@@ -10,23 +10,15 @@ import {
 } from './slider-base.directive';
 
 export const COLOR_STROKE = '#DB56C4';
-export const LINE_WIDTH = 12;
+export const LINE_WIDTH = '.865rem';
 
 @Directive({
   selector: '[appD3SliderLower]'
 })
 export class D3SliderLowerDirective extends D3SliderBaseDirective {
 
-  tooltipWidth = 54;
-  halfTooltipWidth = 27;
-
   constructor () {
     super();
-    this.maxValue = 1;
-    this.minValue = 0;
-    this.step = 1;
-    this.sliderTopMargin = 15;
-    this.height = 40;
     this.id = 'sliderLower';
   }
 
@@ -34,7 +26,13 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
   createSlider(selection) {
     const that = this;
 
-    const width  = this.getWidth();
+    const width = this.getWidth();
+    const fontSize = this.getFontSize();
+    const sliderSideMargin = this.getSideMargin();
+    const halfTooltipWidth = fontSize * 2;
+    const tooltipWidth = halfTooltipWidth * 2;
+    const sliderTopMarginTooltip = fontSize * 0.5;
+    const sliderTopMargin = fontSize * 1.125;
 
     let normValueLeft = this.getNormValue(this.rangeChosen[0]); // value normalized between 0-1
     let normValueRight = this.getNormValue(this.rangeChosen[1]); // value normalized between 0-1
@@ -43,7 +41,7 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
     let selectedValueRight;
 
     function dragLeft() {
-      const _normValue = (d3.event['x'] - that.sliderSideMargin) / width;
+      const _normValue = (d3.event['x'] - sliderSideMargin) / width;
       let denormLeft = that.getDenormValue(_normValue);
 
       // if left handler is outside area
@@ -67,20 +65,20 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       selectedValueLeft = normValueLeft * width;
 
       // re-render handler and related elements
-      leftHandler.attr('x', that.sliderSideMargin + selectedValueLeft - that.halfTooltipWidth);
+      leftHandler.attr('x', sliderSideMargin + selectedValueLeft - halfTooltipWidth);
       leftTooltip
-        .attr('x', that.sliderSideMargin + selectedValueLeft - that.halfTooltipWidth)
+        .attr('x', sliderSideMargin + selectedValueLeft - halfTooltipWidth)
         .text(TimelineScaleComponent.getPipeTooltip(that.getDenormValue(normValueLeft), that.maxValue, that.minValue));
-      valueLine.attr('x1', that.sliderSideMargin + selectedValueLeft);
+      valueLine.attr('x1', sliderSideMargin + selectedValueLeft);
       emptyLineLeft
-        .attr('x1', that.sliderSideMargin)
-        .attr('x2', that.sliderSideMargin + selectedValueLeft);
+        .attr('x1', sliderSideMargin)
+        .attr('x2', sliderSideMargin + selectedValueLeft);
 
       d3.event.sourceEvent.stopPropagation();
     }
 
     function dragRight() {
-      const _normValue = (d3.event['x'] - that.sliderSideMargin) / width;
+      const _normValue = (d3.event['x'] - sliderSideMargin) / width;
       let denormRight = that.getDenormValue(_normValue);
 
       // if right handler is outside area
@@ -104,14 +102,14 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       selectedValueRight = that.getNormValue(denormRight) * width;
 
       // re-render handler and related elements
-      rightHandler.attr('x', that.sliderSideMargin + selectedValueRight - that.halfTooltipWidth);
+      rightHandler.attr('x', sliderSideMargin + selectedValueRight - halfTooltipWidth);
       rightTooltip
-        .attr('x', that.sliderSideMargin + selectedValueRight - that.halfTooltipWidth)
+        .attr('x', sliderSideMargin + selectedValueRight - halfTooltipWidth)
         .text(TimelineScaleComponent.getPipeTooltip(that.getDenormValue(normValueRight), that.maxValue, that.minValue));
-      valueLine.attr('x2', that.sliderSideMargin + selectedValueRight);
+      valueLine.attr('x2', sliderSideMargin + selectedValueRight);
       emptyLineRight
-        .attr('x1', that.sliderSideMargin + selectedValueRight)
-        .attr('x2', that.sliderSideMargin + width);
+        .attr('x1', sliderSideMargin + selectedValueRight)
+        .attr('x2', sliderSideMargin + width);
 
       d3.event.sourceEvent.stopPropagation();
     }
@@ -129,30 +127,30 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
 
     // Line to represent the current value
     const valueLine = selection.append('line')
-      .attr('x1', this.sliderSideMargin + (width * normValueLeft))
-      .attr('x2', this.sliderSideMargin + (width * normValueRight))
-      .attr('y1', this.sliderTopMargin + 10)
-      .attr('y2', this.sliderTopMargin + 10)
+      .attr('x1', sliderSideMargin + (width * normValueLeft))
+      .attr('x2', sliderSideMargin + (width * normValueRight))
+      .attr('y1', sliderTopMargin)
+      .attr('y2', sliderTopMargin)
       .style('stroke', COLOR_STROKE)
       .style('stroke-linecap', 'round')
       .style('stroke-width', LINE_WIDTH);
 
     // Line to show the remaining left value
     const emptyLineLeft = selection.append('line')
-      .attr('x1', this.sliderSideMargin)
-      .attr('x2', this.sliderSideMargin + (width * normValueLeft))
-      .attr('y1', this.sliderTopMargin + 10)
-      .attr('y2', this.sliderTopMargin + 10)
+      .attr('x1', sliderSideMargin)
+      .attr('x2', sliderSideMargin + (width * normValueLeft))
+      .attr('y1', sliderTopMargin)
+      .attr('y2', sliderTopMargin)
       .style('stroke', COLOR_EMPTY_STROKE)
       .style('stroke-linecap', 'round')
       .style('stroke-width', LINE_WIDTH);
 
     // Line to show the remaining right value
     const emptyLineRight = selection.append('line')
-      .attr('x1', this.sliderSideMargin + (width * normValueRight))
-      .attr('x2', this.sliderSideMargin + width)
-      .attr('y1', this.sliderTopMargin + 10)
-      .attr('y2', this.sliderTopMargin + 10)
+      .attr('x1', sliderSideMargin + (width * normValueRight))
+      .attr('x2', sliderSideMargin + width)
+      .attr('y1', sliderTopMargin)
+      .attr('y2', sliderTopMargin)
       .style('stroke', COLOR_EMPTY_STROKE)
       .style('stroke-linecap', 'round')
       .style('stroke-width', LINE_WIDTH);
@@ -162,38 +160,38 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
     let leftTooltip;
     let rightTooltip;
     leftHandler = selection.append('rect')
-      .attr('x', this.sliderSideMargin + (width * normValueLeft) - this.halfTooltipWidth)
-      .attr('y', this.sliderTopMargin)
-      .attr('rx', '0.3em')
-      .attr('ry', '0.3em')
-      .attr('width', this.tooltipWidth)
-      .attr('height', '1.2em')
+      .attr('x', sliderSideMargin + (width * normValueLeft) - halfTooltipWidth)
+      .attr('y', sliderTopMarginTooltip)
+      .attr('rx', '0.3rem')
+      .attr('ry', '0.3rem')
+      .attr('width', tooltipWidth)
+      .attr('height', '1.2rem')
       .style('fill', COLOR_THUMB)
       .style('stroke', COLOR_THUMB_STROKE)
       .style('stroke-width', 1);
     rightHandler = selection.append('rect')
-      .attr('x', this.sliderSideMargin + (width * normValueRight) - this.halfTooltipWidth)
-      .attr('y', this.sliderTopMargin)
-      .attr('rx', '0.3em')
-      .attr('ry', '0.3em')
-      .attr('width', this.tooltipWidth)
-      .attr('height', '1.2em')
+      .attr('x', sliderSideMargin + (width * normValueRight) - halfTooltipWidth)
+      .attr('y', sliderTopMarginTooltip)
+      .attr('rx', '0.3rem')
+      .attr('ry', '0.3rem')
+      .attr('width', tooltipWidth)
+      .attr('height', '1.2rem')
       .style('fill', COLOR_THUMB)
       .style('stroke', COLOR_THUMB_STROKE)
       .style('stroke-width', 1);
     leftTooltip = selection.append('text')
-      .attr('x', this.sliderSideMargin + (width * normValueLeft) - this.halfTooltipWidth)
-      .attr('dx', '1.6em')
-      .attr('y', this.sliderTopMargin)
-      .attr('dy', '1em')
+      .attr('x', sliderSideMargin + (width * normValueLeft) - halfTooltipWidth)
+      .attr('dx', halfTooltipWidth)
+      .attr('y', sliderTopMarginTooltip)
+      .attr('dy', '1rem')
       .attr('text-anchor', 'middle')
       .style('pointer-events', 'none')
       .text(TimelineScaleComponent.getPipeTooltip(that.getDenormValue(normValueLeft), this.maxValue, this.minValue));
     rightTooltip = selection.append('text')
-      .attr('x', this.sliderSideMargin + (width * normValueRight) - this.halfTooltipWidth)
-      .attr('dx', '1.6em')
-      .attr('y', this.sliderTopMargin)
-      .attr('dy', '1em')
+      .attr('x', sliderSideMargin + (width * normValueRight) - halfTooltipWidth)
+      .attr('dx', halfTooltipWidth)
+      .attr('y', sliderTopMarginTooltip)
+      .attr('dy', '1rem')
       .attr('text-anchor', 'middle')
       .style('pointer-events', 'none')
       .text(TimelineScaleComponent.getPipeTooltip(that.getDenormValue(normValueRight), this.maxValue, this.minValue));

@@ -7,10 +7,6 @@ export const COLOR_THUMB_STROKE = '#444444';
 
 export class D3SliderBaseDirective implements OnChanges {
   public id: string;
-  public sliderTopMargin = 30;
-  public sliderSideMargin = 30;
-  public height = 50;
-  public sliderSideMarginHalf = 12;
 
   @Input() maxValue: number;
   @Input() minValue: number;
@@ -18,6 +14,12 @@ export class D3SliderBaseDirective implements OnChanges {
 
   @Input() rangeChosen: number[];
   @Output() rangeChosenChange = new EventEmitter();
+
+  constructor() {
+    this.maxValue = 1;
+    this.minValue = 0;
+    this.step = 1;
+  }
 
   // you must override this method
   createSlider(selection) { }
@@ -51,10 +53,8 @@ export class D3SliderBaseDirective implements OnChanges {
     d3.select('#' + this.id).selectAll('*').remove();
 
     selection = d3.select('#' + this.id).append('svg')
-      // .attr('width', '100%')
-      // .attr('height', '3rem')
-      // .attr('preserveAspectRatio', 'xMinYMid slice')
-      .attr('viewBox', '0,0,1000,' + this.height);
+      .attr('width', '100%')
+      .attr('height', '100%');
 
     this.createSlider(selection);
   }
@@ -78,7 +78,25 @@ export class D3SliderBaseDirective implements OnChanges {
   }
 
   public getWidth(): number {
-    return 1000 - (this.sliderSideMargin * 2);
+    const selection = d3.select('#' + this.id).select('svg')._groups[0][0];
+    return selection.clientWidth - (this.getFontSize() * 6);
+  }
+
+  public getFontSize(): number {
+    const fontSizeString: String = window
+      .getComputedStyle(document.documentElement, null)
+      .getPropertyValue('font-size');
+
+    if (!fontSizeString) {
+      return 16;
+    }
+
+    fontSizeString.replace('px', '');
+    return parseInt(fontSizeString.valueOf(), 10);
+  }
+
+  public getSideMargin(): number {
+    return this.getFontSize() * 3;
   }
 
   public getNormStep(): number {
