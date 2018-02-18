@@ -3,7 +3,7 @@ import {Component, Input, OnInit} from '@angular/core';
 @Component({
   selector: 'app-time-label',
   templateUrl: './time-label.component.html',
-  styleUrls: ['./time-label.component.css']
+  styleUrls: ['./time-label.component.scss']
 })
 export class TimeLabelComponent implements OnInit {
 

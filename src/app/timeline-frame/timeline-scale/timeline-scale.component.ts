@@ -4,7 +4,7 @@ import * as moment from 'moment';
 @Component({
   selector: 'app-timeline-scale',
   templateUrl: './timeline-scale.component.html',
-  styleUrls: ['./timeline-scale.component.css']
+  styleUrls: ['./timeline-scale.component.scss']
 })
 export class TimelineScaleComponent implements OnInit {
 

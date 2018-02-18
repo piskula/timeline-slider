@@ -1,0 +1,54 @@
+@import '../../../scss/global-variables';
+
+.timeline-scale {
+  padding: 0;
+  height: $scale-height;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.markerPriority1 {
+  background-color: #888888;
+  height: .625rem;
+}
+.markerPriority2 {
+  background-color: #AAAAAA;
+  height: .5rem;
+}
+.markerPriority3 {
+  background-color: #CCCCCC;
+  height: .325rem;
+}
+
+.valuePriority1 {
+  color: #888888;
+  font-size: .9rem;
+}
+.valuePriority2 {
+  color: #AAAAAA;
+  font-size: .75rem;
+}
+.valuePriority3 {
+  color: #CCCCCC;
+  font-size: .625rem;
+}
+
+.timeline-scale-marker {
+  width: .125rem;
+  position: absolute;
+  box-sizing: border-box;
+  direction: ltr;
+}
+
+.timeline-scale-value {
+  margin-top: .125rem;
+  margin-left: .075rem;
+  position: absolute;
+  text-align: center;
+  box-sizing: border-box;
+  transform: translate3d(-50%,50%,0);
+  white-space: nowrap;
+}

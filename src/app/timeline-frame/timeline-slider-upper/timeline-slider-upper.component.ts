@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'app-timeline-slider-upper',
   templateUrl: './timeline-slider-upper.component.html',
-  styleUrls: ['./timeline-slider-upper.component.css']
+  styleUrls: ['./timeline-slider-upper.component.scss']
 })
 export class TimelineSliderUpperComponent implements AfterViewInit, OnInit, OnDestroy {
 

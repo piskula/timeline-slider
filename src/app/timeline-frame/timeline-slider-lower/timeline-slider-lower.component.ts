@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'app-timeline-slider-lower',
   templateUrl: './timeline-slider-lower.component.html',
-  styleUrls: ['./timeline-slider-lower.component.css']
+  styleUrls: ['./timeline-slider-lower.component.scss']
 })
 export class TimelineSliderLowerComponent implements OnInit, OnDestroy {
 

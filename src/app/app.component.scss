@@ -1,0 +1,13 @@
+@import '../scss/global-variables';
+
+.timeline-bar {
+  margin: auto;
+  width: 80%;
+  min-width: 40rem;
+  font-family: Arial;
+}
+
+.timeline-background {
+  background-color: #f4f4f4;
+  min-height: $upper-slider-height + $scale-height + $lower-slider-height + $scale-height;
+}
