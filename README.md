@@ -9,7 +9,8 @@ You can try actual state [online here](https://timeline-slider.firebaseapp.com/)
 First of all run `npm install` to install all dependencies.
 If you have not been using angular-cli before, run also `npm install -g @angular/cli`
 
-Then run `ng serve` for a dev server. Navigate to [localhost:4200](http://localhost:4200/). The app will automatically
+Then run `npm run app` for a dev server. This starts also fake REST API, which returns multiple timestamp ranges
+from [db.json](db.json) file. Navigate to [localhost:4200](http://localhost:4200/). The app will automatically
 reload if you change any of the source files.
 
 ## Architecture
