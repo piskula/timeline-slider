@@ -1,16 +1,8 @@
 <h1>Slider Module</h1>
 
 <div class="timeline-bar">
-  <div class="timeline-background" *ngIf="initialized">
-    <app-timeline-frame *ngIf="!error"></app-timeline-frame>
-    <div *ngIf="!!error">
-      Error occurred: {{ error }}
-      <button type="button" (click)="initializeTimeline()">Refresh</button>
-    </div>
-  </div>
-
-  <div class="timeline-background" *ngIf="!initialized">
-    Initializing
+  <div class="timeline-background">
+    <app-timeline-frame></app-timeline-frame>
   </div>
 </div>
 

@@ -1,4 +1,64 @@
-.time-label-div {
-  width: auto;
-  height: 50px;
+@import '../../scss/global-variables';
+
+.centering {
+  height: $lower-slider-height + $scale-height + $upper-slider-height + $scale-height;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  color: $grey-middle;
+
+  i {
+    vertical-align: middle;
+    margin-right: .5rem;
+  }
+
+  .text-center {
+    text-align: center;
+
+    button {
+      background-color: #CCCCCC;
+      border: none;
+      border-radius: .25rem;
+      cursor: pointer;
+      padding: .375rem .75rem;
+      margin-top: .5rem;
+    }
+  }
 }
+
+.frame-wrapper {
+  display: flex;
+
+  .sidebar {
+    width: 2rem;
+    height: $upper-slider-height + $scale-height + $lower-slider-height + $scale-height;
+    display: block;
+    box-sizing: border-box;
+    text-align: right;
+
+    .orange {
+      color: #ffcc00;
+    }
+
+    .icon {
+      display: table;
+      width: 100%;
+      height: 25%;
+
+      .center {
+        display: table-cell;
+        vertical-align: middle;
+      }
+    }
+  }
+  .content {
+    width: 100%;
+    height: $upper-slider-height + $scale-height + $lower-slider-height + $scale-height;
+    box-sizing: border-box;
+  }
+}
+
+//.time-label-div {
+//  width: auto;
+//  height: 50px;
+//}
