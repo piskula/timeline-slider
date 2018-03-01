@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 import {ShareTimeService} from '../time-service/share-time.service';
 import {PossibleTimestampsService, TimestampsWithStep} from '../time-service/possible-timestamps.service';
@@ -12,14 +12,24 @@ import {Observable} from 'rxjs/Observable';
 })
 export class TimelineFrameComponent implements OnInit {
 
+  @Input() isPeriodical = false;
+
   public initialized: Boolean = false;
   public error: String = null;
+  public periodicTaskInProgress: Boolean = false;
+  public refreshButtonActive: Boolean = false;
 
   constructor(private _timeService: ShareTimeService,
               private _timestamps: PossibleTimestampsService) { }
 
   ngOnInit() {
     this.initializeTimeline();
+  }
+
+  public refreshTimeline() {
+    if (this.refreshButtonActive) {
+      this.initializePeriodicalCheck();
+    }
   }
 
   public initializeTimeline(): void {
@@ -36,7 +46,9 @@ export class TimelineFrameComponent implements OnInit {
       })
       .subscribe((response: TimestampsWithStep) => {
         this.setNewData(response);
-        // this.initializePeriodicalCheck();
+        if (this.isPeriodical) {
+          this.initializePeriodicalCheck();
+        }
       });
   }
 
@@ -47,13 +59,18 @@ export class TimelineFrameComponent implements OnInit {
   }
 
   private initializePeriodicalCheck() {
-    console.log('init');
+    this.periodicTaskInProgress = true;
+    this.refreshButtonActive = false;
     Observable
       .interval(5000)
       .flatMap((i) => {
-        console.log('iter');
         return this._timestamps
           .getTimestamps();
+      })
+      .catch((error: HttpErrorResponse) => {
+        this.periodicTaskInProgress = false;
+        this.refreshButtonActive = true;
+        throw error;
       })
       .subscribe((response: TimestampsWithStep) => this.setNewData(response));
   }

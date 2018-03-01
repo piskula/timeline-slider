@@ -8,7 +8,7 @@ import 'rxjs/add/operator/mergeMap'
 @Injectable()
 export class PossibleTimestampsService {
 
-  private counter = 4;
+  private counter = 1;
 
   constructor(private _http: HttpClient) { }
 

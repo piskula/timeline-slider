@@ -3,17 +3,18 @@
   <!--<app-time-label [isLeft]="true" [range]="rangeChosen" class="time-label-left"></app-time-label>-->
 <!--</div>-->
 <div class="frame-wrapper">
-  <div class="sidebar">
+  <div class="sidebar" *ngIf="isPeriodical">
     <div class="icon">
-      <div class="center">
-        <i class="fa fa-refresh fa-spin"></i></div>
+      <div class="center" [class.refresh-active]="refreshButtonActive" (click)="refreshTimeline()">
+        <i class="fa fa-refresh" [class.fa-spin]="periodicTaskInProgress"></i></div>
       </div>
-    <div class="icon orange tooltip">
-      <span class="tooltiptext">Tooltip</span>
-      <i class="fa fa-exclamation-triangle center"></i>
+    <div class="icon orange">
+      <div class="center" *ngIf="initialized && !periodicTaskInProgress">
+        <i class="fa fa-exclamation-triangle tooltip">
+          <span class="tooltiptext">Error occurred while waiting for response from periodic request. Periodic request is paused.</span>
+        </i>
+      </div>
     </div>
-    <!--<div class="icon">A</div>-->
-    <!--<div class="icon">A</div>-->
   </div>
 
   <div class="content">

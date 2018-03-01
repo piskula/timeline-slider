@@ -41,8 +41,8 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
     const sliderTopMargin = fontSize * 2.25;
     const thumbSize = fontSize * 0.5;
     const thumbSizeClick = fontSize * 0.625;
-    const leftLockAddition = fontSize * 0.625;
-    const rightLockAddition = fontSize * 3;
+    const leftLockAddition = width * 0;
+    const rightLockAddition = width * 0.04;
 
     let normValueLeft = this.getNormValue(this.rangeChosen[0]); // value normalized between 0-1
     let normValueRight = this.getNormValue(this.rangeChosen[1]); // value normalized between 0-1

@@ -28,6 +28,7 @@
 
 .frame-wrapper {
   display: flex;
+  font-family: inherit;
 
   .sidebar {
     width: 2rem;
@@ -48,6 +49,10 @@
       .center {
         display: table-cell;
         vertical-align: middle;
+      }
+
+      .refresh-active {
+        cursor: pointer;
       }
     }
   }
