@@ -78,14 +78,39 @@
 \usepackage{url}      %% Hyperlinks
 \usepackage{markdown} %% Lightweight markup
 \usepackage{listings} %% Source code highlighting
+\lstdefinelanguage{TypeScript}{
+    morekeywords={number, string, object,
+        typeof, let, public, private, void
+        },
+    sensitive=false, % keywords are not case-sensitive
+    morecomment=[l]{//}, % l is for line comment
+    morecomment=[s]{/*}{*/}, % s is for start and end delimiter
+    morestring=[b]' % defines that strings are enclosed in double quotes
+}
 \lstset{
-  basicstyle      = \ttfamily,%
-  identifierstyle = \color{black},%
-  keywordstyle    = \color{blue},%
-  keywordstyle    = {[2]\color{cyan}},%
-  keywordstyle    = {[3]\color{olive}},%
-  stringstyle     = \color{teal},%
-  commentstyle    = \itshape\color{magenta}}
+%  basicstyle      = \ttfamily,%
+%  identifierstyle = \color{black},%
+%  keywordstyle    = \color{blue},%
+%  keywordstyle    = {[2]\color{cyan}},%
+%  keywordstyle    = {[3]\color{olive}},%
+%  stringstyle     = \color{teal},%
+%  commentstyle    = \itshape\color{magenta}}
+  language=TypeScript,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  xleftmargin=1.25em,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{darkgray},
+  stringstyle=\color{olive},
+  breaklines=true,
+%  breakatwhitespace=true,
+%  tabsize=3
+}
 \usepackage{floatrow} %% Putting captions above tables
 \floatsetup[table]{capposition=top}
 \usepackage[backend=biber]{biblatex}
@@ -97,8 +122,27 @@
 Toto bude úvod.
 
 \chapter{Angular framework}
-Citations\cite{wikibook}.
+Angular je open-source platforma od spoločnosti Google určená pre tvorbu front-end aplikácií. Využíva TypeScript ako odporúčaný programovací jazyk, ale je možné využiť aj JavaScript.
+
+\section{TypeScript}
+TypeScript je programovací jazyk vyvýjaný firmou Microsoft. Prvý krát bol oficiálne predstavený v roku 2012 a je označovaný ako "syntaktický cukor" pridaný do JavaScriptu, ktorý umožňuje využívať typovú kontrolu.
+
+\subsection{Porovnanie s JavaScriptom}
+JavaScript je dynamicky typovaný jazyk. To znamená, že typ premennej záleží na samotnej hodnote danej premennej. V jednotlivých fázach aplikácie teda môžeme do premennej priradiť hodnoty rôznych typov. To nám v istom smere poskytuje veľkú slobodu, ale zároveň vnáša istú mieru nepresnosti a neurčitosti do kódu, čo môže hlavne v rozsiahlych aplikáciách spôsobiť problémy so spoľahlivosťou.
+
+\begin{lstlisting}
+private example(): void {
+  let attribute = 'some_string';
+  console.log(typeof attribute); // nam vrati "string"
+  attribute = 54;
+  console.log(typeof attribute); // nam vrati "number"
+}
+\end{lstlisting}
+
+TypeScript tvorí nadstavbu nad JavaScriptom. Výsledkom je teda kód, ktorý sa vo výsledku aj tak preloží len do JavaScriptu, avšak vďaka tomuto prekladu získame typovú kontrolu. Okrem toho nám niektoré editory podporujúce TypeScript dokážu navrhovať a zvýrazňovať syntax na základe vopred nadefinovaných typov. Pre vyššie uvedený kód by TypeScriptový prekladač skončil s chybou.
+
 \section{the available}
+\cite{wikibook}.
 \subsection{sectioning}
 \subsubsection{commands.}
 \paragraph{Paragraphs and}
