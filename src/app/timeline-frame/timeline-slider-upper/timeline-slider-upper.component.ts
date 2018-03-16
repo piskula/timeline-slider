@@ -1,63 +1,30 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+
 import { ShareTimeService } from '../../time-service/share-time.service';
-import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-timeline-slider-upper',
   templateUrl: './timeline-slider-upper.component.html',
   styleUrls: ['./timeline-slider-upper.component.scss']
 })
-export class TimelineSliderUpperComponent implements AfterViewInit, OnInit, OnDestroy {
+export class TimelineSliderUpperComponent implements OnInit {
 
   step = 20;
+  public min$: Observable<Number>;
+  public max$: Observable<Number>;
+  public rangeChosen$: Observable<Number[]>;
+  public isLockedRight$: Observable<Boolean>;
+  public isLockedLeft$: Observable<Boolean>;
 
-  public min: Number;
-  public max: Number;
-  public rangeChosen: Number[];
-  public isLockedRight: Boolean;
-  public isLockedLeft: Boolean;
-
-  private range$: Subscription;
-  private max$: Subscription;
-  private isLockedRight$: Subscription;
-  private isLockedLeft$: Subscription;
-
-  el: ElementRef;
-  constructor(el: ElementRef,
-              private _timeService: ShareTimeService) {
-    this.el = el;
-  }
-
-  ngAfterViewInit(): void {
-    console.log(this.el);
-  }
+  constructor(private _timeService: ShareTimeService) { }
 
   ngOnInit() {
-    this.min = this._timeService.getLastMin();
-    this.max = this._timeService.getLastMax();
-    this.rangeChosen = this._timeService.getLastRangeChosen();
-    this.isLockedRight = this._timeService.getLastIsLocked();
-    this.isLockedLeft = this._timeService.getLastIsLockedLeft();
-
-    this.range$ = this._timeService.getRangeChosen().subscribe(range => {
-      this.rangeChosen = range;
-    });
-    this.max$ = this._timeService.getMax().subscribe(max => {
-      this.max = max;
-    });
-    this.isLockedRight$ = this._timeService.isLockedRight().subscribe(isLocked => {
-      this.isLockedRight = isLocked;
-    });
-    this.isLockedLeft$ = this._timeService.isLockedLeft().subscribe(isLockedLeft => {
-      this.isLockedLeft = isLockedLeft;
-    });
-  }
-
-  ngOnDestroy() {
-    this.range$.unsubscribe();
-    this.max$.unsubscribe();
-    this.isLockedRight$.unsubscribe();
-    this.isLockedLeft$.unsubscribe();
+    this.min$ = this._timeService.getMin();
+    this.max$ = this._timeService.getMax();
+    this.rangeChosen$ = this._timeService.getRangeChosen();
+    this.isLockedRight$ = this._timeService.isLockedRight();
+    this.isLockedLeft$ = this._timeService.isLockedLeft();
   }
 
   public onRangeChange(event: Number[]) {

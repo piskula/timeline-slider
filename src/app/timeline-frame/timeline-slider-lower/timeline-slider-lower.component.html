@@ -1,14 +1,16 @@
 <div>
   <div appD3SliderLower
        id="sliderLower"
-       [minValue]="rangeChosen[0]"
-       [maxValue]="rangeChosen[1]"
+       [minValue]="(rangeChosen$ | async)[0]"
+       [maxValue]="(rangeChosen$ | async)[1]"
        [step]="step"
-       [rangeChosen]="rangeChosen"
+       [rangeChosen]="rangeChosen$ | async"
        (rangeChosenChange)="onRangeChange($event)">
   </div>
 
   <div class="scale-margin">
-    <app-timeline-scale [min]="rangeChosen[0]" [max]="rangeChosen[1]"></app-timeline-scale>
+    <app-timeline-scale [min]="(rangeChosen$ | async)[0]"
+                        [max]="(rangeChosen$ | async)[1]">
+    </app-timeline-scale>
   </div>
 </div>

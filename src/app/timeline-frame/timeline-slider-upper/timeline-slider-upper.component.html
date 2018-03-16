@@ -1,19 +1,20 @@
 <div>
-
   <div appD3SliderUpper
        id="sliderUpper"
-       [minValue]="min"
-       [maxValue]="max"
+       [minValue]="min$ | async"
+       [maxValue]="max$ | async"
        [step]="step"
-       [rangeChosen]="rangeChosen"
-       [isLeftLocked]="isLockedLeft"
-       [isRightLocked]="isLockedRight"
+       [rangeChosen]="rangeChosen$ | async"
+       [isLeftLocked]="isLockedLeft$ | async"
+       [isRightLocked]="isLockedRight$ | async"
        (leftLockChange)="lockLeftChange($event)"
        (rightLockChange)="lockRightChange($event)"
        (rangeChosenChange)="onRangeChange($event)">
   </div>
 
   <div class="scale-margin">
-    <app-timeline-scale [min]="min" [max]="max"></app-timeline-scale>
+    <app-timeline-scale [min]="min$ | async"
+                        [max]="max$ | async">
+    </app-timeline-scale>
   </div>
 </div>

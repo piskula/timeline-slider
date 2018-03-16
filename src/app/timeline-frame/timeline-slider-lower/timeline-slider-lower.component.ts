@@ -1,31 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+
 import { ShareTimeService } from '../../time-service/share-time.service';
-import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-timeline-slider-lower',
   templateUrl: './timeline-slider-lower.component.html',
   styleUrls: ['./timeline-slider-lower.component.scss']
 })
-export class TimelineSliderLowerComponent implements OnInit, OnDestroy {
+export class TimelineSliderLowerComponent implements OnInit {
 
   public step = 20;
-  public rangeChosen: Number[];
-
-  private range$: Subscription;
+  public rangeChosen$: Observable<Number[]>;
 
   constructor(private _timeService: ShareTimeService) { }
 
   ngOnInit() {
-    this.rangeChosen = this._timeService.getLastRangeChosen();
-
-    this.range$ = this._timeService.getRangeChosen().subscribe(range => {
-      this.rangeChosen = range;
-    });
-  }
-
-  ngOnDestroy() {
-    this.range$.unsubscribe();
+    this.rangeChosen$ = this._timeService.getRangeChosen();
   }
 
   public onRangeChange(event) {

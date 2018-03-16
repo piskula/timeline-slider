@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
-import {ShareTimeService} from './time-service/share-time.service';
+import { ShareTimeService } from './time-service/share-time.service';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +10,12 @@ import {ShareTimeService} from './time-service/share-time.service';
 })
 export class AppComponent implements OnInit {
 
-  public rangeChosen: Observable<Number[]>;
+  public rangeChosen$: Observable<Number[]>;
 
   constructor(private _timeService: ShareTimeService) { }
 
   ngOnInit(): void {
-    this.rangeChosen = this._timeService.getRangeChosen();
+    this.rangeChosen$ = this._timeService.getRangeChosen();
   }
 
 }
