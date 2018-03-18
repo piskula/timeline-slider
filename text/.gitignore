@@ -1,4 +1,11 @@
-*
-!.gitignore
-!*.tex
-!*.bib
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.idx
+*.log
+*markdown*
+*.out
+*.pdf
+*.run.xml
+*.toc
