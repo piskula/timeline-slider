@@ -163,11 +163,14 @@ Nakoľko simulácie útokov a cvičenia prebiehajú v reálnom čase, vznikla po
 \label{liferay}
 V kontexte webových aplikácií môžeme portál definovať\cite{sezov2011liferay} ako \textit{"Samostatne oddelené webové prostredie, z ktorého sú spustiteľné všetky aplikácie užívateľa. Tieto aplikácie sú systematicky integrované na jednom mieste."}
 
-Liferay je portálový server distribuovaný pod licenciou LGPL, v ktorom je zmysluplne umožnená spolupráca a zdieľanie informácií rôznym používateľom. Umožňuje vykonávať správu obsahu pomocou WYSIWYG\footnote{WYSIWYG - \textit{what you see is what you get} teda \textit{"to, čo vidíš je to, čo aj dostaneš"} je spôsob práce s grafickým rozhraním, pri ktorom sa kód (najčastejšie HTML) generuje na základe našich predstáv, pričom do neho vôbec priamo nezasahujeme} editora. Používateľ tak nepotrebuje žiadnu hlbokú znalosť HTML ani iného programovacieho jazyka. Jednotlivé komponenty stránky si vie jednoducho prispôsobiť a výsledok vidí vždy okamžite\cite{sezov2011liferay}.
+Liferay je portálový server, v ktorom je zmysluplne umožnená spolupráca a zdieľanie informácií rôznym používateľom. Umožňuje vykonávať správu obsahu pomocou WYSIWYG\footnote{WYSIWYG - \textit{what you see is what you get} teda \textit{"to, čo vidíš je to, čo aj dostaneš"} je spôsob práce s grafickým rozhraním, pri ktorom sa kód (najčastejšie HTML) generuje na základe našich predstáv, pričom do neho vôbec priamo nezasahujeme} editora. Používateľ tak nepotrebuje žiadnu hlbokú znalosť HTML ani iného programovacieho jazyka. Jednotlivé komponenty stránky si vie jednoducho prispôsobiť a výsledok vidí vždy okamžite\cite{sezov2011liferay}.
 
-Portálový server Liferay je naprogramovaný v jazyku Java, preto na jeho beh potrebujeme aplikačný server, alebo aspoň servlet kontajner. Liferay natívne podporuje napríklad Apache Tomcat, GlassFish, JBoss, WebLogic, WebSphere a mnoho ďalších.
+Portálový server Liferay je naprogramovaný v jazyku Java a distribuovaný pod licenciou LGPL. Na jeho beh potrebujeme aplikačný server, alebo aspoň servlet kontajner. Liferay natívne podporuje napríklad Apache Tomcat, GlassFish, JBoss, WebLogic, WebSphere a mnoho ďalších.
 
-\section{Používatelia}
+\section{Štruktúra}
+Liferay Portal umožňuje spravovať užívateľov a priraďovať im oprávnenia na jednotlivé časti portálu, alebo ich zaraďovať do rôznych typov skupín podľa oprávnení alebo záujmov. Nasledujúce podkapitoly stručne opisujú veľmi široké možnosti Liferay portálu.
+
+\subsection{Používatelia}
 \label{liferay_users}
 Do portálov majú prístup užívatelia (Users), ktorý môžu byť priraďovaný do skupín (User Groups). Užívatelia taktiež môžu byť priraďovaný do organizácií (Organizations). Tieto organizácie sú zoskupované do rôznych hierarchických štruktúr, popri ktorých ešte v Liferay existujú komunity (Communities) a tímy (Teams). Detailnejší náhľad do štruktúry nám poskytne obrázok \ref{liferay_structure}.
 
@@ -180,12 +183,12 @@ Liferay tak v tomto smere poskytuje pre portálových administrátorov veľmi si
 	\label{liferay_structure}
 \end{figure}
 
-\section{Portlety}
+\subsection{Portlety}
 Základnou stavebnou jednotkou portálu v Liferay je portlet. Každá stránka portálu sa skladá z portletov, pričom každý portlet je v kontexte Liferay samostatná aplikácia. Užívateľ je schopný umiestňovať tieto portlety ľubovoľne po stránke a nastavovať im parametre.
 
 Liferay obsahuje veľké množstvo vopred pripravených portletov, avšak jeho hlavná výhoda tkvie v možnosti rozšíriť ponuku týchto portletov o svoje vlastné. Jednotlivé stránky obsahujúce portlety (pages) je potom možné zaraďovať do lokalít (sites).
 
-\section{Stránky}
+\subsection{Stránky}
 Stránky sú stavebné elementy v Liferay ktoré obsahujú portlety. Podľa viditeľnosti stránok pre používateľov delíme stránky na:
 \begin{description}
 \item[Verejné stránky] - sú viditeľné aj pre užívateľov, ktorí nie sú registrovaný v systéme
@@ -197,14 +200,14 @@ Stránky sú stavebné elementy v Liferay ktoré obsahujú portlety. Podľa vidi
 \end{itemize}
 \end{description}
 
-\section{Lokality}
+\subsection{Lokality}
 Podstatným elementom Liferay sú lokality (Sites), ktoré pomáhajú vytvárať organizovanú štruktúru stránok a používateľov. Na základe nastavení lokality potom môžeme spravovať práva prístupu pre jednotlivých užívateľov. Liferay podporuje tri základné typy lokalít\cite{burska2016portlety}:
 \begin{description}
 \item[Otvorené (Open)] - ľubovoľný používateľ sa môže stať členom danej lokality, stačí keď si danú lokalitu nájde v zozname
 \item[Na požiadanie (Retricted)] - členstvo používateľa v danej lokalite musí byť schválené
 \item[Súkromné (Private)] - lokalita nie je viditeľná bežnému užívateľovi ani v zozname, jeho členstvo musí byť manuálne nastavené administrátorom
 \end{description}
-Z kapitoly \ref{liferay_users} však vieme, že lokality sú priradené organizácii a preto nastavenie oprávnení platí rovnako pre všetkých užívateľov spadajúcich pod danú organizáciu. Aby lokalita mohla užívateľom zobrazovať nejaký obsah, musí obsahovať aspoň jednu stránku.
+Z podkapitoly \ref{liferay_users} však vieme, že lokality sú priradené organizácii a preto nastavenie oprávnení pre organizáciu platí rovnako pre všetkých užívateľov spadajúcich pod danú organizáciu. Aby lokalita mohla užívateľom zobrazovať nejaký obsah, musí obsahovať aspoň jednu stránku.
 
 \chapter{Angular framework}
 Angular je open-source platforma od spoločnosti Google určená pre tvorbu jednostránkových front-end aplikácií. Využíva TypeScript ako odporúčaný programovací jazyk, ale je možné využiť aj JavaScript.
@@ -229,28 +232,34 @@ TypeScript tvorí nadstavbu nad JavaScriptom. Výsledkom je teda kód, ktorý sa
 Typescript teda môžeme považovať za staticky typovaný jazyk, avšak výzkum Kalifornskej univerzity\cite{ray2014large} ukázal, že približne 50\% všetkých použitých atribútov v bežnom TypeScript kóde má deklarovaný typ \textit{any}, pre ktorý prekladač typovú kontrolu nevykonáva. Je teda na mieste úvaha, či môžeme považovať typovú kontrolu v TypeScripte za plnohodnotnú. Môj názor je, že pri dodržiavaní správnych postupov a zvyklostí pri programovaní je táto kontrola zmysluplná.
 
 
-\chapter{Požiadavky na modul}
-Cieľom tejto práce je vytvoriť modul vo frameworku Angular, ktorý bude nasaditeľný ako samostatný portlet do Liferay portálu a prostredníctvom ktorého bude užívateľ schopný zvoliť si podmnožinu časového ohraničenia. Modul tak umožní užívateľovi spresniť (zúžiť) časové okno. Vstupom tohto modulu bude
-\begin{itemize}
-\item informácia o najmenšej uvažovanej časovej jednotke (step) - REST API
-\item dolné a horné časové ohraničenie (min, max) - REST API
-\item verejná IP adresa, na ktorú budú prebiehať volania REST API - konfigurácia
-\end{itemize}
+\chapter{Návrh modulu}
+Cieľom tejto práce je vytvoriť modul vo frameworku Angular, ktorý bude nasaditeľný ako samostatný portlet do Liferay portálu a prostredníctvom ktorého bude užívateľ schopný zvoliť si podmnožinu časového ohraničenia. Modul tak umožní užívateľovi spresniť (zúžiť) časové okno vrámci povolených hodnôt.
+
+Vstupom tohto modulu bude
+\begin{description}
+\item[krok (step)] - najmenšia uvažovaná časová jednotka (získa sa volaním REST rozhrania)
+\item[minimum, maximum] - dolné a horné časové ohraničenie (získa sa volaním REST rozhrania)
+\item[IP adresa] na ktorú budú prebiehať REST volania z predchádzajúcich dvoch bodov (získa sa z konfigurácie portletu)
+\item[príznak periodických volaní (\textit{LIVE})] - informácia o tom, či má modul periodicky overovať zmenu horného časového ohraničenia (získa sa z konfigurácie portletu)
+\begin{description}
+\item[perióda] - ak je príznak periodických volaní nastavený (\textit{true}), zoberie sa z konfigurácie portletu aj táto číselná hodnota (v~sekundách)
+\end{description}
+\end{description}
 Výstupom tohto modulu budú dve časové známky, kde prvá odpovedá aktuálnej pozícii ľavého manipulátora a druhá pozícii pravého manipulátora.
 
-
+\section{Požiadavky}
 Požiadavky na dizajn a funkcionalitu som vytvoril na základe konzultácií s vedúcim práce RNDr. Radkom Ošlejškom, Ph.D.
 
 Hlavnou úlohou časovej osy je
 \begin{itemize}
 \item zrozumiteľne zobraziť informáciu užívateľovi o aktuálne zvolenom časovom rozsahu
-\item umožniť užívateľovi vybrať a neskôr upraviť časový rozsah pomocou vhodného nástroja
+\item umožniť užívateľovi vybrať a upraviť časový rozsah pomocou vhodného nástroja (časovej osy s manipulátormi)
 \end{itemize}
 
-\section{Funkčné požiadavky}
+\subsection{Funkčné požiadavky}
 Medzi funkčné požiadavky patria
 \begin{itemize}
-\item modul si zistí možné časové ohraničenie volaním verejného aplikačného rozhrania (API) cez REST službu
+\item modul si zistí možné časové ohraničenie REST volaním verejného aplikačného rozhrania (API) pomocou HTTP požiadavku
 \item užívateľ bude informovaný vhodnou hláškou ak sa REST volanie nepodarí, alebo príde nevyhovujúca odpoveď
 \item časovú os bude možné spustiť v móde \textit{LIVE} dát pričom sa bude meniť len horné ohraničenie. Dynamickosť dát bude zabezpečovať samotný modul pomocou periodických volaní API vždy po uplynutí vopred definovanej doby.
 \begin{itemize}
@@ -259,7 +268,7 @@ Medzi funkčné požiadavky patria
 \item modul bude pozostávať z dvoch časových osí uložených nad sebou. Vrchná časová os bude vždy zobrazovať celé možné časové ohraničenie, zatiaľ čo spodná bude zobrazovať len práve zvolený výber.
 \end{itemize}
 
-\section{Nefunkčné požiadavky}
+\subsection{Nefunkčné požiadavky}
 Medzi nefunkčné požiadavky patria
 \begin{itemize}
 \item modul bude pracovať s časovými známkami (timestamp), ktoré sú univerzálnym označením časového okamihu v UNIXových operačných systémoch. Výsledný modul tak nebude zohľadňovať časové pásma.
@@ -277,7 +286,7 @@ Z tohto dôvodu vznikla už v minulosti požiadavka, aby sám používateľ port
     ľavý zámok & pravý zámok & správanie pri zmene horného ohraničenia \\ \hline \hline
     odomknutý & odomknutý & výber sa nemení, aktualizuje sa len možné horné ohraničenie viditeľné v hornej osy \\ \hline
     odomknutý & zamknutý & pravý manipulátor sa nastaví na maximum a ľavý sa posunie doprava tak, aby veľkosť zvoleného rozmedzia ostala zachovaná\\ \hline
-    zamknutý & odomknutý & zakázaný stav - ľavý zámok môže byť aktivovaný len ak je aktivovaný zároveň s pravým \\ \hline
+    zamknutý & odomknutý & zakázaný stav - ľavý zámok môže byť aktivovaný len ak je aktivovaný zároveň aj pravý \\ \hline
     zamknutý & zamknutý & pravý manipulátor sa nastaví na maximum a ľavý zostáva, veľkosť zvoleného rozmedzia sa zväčší \\ \hline
   \end{tabular}
 \end{center}
@@ -286,44 +295,6 @@ Z tohto dôvodu vznikla už v minulosti požiadavka, aby sám používateľ port
 %\printbibliography
 
 \printbibliography[heading=bibintoc] %% Print the bibliography.
-
-\chapter{Inserting the index}
-After using the \verb"\makeindex" macro and loading the
-\texttt{makeidx} package that provides additional indexing
-commands, index entries can be created by issuing the \verb"\index"
-command. \index{dummy text|(}It is possible to create ranged index
-entries, which will encompass a span of text.\index{dummy text|)}
-To insert complex typographic material -- such as $\alpha$
-\index{alpha@$\alpha$} or \TeX{} \index{TeX@\TeX} --
-into the index, you need to specify a text string, which will
-determine how the entry will be sorted. It is also possible to
-create hierarchal entries. \index{vehicles!trucks}
-\index{vehicles!speed cars}
-
-After typesetting the document, it is necessary to generate the
-index by running
-\begin{center}%
-  \texttt{texindy -I latex -C utf8 -L }$\langle$\textit{locale}%
-  $\rangle$\texttt{ \jobname.idx}
-\end{center}
-from the command line, where $\langle$\textit{locale}$\rangle$
-corresponds to the main locale of your thesis -- such as
-\texttt{english}, and then typesetting the document again.
-
-The \texttt{texindy} command needs to be executed from within the
-directory, where the \LaTeX\ source file is located. In Windows,
-the command line can be opened in a directory by holding down the
-\textsf{Shift} key and by clicking the right mouse button while
-hovering the cursor over a directory. Select the \textsf{Open Command
-Window Here} option in the context menu that opens shortly
-afterwards.
-
-With online services -- such as Overleaf -- the commands are
-executed automatically, although the locale may be erroneously
-detected, or the \texttt{makeindex} tool (which is only able to
-sort entries that contain digits and letters of the English
-alphabet) may be used instead of \texttt{texindy}. In either case,
-the index will be ill-sorted.
 
   \makeatletter\thesis@blocks@clear\makeatother
   \phantomsection %% Print the index and insert it into the
