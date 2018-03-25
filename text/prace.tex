@@ -115,9 +115,13 @@
   commentstyle=\color{darkgray},
   stringstyle=\color{_green},
   breaklines=true,
+  escapeinside={<@}{@>},
+  showlines=true,
 %  breakatwhitespace=true,
 %  tabsize=3
 }
+\renewcommand{\lstlistingname}{Ukážka}% Listing
+\renewcommand{\lstlistlistingname}{List of \lstlistingname s}% List of Listings
 \usepackage{floatrow} %% Putting captions above tables
 %\floatsetup[table]{capposition=top}
 \usepackage[backend=biber,sorting=none]{biblatex}
@@ -252,8 +256,8 @@ TypeScript je programovací jazyk vyvýjaný firmou Microsoft. Prvý krát bol o
 \subsection{Porovnanie s JavaScriptom}
 JavaScript je dynamicky typovaný jazyk. To znamená, že typ premennej záleží na samotnej hodnote danej premennej. V jednotlivých fázach aplikácie teda môžeme do premennej priradiť hodnoty rôznych typov. To nám v istom smere poskytuje veľkú slobodu, ale zároveň vnáša istú mieru nepresnosti a neurčitosti do kódu, čo môže hlavne v rozsiahlych aplikáciách spôsobiť problémy so spoľahlivosťou.
 
-\begin{lstlisting}
-private example(): void {
+\begin{lstlisting}[caption={Kód v JavaScripte},captionpos=b,label=js_snippet]
+{
   let attribute = 'some_string';
   console.log(typeof attribute); // nam vrati "string"
   attribute = 54;
@@ -261,41 +265,42 @@ private example(): void {
 }
 \end{lstlisting}
 
-TypeScript tvorí nadstavbu nad JavaScriptom. Výsledkom je teda kód, ktorý sa vo výsledku aj tak preloží len do JavaScriptu, avšak vďaka tomuto prekladu získame typovú kontrolu. Okrem toho nám niektoré editory podporujúce TypeScript dokážu navrhovať a zvýrazňovať syntax na základe vopred nadefinovaných typov. Pre vyššie uvedený kód by TypeScriptový prekladač skončil s chybou.
+TypeScript tvorí nadstavbu nad JavaScriptom. Výsledkom je teda kód, ktorý sa vo výsledku aj tak preloží len do JavaScriptu, avšak vďaka tomuto prekladu získame typovú kontrolu. Okrem toho nám niektoré editory podporujúce TypeScript dokážu navrhovať a zvýrazňovať syntax na základe vopred nadefinovaných typov. Pre vyššie uvedenú ukážku \ref{js_snippet} by TypeScriptový prekladač skončil s chybou.
 
 Typescript teda môžeme považovať za staticky typovaný jazyk, avšak výzkum Kalifornskej univerzity\cite{ray2014large} ukázal, že približne 50\% všetkých použitých atribútov v bežnom TypeScript kóde má deklarovaný typ \textit{any}, pre ktorý prekladač typovú kontrolu nevykonáva. Je teda na mieste úvaha, či môžeme považovať typovú kontrolu v TypeScripte za plnohodnotnú. Môj názor je, že pri dodržiavaní správnych postupov a zvyklostí pri programovaní je táto kontrola zmysluplná.
 
 \section{Architektúra}
-Základným architektonickým prvkom v Angulare je modul. Oficiálna dokumentácia Angularu definuje modul ako funkčnú a plnohodnotnú časť aplikácie. Angular aplikácia môže obsahovať niekoľko modulov, najmenej všask jeden. Štruktúru modulu približuje aj obrázok \ref{angular_architecture}
+Základným architektonickým prvkom v Angulare je modul. Oficiálna dokumentácia Angularu definuje modul ako \textit{"funkčnú a plnohodnotnú časť aplikácie. Angular aplikácia môže obsahovať niekoľko modulov, najmenej všask jeden"}\cite{angular}. Štruktúru modulu približuje aj obrázok \ref{angular_architecture}
 
 Základným stavebným prvkom stránky je komponenta. Skladaním komponent do seba sa vytvára UI, ktoré sa následne vyrenderuje v prehliadači a zobrazí užívateľovi. Komponenty, na rozdiel od portletov na stránke Liferay, môžu v sebe opätovne obsahovať ďalšie komponenty. Každá komponenta v kontexte Angularu prislúcha práve jednému modulu a každej komponente prislúcha práve jeden HTML template.
 
-Medzi základné elementy v Angulare v neposlednom rade patria služby (Services), ktoré ,obdobne ako komponenty, prislúchajú práve jednému modulu. Podľa definície sa \textit{"služby využívajú vtedy, keď potrebujeme medzi komponentami zdieľat dáta alebo funkčnú logiku aplikácie, ktorá nemá priradený žiadny template"}\cite{s}.
+Medzi základné elementy v Angulare v neposlednom rade patria služby (Services), ktoré ,obdobne ako komponenty, prislúchajú práve jednému modulu. Podľa definície sa \textit{"služby využívajú vtedy, keď potrebujeme medzi komponentami zdieľat dáta alebo funkčnú logiku aplikácie, ktorá nemá priradený žiadny template"}\cite{angular}.
 
-V skratke je možno túto štruktúru opísať nasledovne:
+Táto štruktúra delenia aplikácie do modulov a komponent sa môže na prvý pohľad zdať zložitá, preto som zvolil nasledujúci praktický príklad pre lepšie porozumenie:
 \begin{description}
 \item[moduly] sú funkčne oddelené súčasti aplikácie, v prípade internetového obchodu napríklad správa užívateľov, moje objednávky a prehľadávanie.
 \item[komponenty] sú stavebné prvky stránky, napríklad modul \textit{správa užívateľov} obsahuje komponent \textit{prehľad}, ktorý ďalej obsahuje komponenty \textit{list} a \textit{vyhľadávanie}, ktoré ale môžu byť opätovne použité aj v iných častiach tohto modulu, pretože sú úplne oddelené.
 \item[služby] poskytujú dáta a logiku, pričom nie sú naviazané na template. Napríklad služba UserService by poskytovala list používateľov a detail používateľa pomocou HTTP metód. V našom prípade by komponenta \textit{list} alebo komponenta \textit{prehľad} mohla využívať túto službu ako zdroj dát.
 \end{description}
 
-\begin{figure}
+\begin{figure}[H]
 	\center
 	\includegraphics[width=1.0\linewidth]{angular_architecture}
-	\caption{Štruktúra modulu v Angulare\cite{a}}
+	\caption{Štruktúra modulu v Angulare\cite{angular}}
 	\label{angular_architecture}
 \end{figure}
 
 \subsection{Komponenty}
-Na nasledujúcej ukážke kódu môžeme vidieť, ako sa dáta z komponenty dostanú do template a opačne. Tento proces sa všeobecne nazýva \textit{binding} a v Angulare poznáme štyri typy bindingu (pozri aj Obr. \ref{angular_architecture})
+Na nasledujúcej ukážke kódu môžeme vidieť, ako sa dáta z komponenty (ukážka \ref{ts_snippet}) dostanú do template (ukážka \ref{html_snippet}) a opačne. Tento proces sa všeobecne nazýva \textit{binding} a v Angulare poznáme štyri typy bindingu (pozri aj Obr. \ref{angular_architecture})
 \begin{description}
-\item[property binding] - posúvame objekt do komponenty pomocou $[ ]$, v template vidíme na riadku 4 
 \item[interpolation] - vkladáme hodnotu do elementu pomocou $\{\{\}\}$, v template vidíme na riadku 3
+\item[property binding] - posúvame objekt do komponenty pomocou $[ ]$, v template vidíme na riadku 4. Väčšinou ho vieme nahradiť pomocou interpolation, napríklad nastavenie vstupu children na riadku 4 v template môžeme zapísať aj ako\\
+\texttt{children="\{\{user.children\}\}"}, ale z dôvodu čitateľnosti kódu je vhodné tieto dva typy nezamieňať.
 \item[event binding] - volá metódu komponenty na základe udalosti pomocou $()$, v template vidíme na riadku 2
-\item[two-way binding] alebo obojsmerný binding - vzniká kombináciou property bindingu a event bindingu, zapisuje sa ako $[( )]$
+\item[two-way binding] alebo obojsmerný binding - vzniká kombináciou property bindingu a event bindingu, zapisuje sa ako $[( )]$ a využíva sa napríklad vo formulárových komponentách, kedy môže byť hodnota ovplyvnená nie len užívateľom, ale aj inou aplikačnou logikou a je potrebné túto zmenu užívateľovi zároveň aj zobraziť.
 \end{description}
 
-\begin{lstlisting}[language=HTML]
+\begin{lstlisting}[language=HTML,caption={HTML template \textit{user-detail.html}},captionpos=b,label=html_snippet]
 <div>User Details</div>
 <div (click)="callClickMethod()">
   <label>Name: {{ user.name }}</label>
@@ -303,12 +308,10 @@ Na nasledujúcej ukážke kódu môžeme vidieť, ako sa dáta z komponenty dost
 </div>
 \end{lstlisting}
 
-Na riadku 9 v kóde komponenty si zase všimneme, ako využívame zdieľanú službu, ktorá nám na riadku 12 poskytne dáta o užívateľovi.
-
-\begin{lstlisting}
+\begin{lstlisting}[caption={Komponenta UserDetail},captionpos=b,label=ts_snippet]
 @Component({
   selector: 'user-detail',
-  templateUrl: './user-detail.component.html',
+  templateUrl: './user-detail.html',
 })
 export class UserDetailComponent implements OnInit {
 
@@ -326,6 +329,57 @@ export class UserDetailComponent implements OnInit {
 }
 \end{lstlisting}
 
+Na riadku 9 v ukážke \ref{ts_snippet} si zase všimneme, ako využívame zdieľanú službu, ktorá nám na riadku 12 poskytne dáta o užívateľovi.
+
+\subsection{Direktívy}
+V prípade komponent zvyčajne definujeme selektor, ktorý je unikátny identifikátor komponenty vrámci modulu a používa sa v template. V ukážke \ref{ts_snippet} sme tak urobili na riadku 2, čím sme umožnili použitie tejto komponenty v inej komponente zadaním HTML tagu \texttt{<user-detail></user-detail>} do template.
+
+Direktívy umožňujú rozšírenú manipuláciu DOM objektov tak, že sa vkladajú do HTML tagov. Poznáme dva typy direktív\cite{angular}:
+\begin{enumerate}
+\item structural - dokážu ovplyvňovať výsledný layout odstraňovaním a pridávaním DOM objektov, napríklad vstavané direktívy *ngFor, *ngIf
+\item attribute - dokážu len upravovať vlastnosti DOM objektu, napríklad vstavané direktívy *ngClass, *ngStyle
+\end{enumerate}
+
+Nasledujúca jednoduchá ukážka \ref{directive_snippet} nám pomôže porozumieť správaniu direktív:
+\begin{figure}[H]
+ \centering
+ \begin{minipage}{.59\textwidth}
+
+  \centering
+  \begin{lstlisting}[language=HTML,caption={Direktívy použité v template (vľavo) a ako ich vo výsledku vníma prehliadač (vpravo)},label=directive_snippet]
+<div *ngIf="true">I am</div>
+<div *ngIf="false">I am not</div>
+
+<div *ngFor="let i of [1,2]">
+  {{ i }}
+</div>
+<div [style.color]="data.color">
+  {{ data.color }}
+</div>
+  \end{lstlisting}
+
+ \end{minipage}
+ \begin{minipage}{.39\textwidth}
+
+  \centering
+  \begin{lstlisting}[language=HTML,numbers=none,xleftmargin=0em]
+<div>True</div>
+<!--DOM not present-->
+
+<div>1</div>
+<div>2</div>
+
+<div style="color:red">
+  <@\textcolor{red}{red}@>
+</div>
+  \end{lstlisting}
+ 
+ \end{minipage}
+\end{figure}
+
+Na riadku 2 môžeme vidieť, že DOM daného divu vo výsledku vôbec nie je prítomný. Avšak v momente, kedy by sa výsledok logického výrazu vloženého do direktívy *ngFor zmenil, DOM sa aktualizuje, vytvorí sa nový objekt a prehliadač daný element vyrenderuje. Direktíva *ngFor tak patrí do prvej skupiny direktív, pretože dokáže pridávať a odoberať DOM objekty zo stránky.
+
+Opačným príkladom je direktíva *ngStyle, ktorá v DOM mení len atribúty. V príklade na riadku 7 predpokladáme, že v komponente existuje objekt \textit{data}, ktorého atribút typu \texttt{string} obsahuje hodnotu "red".
 
 \chapter{Návrh modulu}
 Cieľom tejto práce je vytvoriť modul vo frameworku Angular, ktorý bude nasaditeľný ako samostatný portlet do Liferay portálu a prostredníctvom ktorého bude užívateľ schopný zvoliť si podmnožinu časového ohraničenia. Modul tak umožní užívateľovi spresniť (zúžiť) časové okno vrámci povolených hodnôt.
