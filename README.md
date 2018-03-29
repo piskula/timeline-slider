@@ -22,7 +22,10 @@ service through whole application, so each part can modify all important states 
 
 Both slider parts use SVG images, which are rendered inside \<div\> thanks to my own [directive](src/app/slider-directive). This is
 much more simple solution as [previous](#previous-version-i), where I was trying to use [ng2-nouislider](https://github.com/tb/ng2-nouislider).
-![Components of portlet](https://docs.google.com/uc?id=1Tbpjy5jlqR5IfpGamSdBeTQ6iAdtoXzK)
+![Angular Components of portlet](https://docs.google.com/uc?id=1Tbpjy5jlqR5IfpGamSdBeTQ6iAdtoXzK)
+
+### Component Diagram:
+![Components of portlet](https://docs.google.com/uc?id=1ZEZhC-CGCuj5nj28t2jsk5nEWupSY-57)
 
 <a name="previous-version-i"/>
 
