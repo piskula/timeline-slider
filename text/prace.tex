@@ -131,6 +131,8 @@
 \usepackage{tabu}
 \usepackage{multirow}
 
+\newtheorem{mydef}{Definícia}
+
 \begin{document}
 \chapter*{Úvod}
 \addcontentsline{toc}{chapter}{Introduction}
@@ -340,6 +342,10 @@ Direktívy umožňujú rozšírenú manipuláciu DOM objektov tak, že sa vklada
 \item attribute - dokážu len upravovať vlastnosti DOM objektu, napríklad vstavané direktívy *ngClass, *ngStyle
 \end{enumerate}
 
+\begin{quote}
+\textit{\textbf{DOM - Document Object Model} je objektovo-orientovaná reprezentácia HTML dokumentu. Reprezentuje HTML dokument ako strom objektov s vlastnosťami (veľkosť, štýly, a pod.) a umožňuje tým JavaScriptu identifikovať, meniť, pridávať a odoberať uzly v tomto strome\cite{yang2009topic}. Pomocou DOM je teda možné dynamicky meniť obsah stránok, čo je vo svojej podstate význam JavaScriptu.}
+\end{quote}
+
 Nasledujúca jednoduchá ukážka \ref{directive_snippet} nám pomôže porozumieť správaniu direktív:
 \begin{figure}[H]
  \centering
@@ -377,9 +383,12 @@ Nasledujúca jednoduchá ukážka \ref{directive_snippet} nám pomôže porozumi
  \end{minipage}
 \end{figure}
 
-Na riadku 2 môžeme vidieť, že DOM daného divu vo výsledku vôbec nie je prítomný. Avšak v momente, kedy by sa výsledok logického výrazu vloženého do direktívy *ngFor zmenil, DOM sa aktualizuje, vytvorí sa nový objekt a prehliadač daný element vyrenderuje. Direktíva *ngFor tak patrí do prvej skupiny direktív, pretože dokáže pridávať a odoberať DOM objekty zo stránky.
+Na riadku 2 môžeme vidieť, že DOM daného divu vo výsledku vôbec nie je prítomný. Avšak v momente, kedy by sa výsledok logického výrazu vloženého do direktívy *ngIf zmenil, DOM sa aktualizuje, vytvorí sa nový objekt a prehliadač daný element vyrenderuje. Direktíva *ngIf tak patrí do prvej skupiny direktív, pretože dokáže pridávať a odoberať DOM objekty zo stránky (rovnako direktíva *ngFor na riadku 4).
 
-Opačným príkladom je direktíva *ngStyle, ktorá v DOM mení len atribúty. V príklade na riadku 7 predpokladáme, že v komponente existuje objekt \textit{data}, ktorého atribút typu \texttt{string} obsahuje hodnotu "red".
+Opačným príkladom je direktíva *ngStyle, ktorá v DOM mení len atribúty. V príklade na riadku 7 predpokladáme, že v komponente existuje objekt \textit{data}, ktorého atribút \textit{color} typu \texttt{string} obsahuje hodnotu "red".
+
+\subsection{Dependency Injection}
+Dep
 
 \chapter{Návrh modulu}
 Cieľom tejto práce je vytvoriť modul vo frameworku Angular, ktorý bude nasaditeľný ako samostatný portlet do Liferay portálu a prostredníctvom ktorého bude užívateľ schopný zvoliť si podmnožinu časového ohraničenia. Modul tak umožní užívateľovi spresniť (zúžiť) časové okno vrámci povolených hodnôt.
@@ -397,6 +406,7 @@ Vstupom tohto modulu bude
 Výstupom tohto modulu budú dve časové známky, kde prvá odpovedá aktuálnej pozícii ľavého manipulátora a druhá pozícii pravého manipulátora.
 
 \section{Požiadavky}
+\label{requirements}
 Požiadavky na dizajn a funkcionalitu som vytvoril na základe konzultácií s vedúcim práce RNDr. Radkom Ošlejškom, Ph.D.
 
 Hlavnou úlohou časovej osy je
@@ -408,7 +418,7 @@ Hlavnou úlohou časovej osy je
 \subsection{Funkčné požiadavky}
 Medzi funkčné požiadavky patria
 \begin{itemize}
-\item modul si zistí možné časové ohraničenie REST volaním verejného aplikačného rozhrania (API) pomocou HTTP požiadavku
+\item modul si zistí možné časové ohraničenie REST volaním verejného aplikačného rozhrania (API) pomocou HTTP požiadavky
 \item užívateľ bude informovaný vhodnou hláškou ak sa REST volanie nepodarí, alebo príde nevyhovujúca odpoveď
 \item časovú os bude možné spustiť v móde \textit{LIVE} dát pričom sa bude meniť len horné ohraničenie. Dynamickosť dát bude zabezpečovať samotný modul pomocou periodických volaní API vždy po uplynutí vopred definovanej doby.
 \begin{itemize}
@@ -422,6 +432,7 @@ Medzi nefunkčné požiadavky patria
 \begin{itemize}
 \item modul bude pracovať s časovými známkami (timestamp), ktoré sú univerzálnym označením časového okamihu v UNIXových operačných systémoch. Výsledný modul tak nebude zohľadňovať časové pásma.
 \item modul bude implementovaný v aktuálnej verzii frameworku Angular, v dobe implementácie sa jedná o verziu 5.2.8
+\item modul bude responzívny do takej miery, že pri počiatočnom vyrenderovaní sa prispôsobí šírke samotného portletu. Výška bude minimalizovaná aby zaberala čo najmenšiu časť stránky. Šírka modulu a zobrazené dáta budú optimalizované pre najčastejšie veľkosti displejov používaných na stolných počítačoch.
 \end{itemize}
 
 \subsection{Funkcia zámkov}
@@ -440,6 +451,16 @@ Z tohto dôvodu vznikla už v minulosti požiadavka, aby sám používateľ port
   \end{tabular}
 \end{center}
 
+\section{Existujúce riešenie}
+Existujúci portlet časovej osy pre KYPO bol implementovaný v JavaScripte vrámci diplomovej práce Jiřího Dočkala\cite{dockal2016webovy}. Okrem výberu časového ohraničenia slúžil aj na prehrávanie scenárov, ako je možné vidieť aj na Obr. \ref{old_portlet}.
+
+V aktuálnych víziách vývojového centra KYPO sa však zrodila požiadavka na odlišný portlet, ktorý bude obsahovať v určitom smere menej funkcionality a bude postavený na odlišnej technológii (použitie frameworku Angular). Všetky tieto požiadavky boli zhrnuté v kapitole \ref{requirements}.
+\begin{figure}
+	\center
+	\includegraphics[width=1.0\linewidth]{old_portlet}
+	\caption{Dizajn pôvodného portletu\cite{dockal2016webovy}}
+	\label{old_portlet}
+\end{figure}
 
 %\printbibliography
 
