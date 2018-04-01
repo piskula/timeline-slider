@@ -1,0 +1,20 @@
+#.travis.yml
+
+language: node_js
+node_js:
+  - "8"
+
+branches:
+  only:
+    - master
+
+before_script:
+  - npm install -g firebase-tools
+  - npm install -g @angular/cli
+
+script:
+  - ng build --env=prod
+
+after_success:
+  #- firebase use default
+  #- firebase deploy --token $FIREBASE_TOKEN --non-interactive

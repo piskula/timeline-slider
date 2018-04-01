@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>cz.muni.ics.kypo</groupId>
+    <artifactId>portlet_empty_angular_template</artifactId> <!-- CHANGE - project ID -->
+    <packaging>war</packaging>
+    <name>portlet_empty_angular_template</name> <!-- CHANGE - project name -->
+    <version>0.1</version>
+
+    <properties>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+
+        <liferay.version>6.2.1</liferay.version>
+        <liferay.maven.plugin.version>6.2.1</liferay.maven.plugin.version>
+        <spring.version>4.2.3.RELEASE</spring.version>
+        <javax.portlet.version>2.0</javax.portlet.version>
+        <javax.servlet.version>2.4</javax.servlet.version>
+        <javax.servlet.jsp.version>2.0</javax.servlet.jsp.version>
+        <jstl.version>1.2</jstl.version>
+    </properties>
+
+    <dependencies>
+
+        <!--Liferay Dependency-->
+        <dependency>
+            <groupId>com.liferay.portal</groupId>
+            <artifactId>portal-service</artifactId>
+            <version>${liferay.version}</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.portlet</groupId>
+            <artifactId>portlet-api</artifactId>
+            <version>${javax.portlet.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>${javax.servlet.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>${javax.servlet.jsp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--Spring Deps-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc-portlet</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+        </dependency>
+
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${jstl.version}</version>
+        </dependency>
+    </dependencies>
+</project>

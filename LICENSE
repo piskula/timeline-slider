@@ -1,0 +1,119 @@
+KYPO Software License Agreement
+
+THE SOFTWARE (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS LICENSE
+("LICENSE"). THE SOFTWARE IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE
+LAW. ANY USE OF THE SOFTWARE OTHER THAN AS AUTHORIZED UNDER THIS LICENSE
+OR COPYRIGHT LAW IS PROHIBITED.
+BY EXERCISING ANY RIGHTS TO THE SOFTWARE PROVIDED HERE, YOU ACCEPT AND AGREE
+TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+CONSIDERED TO BE A CONTRACT, THE MU (AS DEFINED BELOW) GRANTS YOU THE RIGHTS
+CONTAINED HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND
+CONDITIONS.
+
+Upon execution of this Agreement by the party identified below
+("Licensee"), the Masaryk University, seated at Žerotínovo nám. 9, 601
+77 Brno, Czech republic, ID: 00216224 ("MU"), will provide the "Software
+for visualization of the KYPO environment" ("KYPO") software in Executable Code
+and/or Source Code form, including configuration files and documentation
+("Software") to Licensee, subject to the following terms and conditions.
+For purposes of this Agreement, Executable Code is the compiled code, which is
+ready to run on Licensee’s computer. Source code consists of a set of files
+that contain the actual program commands that are compiled to form the
+Executable Code.
+
+1. The Software is intellectual property owned by MU, and all right, title and
+interest, including copyright, remain with MU. MU grant, and Licensee hereby
+accepts, a restricted, non-exclusive, non-transferable license to use the
+Software for academic, research and internal non-commercial purposes only,
+e.g. not for commercial use (see Clause 7 below), without a fee.
+2. Software may not be used against the interests of the Czech Republic, it
+especially may not be used in ways that could directly or indirectly adversely
+affect the security of the Czech Republic and its citizens.
+3. Licensee may, at its own expense, create and freely distribute complementary
+works that interoperate with the Software, directing others to the MU to
+license and obtain the Software itself. Licensee may, at its own expense,
+modify the Software to make derivative works. Except as explicitly provided
+below, this License shall apply to any derivative work as it does to the
+original Software distributed by MU. Any derivative work should be clearly
+marked and renamed to notify users that it is a modified version and not the
+original Software distributed by MU. Licensee agrees to reproduce the copyright
+notice and other proprietary markings on any derivative work and to include
+in the documentation of such work the acknowledgement: "This software includes
+KYPO software developed by the Institute of computer science, Masaryk
+University, Czech Republic." Any distribution of the Software or any
+derivative work requires a separate license with MU. Licensee may contact the
+Technology transfer office of the Masaryk University (ctt@ctt.muni.cz)
+to negotiate an appropriate license for such distribution.
+4. Except as expressly set forth in this Agreement, THIS SOFTWARE IS PROVIDED
+"AS IS" AND MU MAKES NO REPRESENTATIONS AND EXTEND NO WARRANTIES OF ANY KIND,
+EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OR
+MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE, OR THAT THE USE OF THE
+SOFTWARE WILL NOT INFRINGE ANY PATENT, TRADEMARK, OR OTHER RIGHTS. LICENSEE
+ASSUMES THE ENTIRE RISK AS TO THE RESULTS AND PERFORMANCE OF THE SOFTWARE
+AND/OR ASSOCIATED MATERIALS. LICENSEE AGREES THAT MU SHALL NOT BE HELD LIABLE
+FOR ANY DIRECT, INDIRECT, CONSEQUENTIAL, OR INCIDENTAL DAMAGES WITH RESPECT
+TO ANY CLAIM BY LICENSEE OR ANY THIRD PARTY ON ACCOUNT OF OR ARISING FROM THIS
+AGREEMENT OR USE OF THE SOFTWARE AND/OR ASSOCIATED MATERIALS.
+5. Licensee understands the Software is proprietary to MU. Licensee agrees
+to take all reasonable steps to insure that the Software is protected and
+secured from unauthorized disclosure, use, or release and will treat it with
+at least the same level of care as Licensee would use to protect and secure
+its own proprietary computer programs and/or information, but using no less
+than a reasonable standard of care. Licensee agrees to provide the Software
+or any derivative work only to any other person or entity who has signed a license
+agreement with MU. If licensee is not registering as an individual but as
+an institution or corporation each member of the institution or corporation
+who has access to or uses Software must agree to and abide by the terms of this
+license. If Licensee becomes aware of any unauthorized licensing, copying
+or use of the Software, Licensee shall promptly notify MU in writing. Licensee
+expressly agrees to use the Software only in the manner and for the specific
+uses authorized in this Agreement.
+6. By using or copying this Software, Licensee agrees to abide by the copyright
+law and all other applicable laws of the Czech Republic and the terms of this
+license. MU shall have the right to terminate this license immediately
+by written notice upon Licensee’s breach of, or non-compliance with, any terms
+of the license. Licensee may be held legally responsible for any copyright
+infringement that is caused or encouraged by its failure to abide by the terms
+of this license. Upon termination, Licensee agrees to destroy all copies of the
+Software in its possession and to verify such destruction in writing.
+7. Licensee agrees that any reports or published results obtained with the
+Software will acknowledge its use by the appropriate citation as follows:
+"KYPO software was developed by the Institute of computer science, Masaryk
+University."
+8. Commercial use of the Software, or derivative works based thereon, REQUIRES
+A COMMERCIAL LICENSE. Should Licensee wish to make commercial use of
+the Software, Licensee will contact the Technology transfer office of the Masaryk
+University (ctt@ctt.muni.cz) to negotiate an appropriate license for such use.
+Commercial use includes: (1) integration of all or part of the Software into
+a product for sale, lease or license by or on behalf of Licensee to third
+parties, (2) distribution of the Software to third parties that need it to
+commercialize product sold or licensed by or on behalf of Licensee, or (3) use
+of the Software to provide any commercial services.
+9. Because substantial governmental funds have been used in the development
+of the Software, the Licensee agrees to use the software in compliance with Czech
+act no. 130/2002 Coll., on promotion of research, experimental development and
+innovation.
+10. KYPO software is being distributed as a research and teaching tool and
+as such, MU encourages contributions from users of the code that might, at MUs’
+sole discretion, be used or incorporated to make the basic operating framework
+of the Software a more stable, flexible, and/or useful product. Licensees who
+contribute their code to become an internal portion of the Software agree that
+such code may be used or distributed by MU for any purpose. Licensee may be
+also required to sign a separate license agreement before MU can accept it.
+
+UNDERSTOOD AND AGREED
+
+Licensee:
+Name:
+Seated at:
+ID:
+VAT ID:
+Represented by:
+
+
+
+
+Signed in ............ at ............
+
+
+.........................
