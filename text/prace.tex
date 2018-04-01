@@ -145,7 +145,7 @@ Kybernetický polygón (KYPO) bol zriadený Ministerstvom vnútra Českej republ
 %V rýchlo sa rozvíjajúcom svete informačných technológií je informačná bezpečnosť najdôležitejším odvetvím informatiky. V dnešnej dobe už nie je veľmi pravdepodobné, aby nás výdobytky techniky ako telefóny a počítače ohrozovali na živote. Hrozba informačnej bezpečnosti sa týka hlavne ochrany informácií. Masarykova Univerzita si uvedomuje vážnosť tejto hrozby a preto sa rozhodla zriadiť výzkumné stredisko v tejto oblasti.
 
 \section{Technológie}
-Toto prostredie funguje na princípe cloudového riešenia v ktorom je možné modelovať virtuálnu sieť\cite{eichler2014analytical}. Toto riešenie poskytuje všetky nástroje potrebné k simulácii rôznych sieťových topológií. Prostredie je určené pre výzkum a testovanie rôznych scenárov kybernetických útokov v izolovanom a plne kontrolovateľnom prostredí\cite{vceleda2015kypo}.
+Prostredie KYPO funguje na princípe cloudového riešenia v ktorom je možné modelovať virtuálnu sieť\cite{eichler2014analytical}. Toto riešenie poskytuje všetky nástroje potrebné k simulácii rôznych sieťových topológií. Prostredie je určené pre výzkum a testovanie rôznych scenárov kybernetických útokov v izolovanom a plne kontrolovateľnom prostredí\cite{vceleda2015kypo}.
 
 Spektrum kybernetických hrozieb vo svete informačných systémov je veľmi široké a každá hrozba má iný spôsob, ktorým narúša kontinuitu iného systému. Medzi časté experimenty vykonávané vrámci KYPO stoja za zmienku DDoS útoky (distributed denial of service), útoky botnet alebo phishing\cite{vcegan2014navrh, celeda2013projekt}.
 
@@ -200,9 +200,9 @@ Portlet časovej osy slúži ako kľúčový element pre filtrovanie týchto dá
 
 \chapter{Liferay Portal}
 \label{liferay}
-V kontexte webových aplikácií môžeme portál definovať\cite{sezov2011liferay} ako \textit{"Samostatne oddelené webové prostredie, z ktorého sú spustiteľné všetky aplikácie užívateľa. Tieto aplikácie sú systematicky integrované na jednom mieste."}
+V kontexte webových aplikácií môžeme portál definovať \cite{sezov2011liferay} ako \textit{"Samostatne oddelené webové prostredie, z ktorého sú spustiteľné všetky aplikácie užívateľa. Tieto aplikácie sú systematicky integrované na jednom mieste."}
 
-Liferay je portálový server, v ktorom je zmysluplne umožnená spolupráca a zdieľanie informácií rôznym používateľom. Umožňuje vykonávať správu obsahu pomocou WYSIWYG\footnote{WYSIWYG - \textit{what you see is what you get} teda \textit{"to, čo vidíš je to, čo aj dostaneš"} je spôsob práce s grafickým rozhraním, pri ktorom sa kód (najčastejšie HTML) generuje na základe našich predstáv, pričom do neho vôbec priamo nezasahujeme} editora. Používateľ tak nepotrebuje žiadnu hlbokú znalosť HTML ani iného programovacieho jazyka. Jednotlivé komponenty stránky si vie jednoducho prispôsobiť a výsledok vidí vždy okamžite\cite{sezov2011liferay}.
+Liferay je portálový server, v ktorom je zmysluplne umožnená spolupráca a zdieľanie informácií rôznym používateľom. Umožňuje vykonávať správu obsahu pomocou WYSIWYG\footnote{WYSIWYG - \textit{what you see is what you get}, teda \textit{"to, čo vidíš je to, čo aj dostaneš"} je intuitívny spôsob vytvárania kódu v 2D grafickom prostredí, pri ktorom sa kód (najčastejšie HTML) generuje bezprostredne na základe našich pokynov. S výslednými elementami pracujeme priamo a kód sa generuje priebežne \cite{guo2011wysiwyg}.} editora. Používateľ tak nepotrebuje žiadnu hlbokú znalosť HTML ani iného programovacieho jazyka. Jednotlivé komponenty stránky si vie jednoducho prispôsobiť a výsledok vidí vždy okamžite \cite{sezov2011liferay}.
 
 Portálový server Liferay je naprogramovaný v jazyku Java a distribuovaný pod licenciou LGPL. Na jeho beh potrebujeme aplikačný server, alebo aspoň servlet kontajner. Liferay natívne podporuje napríklad Apache Tomcat, GlassFish, JBoss, WebLogic, WebSphere a mnoho ďalších.
 
@@ -213,12 +213,12 @@ Liferay Portal umožňuje spravovať užívateľov a priraďovať im oprávnenia
 \label{liferay_users}
 Do portálov majú prístup užívatelia (Users), ktorý môžu byť priraďovaný do skupín (User Groups). Užívatelia taktiež môžu byť priraďovaný do organizácií (Organizations). Tieto organizácie sú zoskupované do rôznych hierarchických štruktúr, popri ktorých ešte v Liferay existujú komunity (Communities) a tímy (Teams). Detailnejší náhľad do štruktúry nám poskytne obrázok \ref{liferay_structure}.
 
-Liferay tak v tomto smere poskytuje pre portálových administrátorov veľmi silný nástroj a taktiež obrovskú škálovateľnosť. Informácie o jednotlivých povoleniach (Permissions) vrámci systému sú pevne definované v rolách (Roles). Užívatelia, skupiny užívateľov, organizácie a komunity môžu byť priraďované do rolí\cite{sezov2010portal}.
+Liferay tak v tomto smere poskytuje pre portálových administrátorov veľmi silný nástroj a taktiež obrovskú škálovateľnosť. Informácie o jednotlivých povoleniach (Permissions) vrámci systému sú pevne definované v rolách (Roles). Užívatelia, skupiny užívateľov, organizácie a komunity môžu byť priraďované do rolí \cite{sezov2010portal}.
 
 \begin{figure}[H]
 	\center
 	\includegraphics[width=1.0\linewidth]{liferay_structure}
-	\caption{Model štruktúry a oprávnení portálového servera Liferay\cite{sezov2010portal}}
+	\caption{Model štruktúry a oprávnení portálového servera Liferay \cite{sezov2010portal}}
 	\label{liferay_structure}
 \end{figure}
 
@@ -274,15 +274,15 @@ Typescript teda môžeme považovať za staticky typovaný jazyk, avšak výzkum
 \section{Architektúra}
 Základným architektonickým prvkom v Angulare je modul. Oficiálna dokumentácia Angularu definuje modul ako \textit{"funkčnú a plnohodnotnú časť aplikácie. Angular aplikácia môže obsahovať niekoľko modulov, najmenej všask jeden"}\cite{angular}. Štruktúru modulu približuje aj obrázok \ref{angular_architecture}
 
-Základným stavebným prvkom stránky je komponenta. Skladaním komponent do seba sa vytvára UI, ktoré sa následne vyrenderuje v prehliadači a zobrazí užívateľovi. Komponenty, na rozdiel od portletov na stránke Liferay, môžu v sebe opätovne obsahovať ďalšie komponenty. Každá komponenta v kontexte Angularu prislúcha práve jednému modulu a každej komponente prislúcha práve jeden HTML template.
+Základným stavebným prvkom stránky je komponent. Skladaním komponent do seba sa vytvára UI, ktoré sa následne vyrenderuje v prehliadači a zobrazí užívateľovi. Komponenty, na rozdiel od portletov na stránke Liferay, môžu v sebe opätovne obsahovať ďalšie komponenty. Každý komponent v kontexte Angularu prislúcha práve jednému modulu a každému komponentu prislúcha práve jeden HTML template.
 
 Medzi základné elementy v Angulare v neposlednom rade patria služby (Services), ktoré ,obdobne ako komponenty, prislúchajú práve jednému modulu. Podľa definície sa \textit{"služby využívajú vtedy, keď potrebujeme medzi komponentami zdieľat dáta alebo funkčnú logiku aplikácie, ktorá nemá priradený žiadny template"}\cite{angular}.
 
-Táto štruktúra delenia aplikácie do modulov a komponent sa môže na prvý pohľad zdať zložitá, preto som zvolil nasledujúci praktický príklad pre lepšie porozumenie:
+Táto štruktúra delenia aplikácie do modulov a komponentov sa môže na prvý pohľad zdať zložitá, preto som zvolil nasledujúci praktický príklad pre lepšie porozumenie:
 \begin{description}
 \item[moduly] sú funkčne oddelené súčasti aplikácie, v prípade internetového obchodu napríklad správa užívateľov, moje objednávky a prehľadávanie.
 \item[komponenty] sú stavebné prvky stránky, napríklad modul \textit{správa užívateľov} obsahuje komponent \textit{prehľad}, ktorý ďalej obsahuje komponenty \textit{list} a \textit{vyhľadávanie}, ktoré ale môžu byť opätovne použité aj v iných častiach tohto modulu, pretože sú úplne oddelené.
-\item[služby] poskytujú dáta a logiku, pričom nie sú naviazané na template. Napríklad služba UserService by poskytovala list používateľov a detail používateľa pomocou HTTP metód. V našom prípade by komponenta \textit{list} alebo komponenta \textit{prehľad} mohla využívať túto službu ako zdroj dát.
+\item[služby] poskytujú dáta a logiku, pričom nie sú naviazané na template. Napríklad služba UserService by poskytovala list používateľov a detail používateľa pomocou HTTP metód. V našom prípade by komponent \textit{list} alebo komponent \textit{prehľad} mohol využívať túto službu ako zdroj dát.
 \end{description}
 
 \begin{figure}[H]
@@ -293,13 +293,13 @@ Táto štruktúra delenia aplikácie do modulov a komponent sa môže na prvý p
 \end{figure}
 
 \subsection{Komponenty}
-Na nasledujúcej ukážke kódu môžeme vidieť, ako sa dáta z komponenty (ukážka \ref{ts_snippet}) dostanú do template (ukážka \ref{html_snippet}) a opačne. Tento proces sa všeobecne nazýva \textit{binding} a v Angulare poznáme štyri typy bindingu (pozri aj Obr. \ref{angular_architecture})
+Na nasledujúcej ukážke kódu môžeme vidieť, ako sa dáta z komponentu (ukážka \ref{ts_snippet}) dostanú do template (ukážka \ref{html_snippet}) a opačne. Tento proces sa všeobecne nazýva \textit{binding} a v Angulare poznáme štyri typy bindingu (pozri aj Obr. \ref{angular_architecture})
 \begin{description}
 \item[interpolation] - vkladáme hodnotu do elementu pomocou $\{\{\}\}$, v template vidíme na riadku 3
-\item[property binding] - posúvame objekt do komponenty pomocou $[ ]$, v template vidíme na riadku 4. Väčšinou ho vieme nahradiť pomocou interpolation, napríklad nastavenie vstupu children na riadku 4 v template môžeme zapísať aj ako\\
+\item[property binding] - posúvame objekt do komponentu pomocou $[ ]$, v template vidíme na riadku 4. Väčšinou ho vieme nahradiť pomocou interpolation, napríklad nastavenie vstupu children na riadku 4 v template môžeme zapísať aj ako\\
 \texttt{children="\{\{user.children\}\}"}, ale z dôvodu čitateľnosti kódu je vhodné tieto dva typy nezamieňať.
-\item[event binding] - volá metódu komponenty na základe udalosti pomocou $()$, v template vidíme na riadku 2
-\item[two-way binding] alebo obojsmerný binding - vzniká kombináciou property bindingu a event bindingu, zapisuje sa ako $[( )]$ a využíva sa napríklad vo formulárových komponentách, kedy môže byť hodnota ovplyvnená nie len užívateľom, ale aj inou aplikačnou logikou a je potrebné túto zmenu užívateľovi zároveň aj zobraziť.
+\item[event binding] - volá metódu komponentu na základe udalosti pomocou $()$, v template vidíme na riadku 2
+\item[two-way binding] alebo obojsmerný binding - vzniká kombináciou property bindingu a event bindingu, zapisuje sa ako $[( )]$ a využíva sa napríklad vo formulárových komponentoch, kedy môže byť hodnota ovplyvnená nie len užívateľom, ale aj inou aplikačnou logikou a je potrebné túto zmenu užívateľovi zároveň aj zobraziť.
 \end{description}
 
 \begin{lstlisting}[language=HTML,caption={HTML template \textit{user-detail.html}},captionpos=b,label=html_snippet]
@@ -310,7 +310,7 @@ Na nasledujúcej ukážke kódu môžeme vidieť, ako sa dáta z komponenty (uk�
 </div>
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Komponenta UserDetail},captionpos=b,label=ts_snippet]
+\begin{lstlisting}[caption={Komponent UserDetail},captionpos=b,label=ts_snippet]
 @Component({
   selector: 'user-detail',
   templateUrl: './user-detail.html',
@@ -331,10 +331,10 @@ export class UserDetailComponent implements OnInit {
 }
 \end{lstlisting}
 
-Na riadku 9 v ukážke \ref{ts_snippet} si zase všimneme, ako využívame zdieľanú službu, ktorá nám na riadku 12 poskytne dáta o užívateľovi.
+Na riadku 9 v ukážke \ref{ts_snippet} si zase všimneme, ako využívame zdieľanú službu, ktorá nám na riadku 12 poskytne dáta o užívateľovi. Viac informácií o zdieľaných službách sa nachádza v podkapitole \ref{sec_di}.
 
 \subsection{Direktívy}
-V prípade komponent zvyčajne definujeme selektor, ktorý je unikátny identifikátor komponenty vrámci modulu a používa sa v template. V ukážke \ref{ts_snippet} sme tak urobili na riadku 2, čím sme umožnili použitie tejto komponenty v inej komponente zadaním HTML tagu \texttt{<user-detail></user-detail>} do template.
+V prípade komponentov zvyčajne definujeme selektor, ktorý je unikátny identifikátor komponentu vrámci modulu a používa sa v template. V ukážke \ref{ts_snippet} sme tak urobili na riadku 2, čím sme umožnili použitie tohto komponentu v inom komponente zadaním HTML tagu \texttt{<user-detail></user-detail>} do template.
 
 Direktívy umožňujú rozšírenú manipuláciu DOM objektov tak, že sa vkladajú do HTML tagov. Poznáme dva typy direktív\cite{angular}:
 \begin{enumerate}
@@ -343,11 +343,11 @@ Direktívy umožňujú rozšírenú manipuláciu DOM objektov tak, že sa vklada
 \end{enumerate}
 
 \begin{quote}
-\textit{\textbf{DOM - Document Object Model} je objektovo-orientovaná reprezentácia HTML dokumentu. Reprezentuje HTML dokument ako strom objektov s vlastnosťami (veľkosť, štýly, a pod.) a umožňuje tým JavaScriptu identifikovať, meniť, pridávať a odoberať uzly v tomto strome\cite{yang2009topic}. Pomocou DOM je teda možné dynamicky meniť obsah stránok, čo je vo svojej podstate význam JavaScriptu.}
+\textit{\textbf{DOM - Document Object Model} je objektovo-orientovaná reprezentácia HTML dokumentu. Reprezentuje HTML dokument ako strom objektov s vlastnosťami (veľkosť, štýly, a pod.) a umožňuje tým JavaScriptu identifikovať, meniť, pridávať a odoberať uzly v tomto strome \cite{yang2009topic}. Pomocou DOM je teda možné dynamicky meniť obsah stránok, čo je vo svojej podstate význam JavaScriptu.}
 \end{quote}
 
 Nasledujúca jednoduchá ukážka \ref{directive_snippet} nám pomôže porozumieť správaniu direktív:
-\begin{figure}[H]
+\begin{figure}
  \centering
  \begin{minipage}{.59\textwidth}
 
@@ -388,7 +388,12 @@ Na riadku 2 môžeme vidieť, že DOM daného divu vo výsledku vôbec nie je pr
 Opačným príkladom je direktíva *ngStyle, ktorá v DOM mení len atribúty. V príklade na riadku 7 predpokladáme, že v komponente existuje objekt \textit{data}, ktorého atribút \textit{color} typu \texttt{string} obsahuje hodnotu "red".
 
 \subsection{Dependency Injection}
-Dep
+\label{sec_di}
+Dependency Injection je implementácia dizajnového vzoru IoC\footnote{IoC - Inversion of Control, prvý krát definoval Michael Mattson v roku 1996~\cite{mattsson1996object}} ktorej úlohou je zbavovať komponenty systému priamych závislostí. Cieľom je túto závislosť (dependency) implementovať samostatne ako službu a potom v danom závislom komponente vykonať injection (vloženie služby), ktorým sa komponentu umožní túto službu využiť \cite{chiba2005aspect, yang2008empirical}.
+
+Komponent sa tým pádom nestará o vytvorenie samotného objektu, ale dostane už hotový objekt, čím sa zbavuje závislosti (na rozdiel od využívania statických metód alebo vytvárania nových objektov pomocou kľúčového slova \textit{new}).
+
+Framework Angular umožňuje vytvárať inštancie služieb (services) pri bootstrape aplikácie. Bootstrap je jeden z procesov spúšťania, ktorý výslednú aplikáciu vloží do súboru \textit{index.html} \cite{angular} (netreba si mýliť s knižnicou Twitter Bootstrap, ktorá obsahuje HTML a CSS šablóny pre tvorbu responzívnych web stránok \cite{peska2017thesis}). Takto inicializované služby potom vieme využívať naprieč modulmi tak, ako je to znázornené v ukážke \ref{ts_snippet} na strane \pageref{ts_snippet}.
 
 \chapter{Návrh modulu}
 Cieľom tejto práce je vytvoriť modul vo frameworku Angular, ktorý bude nasaditeľný ako samostatný portlet do Liferay portálu a prostredníctvom ktorého bude užívateľ schopný zvoliť si podmnožinu časového ohraničenia. Modul tak umožní užívateľovi spresniť (zúžiť) časové okno vrámci povolených hodnôt.
@@ -433,6 +438,7 @@ Medzi nefunkčné požiadavky patria
 \item modul bude pracovať s časovými známkami (timestamp), ktoré sú univerzálnym označením časového okamihu v UNIXových operačných systémoch. Výsledný modul tak nebude zohľadňovať časové pásma.
 \item modul bude implementovaný v aktuálnej verzii frameworku Angular, v dobe implementácie sa jedná o verziu 5.2.8
 \item modul bude responzívny do takej miery, že pri počiatočnom vyrenderovaní sa prispôsobí šírke samotného portletu. Výška bude minimalizovaná aby zaberala čo najmenšiu časť stránky. Šírka modulu a zobrazené dáta budú optimalizované pre najčastejšie veľkosti displejov používaných na stolných počítačoch.
+\item hlavná logika modulu bude pokrytá jednotkovými testami
 \end{itemize}
 
 \subsection{Funkcia zámkov}
