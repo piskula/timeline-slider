@@ -1,10 +1,6 @@
-<!--<div class="time-label-div">-->
-  <!--<app-time-label [isLeft]="false" [range]="rangeChosen" class="time-label-right"></app-time-label>-->
-  <!--<app-time-label [isLeft]="true" [range]="rangeChosen" class="time-label-left"></app-time-label>-->
-<!--</div>-->
-<div class="frame-wrapper">
-  <div class="sidebar" *ngIf="isPeriodical">
-    <div class="icon">
+<div class="frame">
+  <div class="frame__sidebar" *ngIf="isPeriodical">
+    <div class="frame__sidebar__icon">
       <div class="center" [class.refresh-active]="refreshButtonActive" (click)="refreshTimeline()">
         <i class="fa fa-refresh" [class.fa-spin]="periodicTaskInProgress"></i></div>
       </div>
@@ -17,7 +13,7 @@
     </div>
   </div>
 
-  <div class="content">
+  <div class="frame__content">
     <div *ngIf="initialized; else loader">
       <div *ngIf="!error; else errorHandler">
         <app-timeline-slider-upper></app-timeline-slider-upper>

@@ -16,7 +16,7 @@
     text-align: center;
 
     button {
-      background-color: #CCCCCC;
+      background-color: $grey-light;
       border: none;
       border-radius: .25rem;
       cursor: pointer;
@@ -26,11 +26,11 @@
   }
 }
 
-.frame-wrapper {
+.frame {
   display: flex;
   font-family: inherit;
 
-  .sidebar {
+  &__sidebar {
     width: 2rem;
     height: $upper-slider-height + $scale-height + $lower-slider-height + $scale-height;
     display: block;
@@ -40,23 +40,24 @@
     .orange {
       color: #ffcc00;
     }
+  }
 
-    .icon {
-      display: table;
-      width: 100%;
-      height: 25%;
+  &__sidebar__icon {
+    display: table;
+    width: 100%;
+    height: 25%;
 
-      .center {
-        display: table-cell;
-        vertical-align: middle;
-      }
+    .center {
+      display: table-cell;
+      vertical-align: middle;
+    }
 
-      .refresh-active {
-        cursor: pointer;
-      }
+    .refresh-active {
+      cursor: pointer;
     }
   }
-  .content {
+
+  &__content {
     width: 100%;
     height: $upper-slider-height + $scale-height + $lower-slider-height + $scale-height;
     box-sizing: border-box;
