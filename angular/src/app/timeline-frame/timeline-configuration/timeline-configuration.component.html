@@ -1,0 +1,21 @@
+<div class="text-center">
+
+  <div class="block m-b-1">{{ errorMsg }}</div>
+  <form class="inline-block font-middle" [formGroup]="form">
+
+    <div class="input-wrapper w-url">
+      <label for="url">URL</label>
+      <input id="url" formControlName="url">
+    </div>
+
+    <div class="input-wrapper w-period">
+      <label for="period">Period (seconds)*</label>
+      <input id="period" formControlName="period">
+    </div>
+
+    <button type="submit" class="w-button" (click)="onSubmit()" [disabled]="form.invalid">Submit</button>
+
+  </form>
+  <div class="footnote font-middle">*value 0 means to disable periodic check</div>
+
+</div>

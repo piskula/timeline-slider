@@ -1,0 +1,75 @@
+@import '../../../scss/global-variables';
+$url-width: 15rem;
+$period-width: 8rem;
+$button-width: 5rem;
+
+:host {
+  height: $lower-slider-height + $scale-height + $upper-slider-height + $scale-height;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  color: $grey-middle;
+  position: relative;
+}
+
+form {
+  width: $url-width + $period-width + $button-width;
+  position: relative;
+  text-align: left;
+}
+
+.m-b-1 {
+  margin-bottom: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.w-url {
+  width: $url-width;
+  padding-right: 1rem;
+}
+
+.w-period {
+  width: $period-width;
+  padding-right: 1rem;
+}
+
+.w-button {
+  width: $button-width;
+}
+
+.input-wrapper {
+  float: left;
+  position: relative;
+  box-sizing: border-box;
+}
+
+input {
+  width: 100%;
+}
+
+.block {
+  display: block;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.font-middle {
+  font-size: .75rem;
+}
+
+.footnote {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+button {
+  position: absolute;
+  height: 100%;
+}

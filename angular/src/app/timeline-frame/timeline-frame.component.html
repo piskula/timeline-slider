@@ -1,40 +1,26 @@
-<div class="frame">
-  <div class="frame__sidebar" *ngIf="isPeriodical">
-    <div class="frame__sidebar__icon">
-      <div class="center" [class.refresh-active]="refreshButtonActive" (click)="refreshTimeline()">
-        <i class="fa fa-refresh" [class.fa-spin]="periodicTaskInProgress"></i></div>
-      </div>
-    <div class="icon orange">
-      <div class="center" *ngIf="initialized && !periodicTaskInProgress">
-        <i class="fa fa-exclamation-triangle tooltip">
-          <span class="tooltiptext">Error occurred while waiting for response from periodic request. Periodic request is paused.</span>
-        </i>
-      </div>
+<app-timeline-sidebar *ngIf="!error && configuration && configuration.period > 0"
+                      [isInitialized]="initialized"
+                      [isPeriodicTaskInProgress]="periodicTaskInProgress"
+                      [isRefreshButtonActive]="refreshButtonActive"
+                      (onRefresh)="refreshTimeline()">
+</app-timeline-sidebar>
+
+<div class="content">
+  <div *ngIf="initialized; else loader">
+    <div *ngIf="!error; else errorHandler">
+      <app-timeline-slider-upper></app-timeline-slider-upper>
+      <app-timeline-slider-lower></app-timeline-slider-lower>
     </div>
-  </div>
-
-  <div class="frame__content">
-    <div *ngIf="initialized; else loader">
-      <div *ngIf="!error; else errorHandler">
-        <app-timeline-slider-upper></app-timeline-slider-upper>
-        <app-timeline-slider-lower></app-timeline-slider-lower>
-      </div>
-
-      <ng-template #errorHandler>
-        <div class="centering">
-          <div class="text-center">
-            <div>Error {{ error }}</div>
-            <button type="button" (click)="initializeTimeline()"><i class="fa fa-refresh"></i>Refresh</button>
-          </div>
-        </div>
-      </ng-template>
-    </div>
-
-    <ng-template #loader>
-      <div class="centering">
-        <i class="fa fa-cog fa-spin fa-2x"></i>
-        <span>Loading&hellip;</span>
-      </div>
-    </ng-template>
   </div>
 </div>
+
+<ng-template #loader>
+  <div class="centering">
+    <i class="fa fa-cog fa-spin fa-2x"></i>
+    <span>Loading&hellip;</span>
+  </div>
+</ng-template>
+
+<ng-template #errorHandler>
+  <app-timeline-configuration [errorMsg]="error" (config)="onSubmit($event)"></app-timeline-configuration>
+</ng-template>

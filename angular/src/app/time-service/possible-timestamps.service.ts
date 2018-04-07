@@ -12,9 +12,9 @@ export class PossibleTimestampsService {
 
   constructor(private _http: HttpClient) { }
 
-  public getTimestamps(): Observable<TimestampsWithStep> {
+  public getTimestamps(url: string): Observable<TimestampsWithStep> {
     return this._http
-      .get<TimestampsResponse>('http://localhost:3004/all-timestamps/' + (this.counter++ % 5))
+      .get<TimestampsResponse>(url + (this.counter++ % 5))
       .map(response => {
 
         const timestamps: number[] = response.timestamps;

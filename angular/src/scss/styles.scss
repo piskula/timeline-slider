@@ -1,2 +1,21 @@
 @import "../../node_modules/font-awesome/css/font-awesome.css";
 @import "tooltips";
+
+.pointer {
+  cursor: pointer;
+}
+
+button {
+  border: none;
+  border-radius: .25rem;
+  cursor: pointer;
+  padding: .375rem .75rem;
+}
+button:disabled {
+  cursor: default;
+}
+
+input {
+  padding: 0;
+  box-sizing: border-box;
+}

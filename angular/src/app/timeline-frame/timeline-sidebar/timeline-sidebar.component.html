@@ -1,0 +1,13 @@
+<div class="sidebar">
+  <div class="sidebar__icon">
+    <div class="center" [class.pointer]="isRefreshButtonActive" (click)="onRefresh.emit()">
+      <i class="fa fa-refresh" [class.fa-spin]="isPeriodicTaskInProgress"></i></div>
+  </div>
+  <div class="icon orange">
+    <div class="center" *ngIf="isInitialized && !isPeriodicTaskInProgress">
+      <i class="fa fa-exclamation-triangle tooltip">
+        <span class="tooltiptext">Error occurred while waiting for response from periodic request. Periodic request is paused.</span>
+      </i>
+    </div>
+  </div>
+</div>

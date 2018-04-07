@@ -1,9 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {ShareTimeService} from '../time-service/share-time.service';
 import {PossibleTimestampsService, TimestampsWithStep} from '../time-service/possible-timestamps.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
+import {TimelineConfiguration} from './model/configuration';
 
 @Component({
   selector: 'app-timeline-frame',
@@ -12,10 +13,10 @@ import {Observable} from 'rxjs/Observable';
 })
 export class TimelineFrameComponent implements OnInit {
 
-  @Input() isPeriodical = false;
+  private configuration: TimelineConfiguration;
 
-  public initialized: Boolean = false;
-  public error: String = null;
+  public initialized: Boolean = true;
+  public error: String = 'Please, configure timeline:';
   public periodicTaskInProgress: Boolean = false;
   public refreshButtonActive: Boolean = false;
 
@@ -23,6 +24,10 @@ export class TimelineFrameComponent implements OnInit {
               private _timestamps: PossibleTimestampsService) { }
 
   ngOnInit() {
+  }
+
+  public onSubmit(dataFromForm: TimelineConfiguration) {
+    this.configuration = dataFromForm;
     this.initializeTimeline();
   }
 
@@ -37,7 +42,7 @@ export class TimelineFrameComponent implements OnInit {
     this.error = null;
 
     this._timestamps
-      .getTimestamps()
+      .getTimestamps(this.configuration.url)
       .takeWhile(() => !this.initialized)
       .finally(() => this.initialized = true)
       .catch((error: HttpErrorResponse) => {
@@ -46,7 +51,7 @@ export class TimelineFrameComponent implements OnInit {
       })
       .subscribe((response: TimestampsWithStep) => {
         this.setNewData(response);
-        if (this.isPeriodical) {
+        if (this.configuration.period !== 0) {
           this.initializePeriodicalCheck();
         }
       });
@@ -62,10 +67,10 @@ export class TimelineFrameComponent implements OnInit {
     this.periodicTaskInProgress = true;
     this.refreshButtonActive = false;
     Observable
-      .interval(5000)
+      .interval(this.configuration.period * 1000)
       .flatMap((i) => {
         return this._timestamps
-          .getTimestamps();
+          .getTimestamps(this.configuration.url);
       })
       .catch((error: HttpErrorResponse) => {
         this.periodicTaskInProgress = false;
