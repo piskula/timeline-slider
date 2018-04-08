@@ -13,7 +13,7 @@ import {TimelineConfiguration} from './model/configuration';
 })
 export class TimelineFrameComponent implements OnInit {
 
-  private configuration: TimelineConfiguration;
+  public configuration: TimelineConfiguration;
 
   public initialized: Boolean = true;
   public error: String = 'Please, configure timeline:';
