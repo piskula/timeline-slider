@@ -438,7 +438,11 @@ Medzi nefunkčné požiadavky patria
 \item modul bude pracovať s časovými známkami (timestamp), ktoré sú univerzálnym označením časového okamihu v UNIXových operačných systémoch. Výsledný modul tak nebude zohľadňovať časové pásma.
 \item modul bude implementovaný v aktuálnej verzii frameworku Angular, v dobe implementácie sa jedná o verziu 5.2.8
 \item modul bude responzívny do takej miery, že pri počiatočnom vyrenderovaní sa prispôsobí šírke samotného portletu. Výška bude minimalizovaná aby zaberala čo najmenšiu časť stránky. Šírka modulu a zobrazené dáta budú optimalizované pre najčastejšie veľkosti displejov používaných na stolných počítačoch.
-\item hlavná logika modulu bude pokrytá jednotkovými testami
+\item hlavná logika modulu bude pokrytá jednotkovými testami, viac informácií o testoch sa nachádza v sekcii \ref{sec:tests}.
+\begin{quote}
+\textit{Pod pojmom \textbf{hlavná logika modulu} rozumieme vzťah a reagovanie na zmeny medzi týmito prvkami modulu: \textbf{pravý zámok}, \textbf{ľavý zámok}, \textbf{maximum} (je maximálna hodnota, ktorú je možné zvoliť na časovej ose), \textbf{minimum} (je minimálne hodnota, ktorú je možné zvoliť na časovej ose), \textbf{dolné zvolené ohraničenie} (pozícia ľavého manipulátora) a \textbf{horné zvolené ohraničenie} (pozícia pravého manipulátora).}
+\end{quote}
+
 \end{itemize}
 
 \subsection{Funkcia zámkov}
@@ -457,16 +461,141 @@ Z tohto dôvodu vznikla už v minulosti požiadavka, aby sám používateľ port
   \end{tabular}
 \end{center}
 
+\subsection{Rozsah testov}
+\label{sec:tests}
+Modul časovej osy má na prvý pohľad jednoduchú úlohu, t.j. spresňuje časové okno vrámci povolených hodnôt. Avšak pri analýze je možné badať niekoľko rôznych vstupov a premenných ktoré ovplyvňujú správanie tohto modulu, ktoré už nie je úplne triviálne.
+
+V tejto podkapitole sa nachádza zoznam a popis jednotkových testov, ktoré testujú hlavnú logiku modulu.
+\begin{enumerate}
+  \item
+  \begin{tabular}{ | p{2.75cm} | p{8cm} | }
+    \hline
+    stav pred & pravý zámok aktívny \\ \hline
+    udalosť & zmení sa maximum \\ \hline
+    testovaný stav & horné zvolené ohraničenie sa aktualizuje \\ \hline
+  \end{tabular}
+
+  \item
+  \begin{tabular}{ | p{2.75cm} | p{8cm} | }
+    \hline
+    stav pred & pravý zámok nie je aktívny \\ \hline
+    udalosť & zmení sa maximum \\ \hline
+    testovaný stav & zvolené ohraničenie sa nezmení \\ \hline
+  \end{tabular}
+
+  \item
+  \begin{tabular}{ | p{2.75cm} | p{8cm} | }
+    \hline
+    stav pred & pravý zámok je aktívny \\ \hline
+    udalosť & horné zvolené ohraničenie sa posunie doľava \\ \hline
+    testovaný stav & pravý zámok sa deaktivuje \\ \hline
+  \end{tabular}
+
+  \item
+  \begin{tabular}{ | p{2.75cm} | p{8cm} | }
+    \hline
+    stav pred & pravý zámok je aktívny \\ \hline
+    udalosť & dolné zvolené ohraničenie sa zmení \\ \hline
+    testovaný stav & pravý zámok ostáva aktívny a horné zvolené ohraničenie sa nezmení \\ \hline
+  \end{tabular}
+
+  \item
+  \begin{tabular}{ | p{2.75cm} | p{8cm} | }
+    \hline
+    stav pred & ľavý zámok je aktívny \\ \hline
+    udalosť & deaktivuje sa pravý zámok \\ \hline
+    testovaný stav & deaktivuje sa aj ľavý zámok \\ \hline
+  \end{tabular}
+
+  \item
+  \begin{tabular}{ | p{2.75cm} | p{8cm} | }
+    \hline
+    stav pred & pravý zámok je aktívny \\
+    & ľavý zámok nie je aktívny \\ \hline
+    udalosť & zmení sa maximum \\ \hline
+    testovaný stav & horné aj dolné zvolené ohraničenie sa posunie doprava na maximum, zvolený interval ostane rovnako veľký \\ \hline
+  \end{tabular}
+
+  \item
+  \begin{tabular}{ | p{2.75cm} | p{8cm} | }
+    \hline
+    stav pred & ľavý zámok je aktívny \\ \hline
+    udalosť & zmení sa maximum \\ \hline
+    testovaný stav & horné zvolené ohraničenie sa zmení a dolné zvolené ohraničenie sa nezmení, takže zvolený interval sa zväčší \\ \hline
+  \end{tabular}
+  
+    \item
+  \begin{tabular}{ | p{2.75cm} | p{8cm} | }
+    \hline
+    stav pred & pravý zámok nie je aktívny \\ \hline
+    udalosť & aktivuje sa pravý zámok \\ \hline
+    testovaný stav & horné zvolené ohraničenie sa nastaví na maximum \\ \hline
+  \end{tabular}
+
+\end{enumerate}
+
 \section{Existujúce riešenie}
 Existujúci portlet časovej osy pre KYPO bol implementovaný v JavaScripte vrámci diplomovej práce Jiřího Dočkala\cite{dockal2016webovy}. Okrem výberu časového ohraničenia slúžil aj na prehrávanie scenárov, ako je možné vidieť aj na Obr. \ref{old_portlet}.
 
 V aktuálnych víziách vývojového centra KYPO sa však zrodila požiadavka na odlišný portlet, ktorý bude obsahovať v určitom smere menej funkcionality a bude postavený na odlišnej technológii (použitie frameworku Angular). Všetky tieto požiadavky boli zhrnuté v kapitole \ref{requirements}.
-\begin{figure}
+\begin{figure}[H]
 	\center
 	\includegraphics[width=1.0\linewidth]{old_portlet}
 	\caption{Dizajn pôvodného portletu\cite{dockal2016webovy}}
 	\label{old_portlet}
 \end{figure}
+
+\chapter{Implementácia}
+Táto kapitola podrobne opisuje návrh a implementáciu modulu časovej osy, pričom berie do úvahy všetky požiadavky definované v kapitole \ref{requirements}.
+
+\section{Grafické používateľské rozhranie}
+Kľúčovou úlohou v raných fázach vývoja bolo zvoliť vhodný prostriedok, ktorým bude možné manipulovať s časovým ohraničením, resp. s časovou osou. Požiadavky sú v tomto smere pomerne jasné a najbližšie k nim je spomedzi všetkých formulárových prvkov jednoznačne \textit{range} (v preklade \textit{rozsah}, môže byť označený aj ako \textit{range slider}). Na obrázku \ref{html_range} môžeme vidieť názornú ukážku, ako takýto ovládací prvok môže vyzerať.
+\begin{figure}[H]
+	\center
+	\includegraphics{html_range}
+	\caption{HTML prvok \texttt{<input type=\char`\"range\char`\">} v prehliadači Chrome a jeho prednastavený vzhľad}
+	\label{html_range}
+\end{figure}
+
+Formulárový prvok typu range sa skladá z koľajnice a jazdca (manipulátora) (\ref{html_range}) a plní pre používateľa rovnakú funkciu ako bežný číselný vstup, ktorý sa zadáva do políčka prostredníctvom klávesnice, t.j. umožňuje užívateľovi zadať číselnú hodnotu. Oproti tomu má niekoľko vlastností, ktoré sú pre nás prínosom:
+\begin{enumerate}
+\item umožní užívateľovi vybrať číslo striktne len z daného rozsahu, čím odpadá nutnosť dodatočnej validácie (či je číslo v danom rozsahu)
+\item neumožní užívateľovi zadávať nečíselné znaky, čím odpadá nutnosť ďalšej validácie (či je číslo platné)
+\item užívateľ má pred sebou grafickú informáciu, kde približne sa nachádza vrámci povoleného rozsahu, čo je výhodou hlavne pri veľkých číslach.
+\end{enumerate}
+
+Medzi nevýhody formulárového prvku typu range patria:
+\begin{enumerate}
+\item nedá sa pohodlne ovládať len klávesnicou, vyžaduje použitie myši alebo touchpadu
+\item zvolená hodnota je nepresná
+\begin{quote}
+\textit{Predstavme si, že pomocou range potrebujeme zadať hodnotu 726,54 ktorá musí byť v rozmedzí 0 až 10\,000. Trafiť sa do tejto hodnoty sa nám vôbec nemusí podariť.}
+\end{quote}
+\end{enumerate}
+
+Obe spomínané nevýhody sa nás veľmi netýkajú, nakoľko:
+\begin{itemize}
+\item je veľmi malá pravdepodobnosť, že KYPO portál a všeobecne web bude navštevovať používateľ pracujúci výhradne s klávesnicou
+\item z dôvodu nepresnosti tohto formulárového prvku je už vo funkčných požiadavkách definované, že za účelom spresnenia výberu sa bude pod hlavnou časovou osou nachádzať ešte jedna detailnejšia.
+\end{itemize}
+
+Pomocou CSS je možné vo viacerých moderných prehliadačoch upraviť prednastavený vzhľad prvku \texttt{<input type=\char`\"range\char`\">}, ale takýto prvok je pre nás stále nepoužiteľný, nakoľko okrem zopár grafických úprav nedokážeme tento prvok vôbec modifikovať. Z funkčných požiadaviek napríklad vyplýva, že na koľajnici by sa mali nachádzať dva manipulátory, keďže výsledkom (nášho výberu) nie je jedna hodnota, ale rozsah hodnôt.
+
+\subsection{Výber vhodného grafického prvku}
+Spočiatku som sa snažil využiť niekoľko už existujúcich voľne prístupných knižníc (komponent), ktoré riešili implementáciu \textit{range slider}a pre Angular (verzie 2 a vyššej). Väčšina z nich podporovala niekoľko jazdcov na koľajnici a dali sa na nich pomerne jednoducho prepisovať štýly.
+
+Najviac času som strávil s komponentom ng2-nouislider\cite{ng2nouislider}, ale postupom času mi ani tento komponent neponúkol také možnosti, ktoré by som potreboval. Všetky knižnice mali z môjho pohľadu tieto dve nevýhody:
+\begin{description}
+\item[neboli pôvodne navrhnuté pre Angular] - väčšina knižníc spolupracovala s Angularom len preto, že ju niekto \char`\"obalil\char`\" ako Angular2 komponent, čím plnohodnotne nevyužil všetky možnosti Angularu
+\item[neboli navrhnuté pre tento typ použitia] - boli navrhnuté tak, aby na začiatku boli definované hraničné body (minimum, maximum) a následne po celý zvyšok svojej životnosti už len poskytovali informácie o momentálnej voľbe užívateľa. Ak sa následne zmenili hraničné body, väčšina komponent už dané hranice neaktualizovala.
+\end{description}
+
+\subsection{D3.js}
+Táto JavaScriptová knižnica slúži na dynamické vizualizácie dát v prehliadačoch. Hlavnou myšlienkou 
+
+\section{Technológie}
+Vrámci nefunkčných požiadaviek bol pre implementáciu zvolený framework Angular od Google, ktorého verzia v čase tvorby tejto práce bola 5.2.8. Tento framework bol v prostredí KYPO zvolený globálne a preto je táto voľba logická.
+
 
 %\printbibliography
 
