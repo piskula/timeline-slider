@@ -4,7 +4,6 @@ import {ShareTimeService} from './share-time.service';
 describe('ShareTimeService', () => {
   let injector: TestBed;
   let service: ShareTimeService;
-  // let maxSpy: jasmine.Spy;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -13,15 +12,13 @@ describe('ShareTimeService', () => {
 
     injector = getTestBed();
     service = injector.get(ShareTimeService);
-
-    // maxSpy = spyOn(service, '').and.callThrough();
   });
 
   it('should create service', inject([ShareTimeService], (shareTimeService: ShareTimeService) => {
     expect(shareTimeService).toBeTruthy();
   }));
 
-  it ('should update right range when right locked and max change', async(() => {
+  it ('01 should update right range when right locked and max change', async(() => {
     service.setMax(1000);
     service.setLockedRight(true);
     service.setRangeChosen([0, 1000]);
@@ -51,7 +48,7 @@ describe('ShareTimeService', () => {
     expect(actualRangeChosen[1]).toBe(2000);
   }));
 
-  it ('should not update right range when not right locked and max change', async(() => {
+  it ('02 should not update right range when not right locked and max change', async(() => {
     service.setMax(1000);
     service.setLockedRight(false);
     service.setRangeChosen([0, 1000]);
@@ -81,7 +78,7 @@ describe('ShareTimeService', () => {
     expect(actualRangeChosen[1]).toBe(1000);
   }));
 
-  it ('should unlock right lock when right value change and is not equal to max', async(() => {
+  it ('03 should unlock right lock when right value change and is not equal to max', async(() => {
     service.setMax(1000);
     service.setLockedRight(true);
     service.setRangeChosen([0, 1000]);
@@ -116,7 +113,7 @@ describe('ShareTimeService', () => {
     expect(actualRightLocked).toBe(false);
   }));
 
-  it ('should not unlock right lock when left chosen value change', async(() => {
+  it ('04 should not unlock right lock when left chosen value change', async(() => {
     service.setMax(1000);
     service.setLockedRight(true);
     service.setRangeChosen([0, 1000]);
@@ -151,7 +148,7 @@ describe('ShareTimeService', () => {
     expect(actualRightLocked).toBe(true);
   }));
 
-  it ('should unlock left lock when right lock is unlocked', async(() => {
+  it ('05 should unlock left lock when right lock is unlocked', async(() => {
     service.setLockedRight(true);
     service.setLockedLeft(true);
 
@@ -178,7 +175,7 @@ describe('ShareTimeService', () => {
     expect(actualLeftLocked).toBe(false);
   }));
 
-  it ('should update left range when right locked, left unlocked and max change', async(() => {
+  it ('06 should update left range when right locked, left unlocked and max change', async(() => {
     service.setMax(1000);
     service.setLockedRight(true);
     service.setLockedLeft(false);
@@ -209,7 +206,7 @@ describe('ShareTimeService', () => {
     expect(actualRangeChosen[1]).toBe(1005);
   }));
 
-  it ('should not update left range when left locked and max change', async(() => {
+  it ('07 should not update left range when left locked and max change', async(() => {
     service.setMax(1000);
     service.setLockedRight(true);
     service.setLockedLeft(true);
@@ -240,7 +237,7 @@ describe('ShareTimeService', () => {
     expect(actualRangeChosen[1]).toBe(1005);
   }));
 
-  it ('should update right range when right lock is performed', async(() => {
+  it ('08 should update right range when right lock is performed', async(() => {
     service.setMax(1000);
     service.setLockedRight(false);
     service.setRangeChosen([200, 800]);

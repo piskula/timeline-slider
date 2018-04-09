@@ -2,11 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import 'rxjs/add/operator/finally'
-import 'rxjs/add/operator/catch'
-import 'rxjs/add/operator/map'
-import 'rxjs/add/observable/of'
-import 'rxjs/add/operator/takeWhile'
 
 import { D3SliderLowerDirective } from './slider-directive/slider-lower.directive';
 import { D3SliderUpperDirective } from './slider-directive/slider-upper.directive';

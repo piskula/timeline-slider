@@ -1,5 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/operator/catch'
+import 'rxjs/add/operator/finally'
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/takeWhile';
+
 import {ShareTimeService} from '../time-service/share-time.service';
 import {PossibleTimestampsService, TimestampsWithStep} from '../time-service/possible-timestamps.service';
 import {HttpErrorResponse} from '@angular/common/http';
