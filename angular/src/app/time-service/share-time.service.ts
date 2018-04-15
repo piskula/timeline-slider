@@ -29,13 +29,30 @@ export class ShareTimeService {
 
   public setMax(value: Number) {
     const previousValue = this.max$.getValue();
-    this.max$.next(value);
-    if (this.isLockedRight$.getValue()) {
-      if (this.isLockedLeft$.getValue()) {
-        this.setRangeChosen([this.rangeChosen$.getValue()[0], value]);
-      } else {
-        const diff = value.valueOf() - previousValue.valueOf();
-        this.setRangeChosen([this.rangeChosen$.getValue()[0].valueOf() + diff, value]);
+    if (value !== previousValue) {  // notify about change only if there is change
+      this.max$.next(value);
+
+      // check error situations -> if new MAX value is less than previous
+      const resultRangeChosen = [this.rangeChosen$.getValue()[0], this.rangeChosen$.getValue()[1]];
+      if (value < resultRangeChosen[0]) {
+        resultRangeChosen[0] = this.min$.getValue();
+      }
+      if (value < resultRangeChosen[1]) {
+        resultRangeChosen[1] = value;
+      }
+
+      // when some lockers are active, refresh chosen range
+      if (this.isLockedRight$.getValue()) {
+        resultRangeChosen[1] = value;
+        if (!this.isLockedLeft$.getValue()) {
+          const diff = value.valueOf() - previousValue.valueOf();
+          resultRangeChosen[0] = this.rangeChosen$.getValue()[0].valueOf() + diff;
+        }
+      }
+
+      if (resultRangeChosen[0] !== this.rangeChosen$.getValue()[0]
+        || resultRangeChosen[1] !== this.rangeChosen$.getValue()[1]) {
+        this.setRangeChosen(resultRangeChosen);
       }
     }
   }
@@ -55,12 +72,9 @@ export class ShareTimeService {
   public setLockedRight(isRightLocked: Boolean) {
     if (isRightLocked) {
       this.setRangeChosen([this.rangeChosen$.getValue()[0], this.max$.getValue()]);
-      this.isLockedRight$.next(true);
-      this.setLockedLeft(true);
-    } else {
-      this.isLockedRight$.next(false);
-      this.setLockedLeft(false);
     }
+    this.isLockedRight$.next(isRightLocked);
+    this.setLockedLeft(isRightLocked);
   }
 
   public isLockedLeft(): BehaviorSubject<Boolean> {
