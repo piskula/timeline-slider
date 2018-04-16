@@ -11,6 +11,7 @@ import {PossibleTimestampsService, TimestampsWithStep} from '../time-service/pos
 import {HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {TimelineConfiguration} from './model/configuration';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-timeline-frame',
@@ -26,10 +27,18 @@ export class TimelineFrameComponent implements OnInit {
   public periodicTaskInProgress: Boolean = false;
   public refreshButtonActive: Boolean = false;
 
+  public leftTitle = '';
+  public centerTitle = '';
+  public rightTitle = '';
+
   constructor(private _timeService: ShareTimeService,
               private _timestamps: PossibleTimestampsService) { }
 
   ngOnInit() {
+    this._timeService.getMax().subscribe(maxValue => {
+      // console.log('came: ' + maxValue);
+      this.refreshHeader(this._timeService.getMin().getValue(), maxValue);
+    });
   }
 
   public onSubmit(dataFromForm: TimelineConfiguration) {
@@ -83,7 +92,26 @@ export class TimelineFrameComponent implements OnInit {
         this.refreshButtonActive = true;
         throw error;
       })
-      .subscribe((response: TimestampsWithStep) => this.setNewData(response));
+      .subscribe((response: TimestampsWithStep) => {
+        this._timeService.setMax(response.timestamps[1]);
+      });
+  }
+
+  private refreshHeader(min: Number, max: Number): void {
+    if (min && max) {
+      const start = moment(new Date(min.valueOf() * 1000)).utc();
+      const end = moment(new Date(max.valueOf() * 1000)).utc();
+
+      if (start.isSame(end, 'day')) {
+        this.leftTitle = start.format('HH:mm');
+        this.centerTitle = start.format(start.localeData().longDateFormat('LL'));
+        this.rightTitle = end.format('HH:mm');
+      } else {
+        this.leftTitle = start.format(start.localeData().longDateFormat('LL'));
+        this.centerTitle = '';
+        this.rightTitle = end.format(end.localeData().longDateFormat('LL'));
+      }
+    }
   }
 
 }

@@ -13,7 +13,7 @@ export class PossibleTimestampsService {
 
   public getTimestamps(url: string): Observable<TimestampsWithStep> {
     return this._http
-      .get<TimestampsResponse>(url + (this.counter++ % 5))
+      .get<TimestampsResponse>(url + (this.counter++ % 8))
       .map(response => {
 
         const timestamps: number[] = response.timestamps;

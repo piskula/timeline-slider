@@ -1,21 +1,33 @@
-<app-timeline-sidebar *ngIf="!error && configuration && configuration.period > 0"
-                      [isInitialized]="initialized"
-                      [isPeriodicTaskInProgress]="periodicTaskInProgress"
-                      [isRefreshButtonActive]="refreshButtonActive"
-                      (onRefresh)="refreshTimeline()">
-</app-timeline-sidebar>
+<div class="frame-wrapper">
+  <div class="frame-wrapper__header text-center">
+    <div class="float-left">{{ leftTitle }}</div>
+    <div class="float-left"><i class="fa fa-chevron-left"></i></div>
+    <div class="float-right">{{ rightTitle }}</div>
+    <div class="float-right"><i class="fa fa-caret-right"></i></div>
+    <div class="d-inline">{{ centerTitle }}</div>
+  </div>
 
-<div class="content">
-  <div *ngIf="initialized; else loader">
-    <div *ngIf="!error; else errorHandler">
-      <app-timeline-slider-upper></app-timeline-slider-upper>
-      <app-timeline-slider-lower></app-timeline-slider-lower>
+  <div class="d-flex">
+    <app-timeline-sidebar *ngIf="!error && configuration && configuration.period > 0"
+                          [isInitialized]="initialized"
+                          [isPeriodicTaskInProgress]="periodicTaskInProgress"
+                          [isRefreshButtonActive]="refreshButtonActive"
+                          (onRefresh)="refreshTimeline()">
+    </app-timeline-sidebar>
+
+    <div class="w-full content">
+      <div *ngIf="initialized; else loader">
+        <div *ngIf="!error; else errorHandler">
+          <app-timeline-slider-upper></app-timeline-slider-upper>
+          <app-timeline-slider-lower></app-timeline-slider-lower>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <ng-template #loader>
-  <div class="centering">
+  <div class="d-flex centering">
     <i class="fa fa-cog fa-spin fa-2x"></i>
     <span>Loading&hellip;</span>
   </div>

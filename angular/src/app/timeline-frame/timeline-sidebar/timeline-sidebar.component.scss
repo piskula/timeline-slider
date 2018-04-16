@@ -1,24 +1,25 @@
 @import '../../../scss/global-variables';
 
-.sidebar {
+:host {
   width: 2rem;
   height: $upper-slider-height + $scale-height + $lower-slider-height + $scale-height;
   display: block;
   box-sizing: border-box;
   text-align: right;
+  padding-top: 1rem;
+}
 
-  .orange {
-    color: $color-warn;
-  }
+.orange {
+  color: $color-warn;
+}
 
-  &__icon {
-    display: table;
-    width: 100%;
-    height: 25%;
+.sidebar__icon {
+  display: table;
+  width: 100%;
+  height: 25%;
 
-    .center {
-      display: table-cell;
-      vertical-align: middle;
-    }
+  .center {
+    display: table-cell;
+    vertical-align: middle;
   }
 }

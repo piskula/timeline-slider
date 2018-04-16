@@ -1,14 +1,25 @@
 @import '../../scss/global-variables';
 
 :host {
-  display: flex;
   font-family: inherit;
+}
+
+.frame-wrapper {
+  background-color: #EEE;
+
+  &__header {
+    overflow: hidden;
+  }
+}
+
+.content {
+  height: $upper-slider-height + $scale-height + $lower-slider-height + $scale-height;
+  box-sizing: border-box;
 }
 
 .centering {
   height: $lower-slider-height + $scale-height + $upper-slider-height + $scale-height;
   align-items: center;
-  display: flex;
   justify-content: center;
   color: $grey-middle;
 
@@ -16,10 +27,4 @@
     vertical-align: middle;
     margin-right: .5rem;
   }
-}
-
-.content {
-  width: 100%;
-  height: $upper-slider-height + $scale-height + $lower-slider-height + $scale-height;
-  box-sizing: border-box;
 }

@@ -1,6 +1,12 @@
 <div class="timeline-scale">
   <div *ngFor="let item of pipes; let i = index">
-    <div [style.left]="item.value" class="timeline-scale-marker" [ngClass]="'markerPriority' + item.priority"></div>
-    <div [style.left]="item.value" class="timeline-scale-value" [ngClass]="'valuePriority' + item.priority">{{item.title}}</div>
+    <div [style.left]="item.value"
+         class="timeline-scale-marker markerPriority{{item.priority}}">
+    </div>
+    <div [style.left]="item.value"
+         class="timeline-scale-value valuePriority{{item.priority}}"
+         [style.font-weight]="item.bold ? 600 : 400">
+      {{item.title}}
+    </div>
   </div>
 </div>
