@@ -1,14 +1,12 @@
-import {Directive, EventEmitter, Input, Output, ViewContainerRef} from '@angular/core';
+import {Directive, EventEmitter, Input, Output} from '@angular/core';
 import * as d3 from 'd3';
 
 import {
-  COLOR_EMPTY_STROKE,
   COLOR_THUMB,
-  COLOR_THUMB_STROKE,
-  D3SliderBaseDirective
+  DARK_GREY,
+  D3SliderBaseDirective, OPACITY_MIDDLE, COLOR_UPPER, COLOR_LOWER
 } from './slider-base.directive';
 
-export const COLOR_STROKE = '#51CB3F';
 export const LINE_WIDTH = '.625rem';
 export const LINE_EMPTY_WIDTH = '.5rem';
 export const THUMB_STROKE_WIDTH = '.0625rem';
@@ -41,7 +39,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
     const sliderTopMargin = fontSize * 2.25;
     const thumbSize = fontSize * 0.5;
     const thumbSizeClick = fontSize * 0.625;
-    const leftLockAddition = fontSize * 0;
+    const leftLockAddition = fontSize * 0.325;
     const rightLockAddition = fontSize * 2.125;
 
     let normValueLeft = this.getNormValue(this.rangeChosen[0]); // value normalized between 0-1
@@ -210,7 +208,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .attr('x2', sliderSideMargin + (width * normValueRight))
       .attr('y1', sliderTopMargin)
       .attr('y2', sliderTopMargin)
-      .style('stroke', COLOR_STROKE)
+      .style('stroke', COLOR_UPPER)
       .style('stroke-linecap', 'round')
       .style('stroke-width', LINE_WIDTH);
 
@@ -220,7 +218,8 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .attr('x2', sliderSideMargin + (width * normValueLeft))
       .attr('y1', sliderTopMargin)
       .attr('y2', sliderTopMargin)
-      .style('stroke', COLOR_EMPTY_STROKE)
+      .style('stroke', DARK_GREY)
+      .style('opacity', OPACITY_MIDDLE)
       .style('stroke-linecap', 'round')
       .style('stroke-width', LINE_EMPTY_WIDTH);
 
@@ -230,7 +229,8 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .attr('x2', sliderSideMargin + width)
       .attr('y1', sliderTopMargin)
       .attr('y2', sliderTopMargin)
-      .style('stroke', COLOR_EMPTY_STROKE)
+      .style('stroke', DARK_GREY)
+      .style('opacity', OPACITY_MIDDLE)
       .style('stroke-linecap', 'round')
       .style('stroke-width', LINE_EMPTY_WIDTH);
 
@@ -238,14 +238,14 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .attr('cx', sliderSideMargin + (width * normValueLeft))
       .attr('cy', sliderTopMargin)
       .attr('r', thumbSize)
-      .style('stroke', COLOR_THUMB_STROKE)
+      .style('stroke', DARK_GREY)
       .style('stroke-width', THUMB_STROKE_WIDTH)
       .style('fill', COLOR_THUMB);
     const rightHandler = selection.append('circle')
       .attr('cx', sliderSideMargin + (width * normValueRight))
       .attr('cy', sliderTopMargin)
       .attr('r', thumbSize)
-      .style('stroke', COLOR_THUMB_STROKE)
+      .style('stroke', DARK_GREY)
       .style('stroke-width', THUMB_STROKE_WIDTH)
       .style('fill', COLOR_THUMB);
 
@@ -259,11 +259,13 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
     const leftLock = leftLockWrapper
       .append('xhtml:body')
       .html(this.isLeftLocked ? '<i class="fa fa-lock"></i>' : '<i class="fa fa-unlock"></i>')
+      .style('color', COLOR_LOWER)
       .on('click', function () {
         that.leftLockChange.emit(!that.isLeftLocked);
       });
     if (!this.isLeftLocked) {
-      leftLock.style('color', COLOR_EMPTY_STROKE);
+      leftLock.style('opacity', OPACITY_MIDDLE)
+        .style('color', DARK_GREY);
     }
 
     const rightLockWrapper = selection
@@ -276,11 +278,13 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
     const rightLock = rightLockWrapper
       .append('xhtml:body')
       .html(this.isRightLocked ? '<i class="fa fa-lock"></i>' : '<i class="fa fa-unlock"></i>')
+      .style('color', COLOR_LOWER)
       .on('click', function () {
         that.rightLockChange.emit(!that.isRightLocked);
       });
     if (!this.isRightLocked) {
-      rightLock.style('color', COLOR_EMPTY_STROKE);
+      rightLock.style('opacity', OPACITY_MIDDLE)
+        .style('color', DARK_GREY);
     }
 
     leftHandler.call(d3.drag()

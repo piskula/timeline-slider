@@ -1,10 +1,10 @@
 <div class="timeline-scale">
   <div *ngFor="let item of pipes; let i = index">
     <div [style.left]="item.value"
-         class="timeline-scale-marker markerPriority{{item.priority}}">
+         class="marker marker--priority-{{item.priority}}">
     </div>
     <div [style.left]="item.value"
-         class="timeline-scale-value valuePriority{{item.priority}}"
+         class="value value--priority-{{item.priority}}"
          [style.font-weight]="item.bold ? 600 : 400">
       {{item.title}}
     </div>

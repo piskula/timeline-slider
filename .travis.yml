@@ -9,6 +9,7 @@ branches:
     - master
 
 before_script:
+  - cd angular
   - npm install -g firebase-tools
   - npm install -g @angular/cli
 
@@ -16,5 +17,5 @@ script:
   - ng build --env=prod
 
 after_success:
-  #- firebase use default
-  #- firebase deploy --token $FIREBASE_TOKEN --non-interactive
+  - firebase use default
+  - firebase deploy --token $FIREBASE_TOKEN --non-interactive

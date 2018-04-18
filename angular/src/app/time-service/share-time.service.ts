@@ -46,7 +46,9 @@ export class ShareTimeService {
         resultRangeChosen[1] = value;
         if (!this.isLockedLeft$.getValue()) {
           const diff = value.valueOf() - previousValue.valueOf();
-          resultRangeChosen[0] = this.rangeChosen$.getValue()[0].valueOf() + diff;
+          if (diff > 0) {
+            resultRangeChosen[0] = this.rangeChosen$.getValue()[0].valueOf() + diff;
+          }
         }
       }
 

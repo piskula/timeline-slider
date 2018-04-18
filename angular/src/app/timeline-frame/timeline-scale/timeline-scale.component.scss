@@ -10,40 +10,29 @@
   box-sizing: border-box;
 }
 
-.markerPriority1 {
-  background-color: #888888;
-  height: .625rem;
-}
-.markerPriority2 {
-  background-color: #AAAAAA;
-  height: .5rem;
-}
-.markerPriority3 {
-  background-color: #CCCCCC;
-  height: .325rem;
-}
-
-.valuePriority1 {
-  color: #888888;
-  font-size: .9rem;
-}
-.valuePriority2 {
-  color: #AAAAAA;
-  font-size: .75rem;
-}
-.valuePriority3 {
-  color: #CCCCCC;
-  font-size: .625rem;
-}
-
-.timeline-scale-marker {
+.marker {
+  background-color: $grey-middle;
   width: .125rem;
   position: absolute;
   box-sizing: border-box;
   direction: ltr;
+
+  &--priority-1 {
+    height: .625rem;
+    opacity: $opacity-full;
+  }
+  &--priority-2 {
+    height: .5rem;
+    opacity: $opacity-middle;
+  }
+  &--priority-3 {
+    height: .325rem;
+    opacity: $opacity-low;
+  }
 }
 
-.timeline-scale-value {
+.value {
+  color: $grey-middle;
   margin-top: .125rem;
   margin-left: .075rem;
   position: absolute;
@@ -51,4 +40,17 @@
   box-sizing: border-box;
   transform: translate3d(-50%,50%,0);
   white-space: nowrap;
+
+  &--priority-1 {
+    font-size: .9rem;
+    opacity: $opacity-full;
+  }
+  &--priority-2 {
+    font-size: .75rem;
+    opacity: $opacity-middle;
+  }
+  &--priority-3 {
+    font-size: .625rem;
+    opacity: $opacity-low;
+  }
 }

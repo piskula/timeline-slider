@@ -5,10 +5,12 @@
 }
 
 .frame-wrapper {
-  background-color: #EEE;
+  background-color: $color-background;
 
   &__header {
     overflow: hidden;
+    color: $grey-middle;
+    font-size: 1.125rem;
   }
 }
 
@@ -27,4 +29,9 @@
     vertical-align: middle;
     margin-right: .5rem;
   }
+}
+
+.m-lr {
+  margin-left: .125rem;
+  margin-right: .125rem;
 }

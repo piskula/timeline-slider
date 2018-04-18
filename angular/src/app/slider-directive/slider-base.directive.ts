@@ -1,9 +1,11 @@
 import {EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import * as d3 from 'd3';
 
-export const COLOR_EMPTY_STROKE = '#AAAAAA';
-export const COLOR_THUMB = '#FFFFFF';
-export const COLOR_THUMB_STROKE = '#444444';
+export const COLOR_THUMB = '#FAFAFA';
+export const COLOR_LOWER = '#BE148E';
+export const COLOR_UPPER = '#0070C7';
+export const DARK_GREY = '#636466';
+export const OPACITY_MIDDLE = 0.325;
 
 export class D3SliderBaseDirective implements OnChanges {
   public id: string;
@@ -96,7 +98,7 @@ export class D3SliderBaseDirective implements OnChanges {
   }
 
   public getSideMargin(): number {
-    return this.getFontSize() * 2.25;
+    return this.getFontSize() * 2.5;
   }
 
   public getNormStep(): number {

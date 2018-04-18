@@ -1,16 +1,17 @@
-import { Directive, ViewContainerRef } from '@angular/core';
+import { Directive } from '@angular/core';
 import * as d3 from 'd3';
 
 import { TimelineScaleComponent } from '../timeline-frame/timeline-scale/timeline-scale.component';
 import {
-  COLOR_EMPTY_STROKE,
+  COLOR_LOWER,
   COLOR_THUMB,
-  COLOR_THUMB_STROKE,
-  D3SliderBaseDirective
+  DARK_GREY,
+  D3SliderBaseDirective,
+  OPACITY_MIDDLE
 } from './slider-base.directive';
 
-export const COLOR_STROKE = '#DB56C4';
-export const LINE_WIDTH = '.865rem';
+export const LINE_WIDTH = '1rem';
+export const EMPTY_LINE_WIDTH = '.75rem';
 
 @Directive({
   selector: '[appD3SliderLower]'
@@ -29,7 +30,7 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
     const width = this.getWidth();
     const fontSize = this.getFontSize();
     const sliderSideMargin = this.getSideMargin();
-    const halfTooltipWidth = fontSize * 2;
+    const halfTooltipWidth = fontSize * 2.25;
     const tooltipWidth = halfTooltipWidth * 2;
     const sliderTopMarginTooltip = fontSize * 0.5;
     const sliderTopMargin = fontSize * 1.125;
@@ -131,7 +132,7 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('x2', sliderSideMargin + (width * normValueRight))
       .attr('y1', sliderTopMargin)
       .attr('y2', sliderTopMargin)
-      .style('stroke', COLOR_STROKE)
+      .style('stroke', COLOR_LOWER)
       .style('stroke-linecap', 'round')
       .style('stroke-width', LINE_WIDTH);
 
@@ -141,9 +142,10 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('x2', sliderSideMargin + (width * normValueLeft))
       .attr('y1', sliderTopMargin)
       .attr('y2', sliderTopMargin)
-      .style('stroke', COLOR_EMPTY_STROKE)
-      .style('stroke-linecap', 'round')
-      .style('stroke-width', LINE_WIDTH);
+      .style('stroke', DARK_GREY)
+      .style('opacity', OPACITY_MIDDLE)
+      .style('stroke-linecap', 'butt')
+      .style('stroke-width', EMPTY_LINE_WIDTH);
 
     // Line to show the remaining right value
     const emptyLineRight = selection.append('line')
@@ -151,9 +153,10 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('x2', sliderSideMargin + width)
       .attr('y1', sliderTopMargin)
       .attr('y2', sliderTopMargin)
-      .style('stroke', COLOR_EMPTY_STROKE)
-      .style('stroke-linecap', 'round')
-      .style('stroke-width', LINE_WIDTH);
+      .style('stroke', DARK_GREY)
+      .style('opacity', OPACITY_MIDDLE)
+      .style('stroke-linecap', 'butt')
+      .style('stroke-width', EMPTY_LINE_WIDTH);
 
     let leftHandler;
     let rightHandler;
@@ -167,8 +170,8 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('width', tooltipWidth)
       .attr('height', '1.2rem')
       .style('fill', COLOR_THUMB)
-      .style('stroke', COLOR_THUMB_STROKE)
-      .style('stroke-width', 1);
+      .style('stroke', COLOR_LOWER)
+      .style('stroke-width', 2);
     rightHandler = selection.append('rect')
       .attr('x', sliderSideMargin + (width * normValueRight) - halfTooltipWidth)
       .attr('y', sliderTopMarginTooltip)
@@ -177,8 +180,8 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('width', tooltipWidth)
       .attr('height', '1.2rem')
       .style('fill', COLOR_THUMB)
-      .style('stroke', COLOR_THUMB_STROKE)
-      .style('stroke-width', 1);
+      .style('stroke', COLOR_LOWER)
+      .style('stroke-width', 2);
     leftTooltip = selection.append('text')
       .attr('x', sliderSideMargin + (width * normValueLeft) - halfTooltipWidth)
       .attr('dx', halfTooltipWidth)
