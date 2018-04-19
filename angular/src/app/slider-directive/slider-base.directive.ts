@@ -76,7 +76,14 @@ export class D3SliderBaseDirective implements OnChanges {
    * @returns {Number}
    */
   getDenormValue(iValue: number): number {
-    return (iValue * (this.maxValue - this.minValue)) - ((iValue * (this.maxValue - this.minValue)) % this.step) + this.minValue;
+    const denorm = iValue * (this.maxValue - this.minValue) + this.minValue;
+    const remainder = denorm % this.step;
+    let result = denorm - remainder;
+    // to fit steps we need float from half up
+    if (remainder > (this.step * 0.5)) {
+      result += this.step;
+    }
+    return result;
   }
 
   public getWidth(): number {
