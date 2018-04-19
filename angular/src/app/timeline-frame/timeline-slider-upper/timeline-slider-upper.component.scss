@@ -7,3 +7,7 @@
 #sliderUpper {
   height: $upper-slider-height;
 }
+
+.collapsed {
+  height: $upper-slider-collapsed-height !important;
+}

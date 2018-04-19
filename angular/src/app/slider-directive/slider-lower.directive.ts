@@ -10,7 +10,7 @@ import {
   OPACITY_MIDDLE
 } from './slider-base.directive';
 
-export const LINE_WIDTH = '1rem';
+export const LINE_WIDTH = '.5rem';
 export const EMPTY_LINE_WIDTH = '.75rem';
 
 @Directive({

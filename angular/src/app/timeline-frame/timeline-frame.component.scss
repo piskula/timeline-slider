@@ -31,6 +31,10 @@
   }
 }
 
+.collapsed {
+  height: $lower-slider-height + $scale-height + $upper-slider-collapsed-height + $scale-height;
+}
+
 .m-lr {
   margin-left: .125rem;
   margin-right: .125rem;

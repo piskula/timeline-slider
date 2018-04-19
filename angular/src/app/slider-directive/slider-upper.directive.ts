@@ -7,7 +7,7 @@ import {
   D3SliderBaseDirective, OPACITY_MIDDLE, COLOR_UPPER, COLOR_LOWER
 } from './slider-base.directive';
 
-export const LINE_WIDTH = '.625rem';
+export const LINE_WIDTH = '1rem';
 export const LINE_EMPTY_WIDTH = '.5rem';
 export const THUMB_STROKE_WIDTH = '.0625rem';
 
@@ -16,6 +16,7 @@ export const THUMB_STROKE_WIDTH = '.0625rem';
 })
 export class D3SliderUpperDirective extends D3SliderBaseDirective {
 
+  @Input() isLockSectionHidden = true;
   @Input() isRightLocked: Boolean;
   @Input() isLeftLocked: Boolean;
   @Output() rightLockChange = new EventEmitter();
@@ -36,10 +37,10 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
     const width = this.getWidth();
     const fontSize = this.getFontSize();
     const sliderSideMargin = this.getSideMargin();
-    const sliderTopMargin = fontSize * 2.25;
+    const sliderTopMargin = fontSize * (this.isLockSectionHidden ? 1.125 : 2.25);
     const thumbSize = fontSize * 0.5;
     const thumbSizeClick = fontSize * 0.625;
-    const leftLockAddition = fontSize * 0.325;
+    const leftLockAddition = fontSize * 0.625;
     const rightLockAddition = fontSize * 2.125;
 
     let normValueLeft = this.getNormValue(this.rangeChosen[0]); // value normalized between 0-1
@@ -120,7 +121,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       rightHandler.attr('cx', sliderSideMargin + selectedValueRight);
       rightLockWrapper
         .attr('x', selectedValueRight + rightLockAddition)
-        .style('display', normValueRight === 1 ? 'inherit' : 'none');
+        .style('display', normValueRight === 1 && !that.isLockSectionHidden ? 'inherit' : 'none');
       valueLine.attr('x2', sliderSideMargin + selectedValueRight);
       emptyLineRight
         .attr('x1', sliderSideMargin + selectedValueRight)
@@ -166,7 +167,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       rightHandler.attr('cx', sliderSideMargin + selectedValueRight);
       rightLockWrapper
         .attr('x', selectedValueRight + rightLockAddition)
-        .style('display', normValueRight === 1 ? 'inherit' : 'none');
+        .style('display', normValueRight === 1 && !that.isLockSectionHidden ? 'inherit' : 'none');
 
       emptyLineLeft
         .attr('x1', sliderSideMargin)
@@ -255,7 +256,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .attr('y', -10)
       .style('font-size', '2rem')
       .style('cursor', 'pointer')
-      .style('display', that.isRightLocked ? 'inherit' : 'none');
+      .style('display', that.isRightLocked && !that.isLockSectionHidden ? 'inherit' : 'none');
     const leftLock = leftLockWrapper
       .append('xhtml:body')
       .html(this.isLeftLocked ? '<i class="fa fa-lock"></i>' : '<i class="fa fa-unlock"></i>')
@@ -274,7 +275,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .attr('y', -10)
       .style('font-size', '2rem')
       .style('cursor', 'pointer')
-      .style('display', normValueRight === 1 ? 'inherit' : 'none');
+      .style('display', normValueRight === 1 && !that.isLockSectionHidden ? 'inherit' : 'none');
     const rightLock = rightLockWrapper
       .append('xhtml:body')
       .html(this.isRightLocked ? '<i class="fa fa-lock"></i>' : '<i class="fa fa-unlock"></i>')

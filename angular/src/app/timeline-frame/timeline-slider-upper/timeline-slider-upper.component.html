@@ -1,10 +1,12 @@
 <div>
   <div appD3SliderUpper
        id="sliderUpper"
+       [class.collapsed]="!isLiveModeActive"
        [minValue]="min$ | async"
        [maxValue]="max$ | async"
        [step]="step"
        [rangeChosen]="rangeChosen$ | async"
+       [isLockSectionHidden]="!isLiveModeActive"
        [isLeftLocked]="isLockedLeft$ | async"
        [isRightLocked]="isLockedRight$ | async"
        (leftLockChange)="lockLeftChange($event)"

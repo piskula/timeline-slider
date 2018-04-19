@@ -1,9 +1,9 @@
 <div class="frame-wrapper">
   <div class="frame-wrapper__header text-center">
     <div class="float-left">{{ leftTitle }}</div>
-    <div class="float-left"><i class="fa fa-caret-left m-lr"></i></div>
+    <div class="float-left" [hidden]="!leftTitle"><i class="fa fa-caret-left m-lr"></i></div>
     <div class="float-right">{{ rightTitle }}</div>
-    <div class="float-right"><i class="fa fa-caret-right m-lr"></i></div>
+    <div class="float-right" [hidden]="!rightTitle"><i class="fa fa-caret-right m-lr"></i></div>
     <div class="d-inline">{{ centerTitle }}</div>
   </div>
 
@@ -15,10 +15,10 @@
                           (onRefresh)="refreshTimeline()">
     </app-timeline-sidebar>
 
-    <div class="w-full content">
+    <div class="w-full content" [class.collapsed]="configuration && configuration.period === 0">
       <div *ngIf="initialized; else loader">
         <div *ngIf="!error; else errorHandler">
-          <app-timeline-slider-upper></app-timeline-slider-upper>
+          <app-timeline-slider-upper [isLiveModeActive]="configuration.period > 0"></app-timeline-slider-upper>
           <app-timeline-slider-lower></app-timeline-slider-lower>
         </div>
       </div>
@@ -27,7 +27,7 @@
 </div>
 
 <ng-template #loader>
-  <div class="d-flex centering">
+  <div class="d-flex centering" [class.collapsed]="configuration && configuration.period === 0">
     <i class="fa fa-cog fa-spin fa-2x"></i>
     <span>Loading&hellip;</span>
   </div>
