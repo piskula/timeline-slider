@@ -132,6 +132,7 @@
 \usepackage{multirow}
 
 \newtheorem{mydef}{Definícia}
+\def \angular_version {5.2.10}
 
 \begin{document}
 \chapter*{Úvod}
@@ -396,17 +397,29 @@ Komponent sa tým pádom nestará o vytvorenie samotného objektu, ale dostane u
 Framework Angular umožňuje vytvárať inštancie služieb (services) pri bootstrape aplikácie. Bootstrap je jeden z procesov spúšťania, ktorý výslednú aplikáciu vloží do súboru \textit{index.html} \cite{angular} (netreba si mýliť s knižnicou Twitter Bootstrap, ktorá obsahuje HTML a CSS šablóny pre tvorbu responzívnych web stránok \cite{peska2017thesis}). Takto inicializované služby potom vieme využívať naprieč modulmi tak, ako je to znázornené v ukážke \ref{ts_snippet} na strane \pageref{ts_snippet}.
 
 \chapter{Návrh modulu}
-Cieľom tejto práce je vytvoriť modul vo frameworku Angular, ktorý bude nasaditeľný ako samostatný portlet do Liferay portálu a prostredníctvom ktorého bude užívateľ schopný zvoliť si podmnožinu časového ohraničenia. Modul tak umožní užívateľovi spresniť (zúžiť) časové okno vrámci povolených hodnôt.
+%Cieľom tejto práce je vytvoriť modul vo frameworku Angular, ktorý bude nasaditeľný ako samostatný portlet do Liferay portálu a prostredníctvom ktorého bude užívateľ schopný zvoliť si podmnožinu časového ohraničenia.
 
+Kybernetický polygón generuje počas experimentu obrovské množstvo dát. Tieto dáta sa zaznamenávajú do prislúchajúcich časových postupností, z ktorých sa vytvárajú rôznorodé vizualizácie, ktoré umožňujú užívateľovi vnímať tieto dáta z viacerých pohľadov. Príklad takejto vizualizácie môžeme vidieť na obrázku \ref{visualization}.
+
+\begin{figure}
+	\center
+	\includegraphics[width=1.0\linewidth]{visualization}
+	\caption{Ukážka vizualizácií\cite{eichler2014analytical}}
+	\label{visualization}
+\end{figure}
+
+Úlohou modulu interaktívnej časovej osy je poskytnúť užívateľovi intuitívny nástroj, ktorým dokáže z množstva týchto dát vybrať len určitý časový úsek a následne túto informáciu podať všetkým prislúchajúcim portletom na danej stránke. Zároveň bude tento modul spĺňať veľmi špecifické nároky na funkcionalitu, ktorým je venovaná táto kapitola. Jedným z najdôležitejších faktorov je, že celkové možné časové ohraničenie sa môže dynamicky meniť.
+
+\section{Vstupy a Výstupy}
 Vstupom tohto modulu bude
 \begin{description}
 \item[krok (step)] - najmenšia uvažovaná časová jednotka (získa sa volaním REST rozhrania)
 \item[minimum, maximum] - dolné a horné časové ohraničenie (získa sa volaním REST rozhrania)
 \item[IP adresa] na ktorú budú prebiehať REST volania z predchádzajúcich dvoch bodov (získa sa z konfigurácie portletu)
-\item[príznak periodických volaní (\textit{LIVE})] - informácia o tom, či má modul periodicky overovať zmenu horného časového ohraničenia (získa sa z konfigurácie portletu)
-\begin{description}
-\item[perióda] - ak je príznak periodických volaní nastavený (\textit{true}), zoberie sa z konfigurácie portletu aj táto číselná hodnota (v~sekundách)
-\end{description}
+\item[perióda] - číselná hodnota v sekundách, ktorá udáva, ako často sa má cez REST znovu overiť časové ohraničenie
+\begin{itemize}
+\item ak je perióda nulová, periodické volania sa nevykonávajú a možné časové ohraničenie sa zistí jednorázovo
+\end{itemize}
 \end{description}
 Výstupom tohto modulu budú dve časové známky, kde prvá odpovedá aktuálnej pozícii ľavého manipulátora a druhá pozícii pravého manipulátora.
 
@@ -414,30 +427,25 @@ Výstupom tohto modulu budú dve časové známky, kde prvá odpovedá aktuálne
 \label{requirements}
 Požiadavky na dizajn a funkcionalitu som vytvoril na základe konzultácií s vedúcim práce RNDr. Radkom Ošlejškom, Ph.D.
 
-Hlavnou úlohou časovej osy je
-\begin{itemize}
-\item zrozumiteľne zobraziť informáciu užívateľovi o aktuálne zvolenom časovom rozsahu
-\item umožniť užívateľovi vybrať a upraviť časový rozsah pomocou vhodného nástroja (časovej osy s manipulátormi)
-\end{itemize}
-
 \subsection{Funkčné požiadavky}
+\label{funkcne_poziadavky}
 Medzi funkčné požiadavky patria
 \begin{itemize}
-\item modul si zistí možné časové ohraničenie REST volaním verejného aplikačného rozhrania (API) pomocou HTTP požiadavky
-\item užívateľ bude informovaný vhodnou hláškou ak sa REST volanie nepodarí, alebo príde nevyhovujúca odpoveď
-\item časovú os bude možné spustiť v móde \textit{LIVE} dát pričom sa bude meniť len horné ohraničenie. Dynamickosť dát bude zabezpečovať samotný modul pomocou periodických volaní API vždy po uplynutí vopred definovanej doby.
-\begin{itemize}
-\item definovanie správania časovej osy v prípade zmeny ohraničenia bude implementované pomocou zámkov. Bude možné zamkýnať obe strany časovej osy. Požiadavky na funkcionalitu zámkov sú opísané v sekcii \ref{sec:lockers}~\nameref{sec:lockers}.
-\end{itemize}
-\item modul bude pozostávať z dvoch časových osí uložených nad sebou. Vrchná časová os bude vždy zobrazovať celé možné časové ohraničenie, zatiaľ čo spodná bude zobrazovať len práve zvolený výber.
+\item Užívateľ si na časovej ose bude môcť zvoliť časový interval, pričom tento interval bude len vrámci povolených hodnôt.
+\item Užívateľ bude schopný z modulu ľahko vyčítať informáciu o práve zvolenom časovom intervale a rovnako aj o rozsahu povolených hodnôt. Ak sa jeho aktivity nezameriavajú na časový interval ale jeden konkrétny okamih, užívateľ vie zvolený okamih taktiež ľahko určiť.
+\item V prípade, že možné ohraničenie sa bude dynamicky meniť, užívateľ bude vedieť definovať, ako a či vôbec sa pri zmene možného ohraničenia zmení zvolený časový interval.
+\item Užívateľ bude informovaný vhodným chybovým hlásením, pokiaľ nastane chyba pri zisťovaní možného časového ohraničenia.
 \end{itemize}
 
 \subsection{Nefunkčné požiadavky}
 Medzi nefunkčné požiadavky patria
 \begin{itemize}
-\item modul bude pracovať s časovými známkami (timestamp), ktoré sú univerzálnym označením časového okamihu v UNIXových operačných systémoch. Výsledný modul tak nebude zohľadňovať časové pásma.
-\item modul bude implementovaný v aktuálnej verzii frameworku Angular, v dobe implementácie sa jedná o verziu 5.2.8
-\item modul bude responzívny do takej miery, že pri počiatočnom vyrenderovaní sa prispôsobí šírke samotného portletu. Výška bude minimalizovaná aby zaberala čo najmenšiu časť stránky. Šírka modulu a zobrazené dáta budú optimalizované pre najčastejšie veľkosti displejov používaných na stolných počítačoch.
+\item Modul bude pracovať s časovými známkami (timestamp), ktoré sú univerzálnym označením časového okamihu v UNIXových operačných systémoch. Výsledný modul tak nebude zohľadňovať časové pásma.
+\item Modul bude implementovaný v aktuálnej verzii frameworku Angular, v dobe implementácie sa jedná o verziu \angular_version .
+\item Graficky bude modul prezentovaný ako dve časové osy. Maximum spodnej časovej osy bude vždy odpovedať hornému zvolenému časovému intervalu, analogicky minimum (bude odpovedať dolnému zvolenému časovému intervalu). Vrchná časová os bude vždy reflektovať zvolený časový interval ako \textit{"spojitú"} podmnožinu možného ohraničenia. Jediným účelom spodnej osy bude spresnenie zvoleného intervalu jeho zmenšením.
+\item Pri manipulátoroch (jazdcoch) na vrchnej časovej osy sa budú nachádzať klikateľné ukazatele zámkov. Tieto zámky budú implementovať funkčnú požiadavku uvedenú v sekcii \ref{funkcne_poziadavky} a užívateľ pomocou nich bude definovať správanie modulu pri zmene dát. Viac informácií o zámkoch doplňuje sekcia \ref{sec:lockers}.
+\item Výška portletu bude minimalizovaná, aby zaberala čo najmenšiu vertikálnu časť obrazovky.
+\item Modul bude responzívny do takej miery, že pri počiatočnom vyrenderovaní sa prispôsobí šírke samotného portletu. Šírka modulu a zobrazené dáta budú optimalizované pre najčastejšie veľkosti displejov používaných na stolných počítačoch.
 \item hlavná logika modulu bude pokrytá jednotkovými testami, viac informácií o testoch sa nachádza v sekcii \ref{sec:tests}.
 \begin{quote}
 \textit{Pod pojmom \textbf{hlavná logika modulu} rozumieme vzťah a reagovanie na zmeny medzi týmito prvkami modulu: \textbf{pravý zámok}, \textbf{ľavý zámok}, \textbf{maximum} (je maximálna hodnota, ktorú je možné zvoliť na časovej ose), \textbf{minimum} (je minimálne hodnota, ktorú je možné zvoliť na časovej ose), \textbf{dolné zvolené ohraničenie} (pozícia ľavého manipulátora) a \textbf{horné zvolené ohraničenie} (pozícia pravého manipulátora).}
@@ -463,7 +471,7 @@ Z tohto dôvodu vznikla už v minulosti požiadavka, aby sám používateľ port
 
 \subsection{Rozsah testov}
 \label{sec:tests}
-Modul časovej osy má na prvý pohľad jednoduchú úlohu, t.j. spresňuje časové okno vrámci povolených hodnôt. Avšak pri analýze je možné badať niekoľko rôznych vstupov a premenných ktoré ovplyvňujú správanie tohto modulu, ktoré už nie je úplne triviálne.
+Modul časovej osy má na prvý pohľad jednoduchú úlohu, t.j. spresňuje časové okno vrámci povolených hodnôt. Avšak pri analýze je možné badať niekoľko rôznych vstupov a premenných ktoré sa navzájom ovplyvňujú a ovplyvňujú tak aj správanie tohto modulu, ktoré už nie je úplne triviálne.
 
 V tejto podkapitole sa nachádza zoznam a popis jednotkových testov, ktoré testujú hlavnú logiku modulu.
 \begin{enumerate}
@@ -471,7 +479,7 @@ V tejto podkapitole sa nachádza zoznam a popis jednotkových testov, ktoré tes
   \begin{tabular}{ | p{2.75cm} | p{8cm} | }
     \hline
     stav pred & pravý zámok aktívny \\ \hline
-    udalosť & zmení sa maximum \\ \hline
+    udalosť & zmení sa maximum (zväčší sa)\\ \hline
     testovaný stav & horné zvolené ohraničenie sa aktualizuje \\ \hline
   \end{tabular}
 
@@ -479,7 +487,7 @@ V tejto podkapitole sa nachádza zoznam a popis jednotkových testov, ktoré tes
   \begin{tabular}{ | p{2.75cm} | p{8cm} | }
     \hline
     stav pred & pravý zámok nie je aktívny \\ \hline
-    udalosť & zmení sa maximum \\ \hline
+    udalosť & zmení sa maximum (zväščí sa)\\ \hline
     testovaný stav & zvolené ohraničenie sa nezmení \\ \hline
   \end{tabular}
 
@@ -487,7 +495,7 @@ V tejto podkapitole sa nachádza zoznam a popis jednotkových testov, ktoré tes
   \begin{tabular}{ | p{2.75cm} | p{8cm} | }
     \hline
     stav pred & pravý zámok je aktívny \\ \hline
-    udalosť & horné zvolené ohraničenie sa posunie doľava \\ \hline
+    udalosť & horné zvolené ohraničenie sa posunie doľava (užívateľ posunie pravý manipulátor doľava)\\ \hline
     testovaný stav & pravý zámok sa deaktivuje \\ \hline
   \end{tabular}
 
@@ -495,7 +503,7 @@ V tejto podkapitole sa nachádza zoznam a popis jednotkových testov, ktoré tes
   \begin{tabular}{ | p{2.75cm} | p{8cm} | }
     \hline
     stav pred & pravý zámok je aktívny \\ \hline
-    udalosť & dolné zvolené ohraničenie sa zmení \\ \hline
+    udalosť & dolné zvolené ohraničenie sa zmení (užívateľ posunie ľavý manipulátor ľubovoľne)\\ \hline
     testovaný stav & pravý zámok ostáva aktívny a horné zvolené ohraničenie sa nezmení \\ \hline
   \end{tabular}
 
@@ -532,6 +540,22 @@ V tejto podkapitole sa nachádza zoznam a popis jednotkových testov, ktoré tes
     testovaný stav & horné zvolené ohraničenie sa nastaví na maximum \\ \hline
   \end{tabular}
 
+    \item
+  \begin{tabular}{ | p{2.75cm} | p{8cm} | }
+    \hline
+    stav pred & pravý zámok nie je aktívny \\ \hline
+    udalosť & minimum sa zväčší alebo maximum sa zmenší\\ \hline
+    testovaný stav & tento stav by logicky nemal nastať, ale ak nastane, zvolený časový interval sa nastaví tak, aby bol podmnožinou nového intervalu (aby sa manipulátory neocitli mimo osy) \\ \hline
+  \end{tabular}
+
+    \item
+  \begin{tabular}{ | p{2.75cm} | p{8cm} | }
+    \hline
+    stav pred & pravý zámok je aktívny \\
+    & ľavý zámok nie je aktívny \\ \hline
+    udalosť \& testovaný stav & rovnako ako v testovacom prípade č.9\\ \hline
+  \end{tabular}
+
 \end{enumerate}
 
 \section{Existujúce riešenie}
@@ -546,14 +570,14 @@ V aktuálnych víziách vývojového centra KYPO sa však zrodila požiadavka na
 \end{figure}
 
 \chapter{Implementácia}
-Táto kapitola podrobne opisuje návrh a implementáciu modulu časovej osy, pričom berie do úvahy všetky požiadavky definované v kapitole \ref{requirements}.
+Táto kapitola podrobne opisuje štruktúru a implementáciu modulu časovej osy, pričom berie do úvahy všetky požiadavky definované v kapitole \ref{requirements}.
 
-\section{Grafické používateľské rozhranie}
+\section{Výber vhodného grafického prvku}
 Kľúčovou úlohou v raných fázach vývoja bolo zvoliť vhodný prostriedok, ktorým bude možné manipulovať s časovým ohraničením, resp. s časovou osou. Požiadavky sú v tomto smere pomerne jasné a najbližšie k nim je spomedzi všetkých formulárových prvkov jednoznačne \textit{range} (v preklade \textit{rozsah}, môže byť označený aj ako \textit{range slider}). Na obrázku \ref{html_range} môžeme vidieť názornú ukážku, ako takýto ovládací prvok môže vyzerať.
 \begin{figure}[H]
 	\center
 	\includegraphics{html_range}
-	\caption{HTML prvok \texttt{<input type=\char`\"range\char`\">} v prehliadači Chrome a jeho prednastavený vzhľad}
+	\caption{HTML prvok \texttt{<input type=\char`\"range\char`\"/>} v prehliadači Chrome a jeho prednastavený vzhľad}
 	\label{html_range}
 \end{figure}
 
@@ -561,13 +585,13 @@ Formulárový prvok typu range sa skladá z koľajnice a jazdca (manipulátora) 
 \begin{enumerate}
 \item umožní užívateľovi vybrať číslo striktne len z daného rozsahu, čím odpadá nutnosť dodatočnej validácie (či je číslo v danom rozsahu)
 \item neumožní užívateľovi zadávať nečíselné znaky, čím odpadá nutnosť ďalšej validácie (či je číslo platné)
-\item užívateľ má pred sebou grafickú informáciu, kde približne sa nachádza vrámci povoleného rozsahu, čo je výhodou hlavne pri veľkých číslach.
+\item užívateľ má pred sebou grafickú informáciu, kde približne sa svojou hodnotou nachádza vrámci povoleného rozsahu, čo je výhodou hlavne pri veľkých číslach.
 \end{enumerate}
 
 Medzi nevýhody formulárového prvku typu range patria:
 \begin{enumerate}
-\item nedá sa pohodlne ovládať len klávesnicou, vyžaduje použitie myši alebo touchpadu
-\item zvolená hodnota je nepresná
+\item nedá sa pohodlne ovládať len klávesnicou, vyžaduje použitie myši alebo touchpadu (pri dotykových obrazovkách dotyk a následné potiahnutie)
+\item zvolená hodnota nemusí byť presná
 \begin{quote}
 \textit{Predstavme si, že pomocou range potrebujeme zadať hodnotu 726,54 ktorá musí byť v rozmedzí 0 až 10\,000. Trafiť sa do tejto hodnoty sa nám vôbec nemusí podariť.}
 \end{quote}
@@ -581,20 +605,37 @@ Obe spomínané nevýhody sa nás veľmi netýkajú, nakoľko:
 
 Pomocou CSS je možné vo viacerých moderných prehliadačoch upraviť prednastavený vzhľad prvku \texttt{<input type=\char`\"range\char`\">}, ale takýto prvok je pre nás stále nepoužiteľný, nakoľko okrem zopár grafických úprav nedokážeme tento prvok vôbec modifikovať. Z funkčných požiadaviek napríklad vyplýva, že na koľajnici by sa mali nachádzať dva manipulátory, keďže výsledkom (nášho výberu) nie je jedna hodnota, ale rozsah hodnôt.
 
-\subsection{Výber vhodného grafického prvku}
+\subsection{Existujúce implementácie range slidera}
 Spočiatku som sa snažil využiť niekoľko už existujúcich voľne prístupných knižníc (komponent), ktoré riešili implementáciu \textit{range slider}a pre Angular (verzie 2 a vyššej). Väčšina z nich podporovala niekoľko jazdcov na koľajnici a dali sa na nich pomerne jednoducho prepisovať štýly.
 
-Najviac času som strávil s komponentom ng2-nouislider\cite{ng2nouislider}, ale postupom času mi ani tento komponent neponúkol také možnosti, ktoré by som potreboval. Všetky knižnice mali z môjho pohľadu tieto dve nevýhody:
+Najviac času som strávil s komponentom ng2-nouislider\cite{ng2nouislider}, ale postupom času mi ani tento komponent neponúkol také možnosti, ktoré by som potreboval. Všetky knižnice mali z môjho pohľadu tieto dva nedostatky:
 \begin{description}
-\item[neboli pôvodne navrhnuté pre Angular] - väčšina knižníc spolupracovala s Angularom len preto, že ju niekto \char`\"obalil\char`\" ako Angular2 komponent, čím plnohodnotne nevyužil všetky možnosti Angularu
-\item[neboli navrhnuté pre tento typ použitia] - boli navrhnuté tak, aby na začiatku boli definované hraničné body (minimum, maximum) a následne po celý zvyšok svojej životnosti už len poskytovali informácie o momentálnej voľbe užívateľa. Ak sa následne zmenili hraničné body, väčšina komponent už dané hranice neaktualizovala.
+\item[neboli pôvodne navrhnuté pre Angular] - väčšina knižníc spolupracovala s Angularom len preto, že niekto \char`\"obalil\char`\" jej existujúceho JavaScriptového predchodcu ako Angular2 komponent, čím plnohodnotne nevyužil všetky možnosti Angularu (ako napríklad obojsmerný binding)
+\item[neboli navrhnuté pre tento typ použitia] - boli navrhnuté tak, aby na začiatku boli definované hraničné body (minimum, maximum) a následne po celý zvyšok svojej životnosti už len poskytovali informácie o momentálnej voľbe užívateľa. Ak sa následne zmenili hraničné body, väčšina komponent v lepšom prípade dané hranice len neaktualizovala, v horšom prípade úplne prestala fungovať.
 \end{description}
 
-\subsection{D3.js}
-Táto JavaScriptová knižnica slúži na dynamické vizualizácie dát v prehliadačoch. Hlavnou myšlienkou 
+\section{D3.js}
+Táto JavaScriptová knižnica slúži na dynamické vizualizácie dát v prehliadačoch. Hlavnou technológiou, na ktorej je postavená táto knižnica, je vektorová grafika a konkrétne značkovací jazyk SVG.
+
+SVG alebo Scalable Vector Graphics bol vyvynutý na opis dvojrozmernej statickej aj animovanej grafiky a využíva pritom syntax XML\cite{quint2003scalable}.
+Dnes je SVG formát široko podporovaný väčšinou webových prehliadačov. Je možné vkladať ho priamo do HTML kódu a následne interpretovať. SVG má oproti štandardným rastrovým obrázkom hneď niekoľko výhod, z nich najpodstatnejšie pre webový vývoj sú tieto:
+\begin{itemize}
+\item SVG obrázky sú škálovateľné. Vyplýva to z predpokladu, že hovoríme o vektorovej grafike. Pri rôznych veľkostiach toho istého obrázka nestrácame žiadnu informáciu. Hlavne v oblasti responzívneho dizajnu je to veľmi podstatný faktor.
+\item Veľkosť - keďže sa jedná o textovú informáciu, výsledný súbor je veľmi malý. Navyše nám pre viacero rozlíšení postačuje jeden a ten istý a nepotrebujeme vytvárať viacero obrázkov pre rôzne veľkosti. Tento faktor je podstatný hlavne v oblasti mobilného vývoja, kde je jednou z požiadaviek aj veľkosť prenášaných dát.
+\item Ak obrázok obsahuje text, je možné ho vyhľadať a vedia ho prečítať aj roboty vyhľadávačov, čo je pri weboch veľké plus.
+\end{itemize}
+
+D3.js umožňuje pridávať do DOMu stránky SVG elementy. Týmto spôsobom vieme "programovať", ako sa má grafika zobraziť a odchytávať rôzne typy udalostí ako sú napríklad kliknutia. Toto je hlavný princíp, na ktorom je postavená implementácia modulu.
+
+Implementoval som direktívy, ktoré majú niekoľko vstupov, ako napríklad minimum, maximum, zvolený časový úsek a podobne. Na základe týchto informácií direktíva vytvorí SVG element, v ktorom vykreslí koľajnicu a dvoch jazdcov (manipulátory). Udalosť kliknutia a ťahania týchto jazdcov odchytávam a pomocou nich viem upraviť výsledný časový úsek aj vzhľad.
+
+Vo výsledku teda môžeme povedať, že dve časové osy, ktoré vidíme v tomto module, sú v podstate dva vektorové obrázky.
+
+\section{Ikony Font-Awesome}
+Vzhľad modulu 
 
 \section{Technológie}
-Vrámci nefunkčných požiadaviek bol pre implementáciu zvolený framework Angular od Google, ktorého verzia v čase tvorby tejto práce bola 5.2.8. Tento framework bol v prostredí KYPO zvolený globálne a preto je táto voľba logická.
+Vrámci nefunkčných požiadaviek bol pre implementáciu zvolený framework Angular od Google, ktorého verzia v čase tvorby tejto práce bola \angular_version . Tento framework bol v prostredí KYPO zvolený globálne a preto je táto voľba logická.
 
 
 %\printbibliography
