@@ -87,8 +87,11 @@ export class D3SliderBaseDirective implements OnChanges {
   }
 
   public getWidth(): number {
-    const selection = d3.select('#' + this.id).select('svg')._groups[0][0];
-    return selection.clientWidth - (this.getSideMargin() * 2);
+    // const selection = d3.select('#' + this.id).select('svg')._groups[0][0];
+    const selection = d3.select('#' + this.id)._groups[0][0];
+    const result = selection.clientWidth - (this.getSideMargin() * 2);
+    console.log(result);
+    return result;
   }
 
   public getFontSize(): number {

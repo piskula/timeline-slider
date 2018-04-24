@@ -32,6 +32,8 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
     const sliderSideMargin = this.getSideMargin();
     const halfTooltipWidth = fontSize * 2.25;
     const tooltipWidth = halfTooltipWidth * 2;
+    const tooltipHeight = fontSize * 1.25;
+    const tooltipCornerRadius = fontSize * 0.25;
     const sliderTopMarginTooltip = fontSize * 0.5;
     const sliderTopMargin = fontSize * 1.125;
 
@@ -165,20 +167,20 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
     leftHandler = selection.append('rect')
       .attr('x', sliderSideMargin + (width * normValueLeft) - halfTooltipWidth)
       .attr('y', sliderTopMarginTooltip)
-      .attr('rx', '0.3rem')
-      .attr('ry', '0.3rem')
+      .attr('rx', tooltipCornerRadius)
+      // .attr('ry', '0.3rem')
       .attr('width', tooltipWidth)
-      .attr('height', '1.2rem')
+      .attr('height', tooltipHeight)
       .style('fill', COLOR_THUMB)
       .style('stroke', COLOR_LOWER)
       .style('stroke-width', 2);
     rightHandler = selection.append('rect')
       .attr('x', sliderSideMargin + (width * normValueRight) - halfTooltipWidth)
       .attr('y', sliderTopMarginTooltip)
-      .attr('rx', '0.3rem')
-      .attr('ry', '0.3rem')
+      .attr('rx', tooltipCornerRadius)
+      // .attr('ry', '0.3rem')
       .attr('width', tooltipWidth)
-      .attr('height', '1.2rem')
+      .attr('height', tooltipHeight)
       .style('fill', COLOR_THUMB)
       .style('stroke', COLOR_LOWER)
       .style('stroke-width', 2);
@@ -186,7 +188,7 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('x', sliderSideMargin + (width * normValueLeft) - halfTooltipWidth)
       .attr('dx', halfTooltipWidth)
       .attr('y', sliderTopMarginTooltip)
-      .attr('dy', '1rem')
+      .attr('dy', fontSize)
       .attr('text-anchor', 'middle')
       .style('pointer-events', 'none')
       .text(TimelineScaleComponent.getPipeTooltip(that.getDenormValue(normValueLeft), this.maxValue, this.minValue));
@@ -194,7 +196,7 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('x', sliderSideMargin + (width * normValueRight) - halfTooltipWidth)
       .attr('dx', halfTooltipWidth)
       .attr('y', sliderTopMarginTooltip)
-      .attr('dy', '1rem')
+      .attr('dy', fontSize)
       .attr('text-anchor', 'middle')
       .style('pointer-events', 'none')
       .text(TimelineScaleComponent.getPipeTooltip(that.getDenormValue(normValueRight), this.maxValue, this.minValue));

@@ -277,7 +277,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .style('cursor', 'pointer')
       .style('display', normValueRight === 1 && !that.isLockSectionHidden ? 'inherit' : 'none');
     const rightLock = rightLockWrapper
-      .append('xhtml:body')
+      .append('xhtml:div')
       .html(this.isRightLocked ? '<i class="fa fa-lock"></i>' : '<i class="fa fa-unlock"></i>')
       .style('color', COLOR_LOWER)
       .on('click', function () {
