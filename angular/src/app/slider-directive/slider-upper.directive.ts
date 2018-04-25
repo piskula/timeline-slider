@@ -262,15 +262,14 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .style('display', that.isRightLocked && !that.isLockSectionHidden ? 'inherit' : 'none');
     const leftLock = leftLockWrapper
       .append('xhtml:div')
-      .html(this.isLeftLocked ? '<i class="fa fa-lock"></i>' : '<i class="fa fa-unlock"></i>')
-      .style('color', COLOR_LOWER)
+      .html(this.isLeftLocked ? '<i class="fa fa-lock invisible"></i>' : '<i class="fa fa-unlock"></i>')
       .on('click', function () {
         that.leftLockChange.emit(!that.isLeftLocked);
       });
-    if (!this.isLeftLocked) {
-      leftLock.style('opacity', OPACITY_MIDDLE)
-        .style('color', DARK_GREY);
-    }
+    // if (!this.isLeftLocked) {
+    //   leftLock.style('opacity', OPACITY_MIDDLE)
+    //     .style('color', DARK_GREY);
+    // }
 
     const rightLockWrapper = selection
       .append('svg:foreignObject')
@@ -284,14 +283,13 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
     const rightLock = rightLockWrapper
       .append('xhtml:div')
       .html(this.isRightLocked ? '<i class="fa fa-lock"></i>' : '<i class="fa fa-unlock"></i>')
-      .style('color', COLOR_LOWER)
       .on('click', function () {
         that.rightLockChange.emit(!that.isRightLocked);
       });
-    if (!this.isRightLocked) {
-      rightLock.style('opacity', OPACITY_MIDDLE)
-        .style('color', DARK_GREY);
-    }
+    // if (!this.isRightLocked) {
+    //   rightLock.style('opacity', OPACITY_MIDDLE)
+    //     .style('color', DARK_GREY);
+    // }
 
     leftHandler.call(d3.drag()
       .on('start', dragStartLeft)

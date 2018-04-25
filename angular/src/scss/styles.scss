@@ -1,4 +1,5 @@
 @import "../../node_modules/font-awesome/css/font-awesome.css";
+@import "global-variables";
 @import "tooltips";
 
 .pointer {
@@ -42,4 +43,14 @@ input {
 
 .text-center {
   text-align: center;
+}
+
+.fa.fa-unlock{
+  color: $grey-middle;
+  opacity: .5;
+}
+
+.fa.fa-lock{
+  color: $color-lock;
+  opacity: 1;
 }
