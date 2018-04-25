@@ -130,6 +130,10 @@
 \graphicspath{ {pics/} }
 \usepackage{tabu}
 \usepackage{multirow}
+\usepackage{subcaption}
+
+\def\refresh_icon{\includegraphics[scale=0.18]{refresh}\hspace{\fontdimen2\font}}
+\def\warning_icon{\includegraphics[scale=0.18]{warning}\hspace{\fontdimen2\font}}
 
 \newtheorem{mydef}{Definícia}
 \def \angular_version {5.2.10}
@@ -570,7 +574,8 @@ V aktuálnych víziách vývojového centra KYPO sa však zrodila požiadavka na
 \end{figure}
 
 \chapter{Implementácia}
-Táto kapitola podrobne opisuje štruktúru a implementáciu modulu časovej osy, pričom berie do úvahy všetky požiadavky definované v kapitole \ref{requirements}.
+% Vrámci nefunkčných požiadaviek bol pre implementáciu zvolený framework Angular od Google, ktorého verzia v čase tvorby tejto práce bola \angular_version . Tento framework bol v prostredí KYPO zvolený globálne a preto je táto voľba logická...TODO
+Táto kapitola podrobne opisuje štruktúru a implementáciu modulu časovej osy v Angulare, pričom berie do úvahy všetky funkčné aj nefunkčné požiadavky definované v kapitole \ref{requirements}.
 
 \section{Výber vhodného grafického prvku}
 Kľúčovou úlohou v raných fázach vývoja bolo zvoliť vhodný prostriedok, ktorým bude možné manipulovať s časovým ohraničením, resp. s časovou osou. Požiadavky sú v tomto smere pomerne jasné a najbližšie k nim je spomedzi všetkých formulárových prvkov jednoznačne \textit{range} (v preklade \textit{rozsah}, môže byť označený aj ako \textit{range slider}). Na obrázku \ref{html_range} môžeme vidieť názornú ukážku, ako takýto ovládací prvok môže vyzerať.
@@ -632,10 +637,83 @@ Implementoval som direktívy, ktoré majú niekoľko vstupov, ako napríklad min
 Vo výsledku teda môžeme povedať, že dve časové osy, ktoré vidíme v tomto module, sú v podstate dva vektorové obrázky.
 
 \section{Ikony Font-Awesome}
-Vzhľad modulu 
+Súčasťou grafického dizajnu modulu je aj niekoľko stavových ikon. Tieto ikony som nevytváral svojvoľne, ale použil som existujúcu knižnicu Font-Awesome (presnejšie jej voľne dostupnú časť, ktorá je distribuovaná pod licenciou Open Font License).
 
-\section{Technológie}
-Vrámci nefunkčných požiadaviek bol pre implementáciu zvolený framework Angular od Google, ktorého verzia v čase tvorby tejto práce bola \angular_version . Tento framework bol v prostredí KYPO zvolený globálne a preto je táto voľba logická.
+Font-Awesome, ako vyplýva z názvu, v skutočnosti nie je knižnica obrázkov, ale špeciálneho obrázkového písma (fontu). Takéto využitie písma ako ikon si so sebou nesie všetky výhody SVG vektorovej grafiky, ktoré som spomínal v predchádzajúcej sekcii. Navyše vieme takéto ikony zafarbovať pomocou CSS atribútu \textit{color} a meniť ich veľkosť pomocou atribútu \textit{font-size}. Jedinou nevýhodou je, že takáto ikonka môže vždy byť len jednofarebná.
+
+\begin{figure}
+	\center
+	\includegraphics[width=.25\linewidth]{icons}
+	\caption{Ikony Font-Awesome použité v implementácii}
+	\label{icons}
+\end{figure}
+
+Takýchto knižníc je dnes dostupných viacero, medzi najznámejšie patria okrem Font-Awesome napríklad IcoMoon alebo Material Design od Google. Sú navrhnuté tak aby pokryli ikony, ktoré vývojári veľmi často potrebujú, preto pri menej náročných systémoch je možné si s nimi úplne vystačiť. Na obrázku \ref{icons} sú znázornené ikony, ktoré som využil vo svojej implementácii.
+
+Knižnicu Font-Awesome som spomedzi ostatných zvolil z toho dôvodu, že poskytuje vhodné ikony aktivného a neaktívneho zámku. Tieto ikony sú v mojej implementácii síce rozlíšené farebne, no podľa WCAG 2.0 (Web Content Accessibility Guidline) by sa kvôli zrakovo znevýhodneným používateľom nemala farebná informácia starať o rozdiel vo vyjadrovacom význame \cite[sekcia~1.4]{caldwell2008web}.
+
+\section{Výsledný vzhľad}
+\label{design_created}
+Nefunkčné požiadavky kladú pomerne striktné pokyny pre dizajn. Portlet má maximalizovať svoju šírku na úkor svojej výšky, ktorá má byť čo najmenšia. Na obrázku \ref{slider_150} a detailnejších obrázkoch \ref{slider_detail_150} vidíme dizajn, ktorý som vytvoril podľa týchto požiadaviek. Všetky nasledujúce obrázky som urobil pri zväčšení stránky na 150\,\% z dôvodu veľkého skreslenia detailov.
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=1.0\linewidth]{slider_150}
+	\caption{Dizajn modulu pri šírke 1366\,pixelov zväčšený na 150\,\%}
+	\label{slider_150}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{slider_left_150}
+  \caption{ľavá strana}
+  \label{slider_detail_150_left}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{slider_right_150}
+  \caption{pravá strana}
+\end{subfigure}
+\caption{Bližší záber na oba konce časovej osy}
+\label{slider_detail_150}
+\end{figure}
+
+V hornej časti modulu sa nachádza riadok, ktorý informuje užívateľa o celkovom možnom časovom ohraničení, resp. o šírke vrchnej osy. Tá po celú dobu reflektuje výber užívateľa vo vzťahu k celému možnému intervalu.
+
+V ľavej časti (obrázok \ref{slider_detail_150_left}) sa nachádza stavový stĺpec, ktorý informuje užívateľa o správnom fungovaní časovej osy.
+
+Na vrchnej časovej ose sa pri obidvoch jazdcoch nachádzajú klikateľné ukazatele zámkov, tak ako to vyžadujú požiadavky uvedené v sekcii \ref{sec:lockers}. Spodná časová os obsahuje v jazdcoch informáciu o práve zvolenom časovom intervale.
+
+\section{Funkcie jednotlivých komponent}
+Táto sekcia sa venuje popisu jednotlivých implementovaných častí modulu uvedených v sekcii \ref{design_created}.
+
+\subsection{Riadok s možným časovým rozsahom}
+Tento riadok obsahuje informáciu o celkovom časovom intervale, ktorý je možné zvoliť. Podľa zistených informácií experimenty v KYPO neprebiehajú dlhšie ako 24 hodín. Preto som uprostred umiestnil dátum experimentu a na okraje pri šípkach časové ohraničenie. Informácia o čase je v tomto prípade pre užívateľa dôležitejšia a dátum by ju robil menej čitateľnejšou.
+
+V budúcnosti však existuje možnosť dlhších experimentov, ktoré môžu trvať aj niekoľko dní. Vtedy sa dátumy zobrazia na krajoch ale časy už nie. Je to opäť z dôvodu čitateľnosti. Pri viacdňovom experimente je pre užévateľa dôležitejší dátum začiatku a konca experimentu, ako čas. Navyše informácia o čase sa nachádza v popiskoch hornej časovej osy hneď pod dátumom (stupnica pod osou).
+
+\subsection{Stavový stĺpec}
+Tento komponent podáva užívateľovi informáciu o korektnom fungovaní periodických REST volaní (slúžiacich pre zisťovanie možného časového ohraničenia). V prípade že sa periodické volania nevykonávajú a modul funguje nad statickými dátami, táto časť nie je v module prítomná a časová os zaberá plnú šírku.
+
+Na obrázku \ref{slider_detail_150_left} vidíme dve použité ikony:
+\begin{description}
+\item[\refresh_icon refresh] Táto ikona svojím otáčaním indikuje, že periodické zisťovania možného ohraničenia prebiehajú a fungujú. V prípade, že periodické zisťovania prestanú prebiehať, ikona sa prestane otáčať. Po kliknutí na ikonu sa periodické zisťovania opätovne naštartujú.
+\item[\warning_icon výstražný trojuholník] Tento trojuholník sa zobrazí vtedy, ak sa nepodarí REST volanie (príde HTTP status iný ako 2xx\footnote{za úspešné volanie sa považuje také, ktoré vráti status~>=~200 a zároveň status~<~300}) alebo odpoveď zo servera nemá dohodnutý formát. Pri nabehnutí myšou na túto ikonu sa v bubline zobrazí detailnejšia informácia.
+\end{description}
+
+\subsection{Horná časová os}
+Horná časová os ponúka užívateľovi grafickú informáciu o tom, kde sa jeho zvolený časový interval nachádza vrámci povoleného časového ohraničenia. Nad manipulátormi tejto osy sa nachádzajú zámky, ktorými dokáže užívateľ definovať správanie modulu pri zmene možného ohraničenia tak, ako je to definované v požiadavkách \ref{sec:lockers}.
+
+V prípade, že modul pracuje so statickými dátami a nevykonáva periodické volania, z dôvodu kompaktnosti modulu sa tieto zámky vo výsledku vôbec nezobrazia a výška modulu sa vďaka tomu ešte mierne zníži. Pod osou sa nachádza pomocná stupnica, ktorej stupne a rozostupy sa dynamicky prispôsobujú veľkosti intervalu.
+
+Pravý zámok je viditeľný len v situácii, keď je pravý manipulátor na maxime. Rovnako ľavý zámok je viditeľný len vtedy, ak je pravý zámok aktívny. Dôvodom je skutočnosť, že keby bol zobrazený len pravý zámok, užívateľ by mohol byť zmätený, prečo nevidí aj ľavý. Zároveň vidí užívateľ len tie zámky, na ktoré môže aj kliknúť.
+
+\subsection{Dolná časová os}
+Dolná časová os (resp. jej ohraničenie) vždy reflektuje interval zvolený užívateľom. To znamená, že s výnimkou momentu ťahania niektorého z jazdcov je jej výber vždy roztiahnutý na celú širku.
+
+V jazdcoch sa nachádza aj informácia o časovom okamihu, na ktorý sú práve nastavení. Táto informácia je udávaná v hodinách a minútach, avšak pri veľmi malých časových ohraničeniach zobrazuje aj sekundy. Práve tieto časové okamihy podávajú informáciu o práve zvolenom časovom intervale a kvôli kompaktnosti celého modulu sa už nikde inde táto informácia nenachádza.
 
 
 %\printbibliography
