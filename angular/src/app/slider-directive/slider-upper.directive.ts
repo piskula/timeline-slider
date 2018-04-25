@@ -10,6 +10,7 @@ import {
 export const LINE_WIDTH = '1rem';
 export const LINE_EMPTY_WIDTH = '.5rem';
 export const THUMB_STROKE_WIDTH = '.0625rem';
+export const LOCKER_ICON_FONT_MULTIPLY = 2;
 
 @Directive({
   selector: '[appD3SliderUpper]'
@@ -40,8 +41,8 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
     const sliderTopMargin = fontSize * (this.isLockSectionHidden ? 1.125 : 2.25);
     const thumbSize = fontSize * 0.5;
     const thumbSizeClick = fontSize * 0.625;
-    const leftLockAddition = fontSize * 0.625;
-    const rightLockAddition = fontSize * 2.125;
+    const leftLockAddition = fontSize * 0.875;
+    const rightLockAddition = fontSize * 2.875;
 
     let normValueLeft = this.getNormValue(this.rangeChosen[0]); // value normalized between 0-1
     let normValueRight = this.getNormValue(this.rangeChosen[1]); // value normalized between 0-1
@@ -253,12 +254,14 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
     const leftLockWrapper = selection
       .append('svg:foreignObject')
       .attr('x', (width * normValueLeft) + leftLockAddition)
-      .attr('y', -10)
-      .style('font-size', '2rem')
+      // .attr('y', -10)
+      .attr('width', fontSize * LOCKER_ICON_FONT_MULTIPLY)
+      .attr('height', fontSize * LOCKER_ICON_FONT_MULTIPLY)
+      .style('font-size', LOCKER_ICON_FONT_MULTIPLY + 'rem')
       .style('cursor', 'pointer')
       .style('display', that.isRightLocked && !that.isLockSectionHidden ? 'inherit' : 'none');
     const leftLock = leftLockWrapper
-      .append('xhtml:body')
+      .append('xhtml:div')
       .html(this.isLeftLocked ? '<i class="fa fa-lock"></i>' : '<i class="fa fa-unlock"></i>')
       .style('color', COLOR_LOWER)
       .on('click', function () {
@@ -272,8 +275,10 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
     const rightLockWrapper = selection
       .append('svg:foreignObject')
       .attr('x', (width * normValueRight) + rightLockAddition)
-      .attr('y', -10)
-      .style('font-size', '2rem')
+      // .attr('y', -10)
+      .attr('width', fontSize * LOCKER_ICON_FONT_MULTIPLY)
+      .attr('height', fontSize * LOCKER_ICON_FONT_MULTIPLY)
+      .style('font-size', LOCKER_ICON_FONT_MULTIPLY + 'rem')
       .style('cursor', 'pointer')
       .style('display', normValueRight === 1 && !that.isLockSectionHidden ? 'inherit' : 'none');
     const rightLock = rightLockWrapper
