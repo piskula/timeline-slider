@@ -7,9 +7,9 @@ import {
   D3SliderBaseDirective, OPACITY_MIDDLE, COLOR_UPPER, COLOR_LOWER
 } from './slider-base.directive';
 
-export const LINE_WIDTH = '1rem';
-export const LINE_EMPTY_WIDTH = '.5rem';
-export const THUMB_STROKE_WIDTH = '.0625rem';
+export const LINE_HEIGHT_MULTIPLY = 1;
+export const LINE_EMPTY_HEIGHT_MULTIPLY = 0.5;
+export const THUMB_STROKE_MULTIPLY = 0.0625;
 export const LOCKER_ICON_FONT_MULTIPLY = 2;
 
 @Directive({
@@ -212,7 +212,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .attr('y2', sliderTopMargin)
       .style('stroke', COLOR_UPPER)
       .style('stroke-linecap', 'round')
-      .style('stroke-width', LINE_WIDTH);
+      .style('stroke-width', LINE_HEIGHT_MULTIPLY * fontSize);
 
     // Line to show the remaining left value
     const emptyLineLeft = selection.append('line')
@@ -223,7 +223,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .style('stroke', DARK_GREY)
       .style('opacity', OPACITY_MIDDLE)
       .style('stroke-linecap', 'round')
-      .style('stroke-width', LINE_EMPTY_WIDTH);
+      .style('stroke-width', LINE_EMPTY_HEIGHT_MULTIPLY * fontSize);
 
     // Line to show the remaining right value
     const emptyLineRight = selection.append('line')
@@ -234,21 +234,21 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .style('stroke', DARK_GREY)
       .style('opacity', OPACITY_MIDDLE)
       .style('stroke-linecap', 'round')
-      .style('stroke-width', LINE_EMPTY_WIDTH);
+      .style('stroke-width', LINE_EMPTY_HEIGHT_MULTIPLY * fontSize);
 
     const leftHandler = selection.append('circle')
       .attr('cx', sliderSideMargin + (width * normValueLeft))
       .attr('cy', sliderTopMargin)
       .attr('r', thumbSize)
       .style('stroke', DARK_GREY)
-      .style('stroke-width', THUMB_STROKE_WIDTH)
+      .style('stroke-width', THUMB_STROKE_MULTIPLY * fontSize)
       .style('fill', COLOR_THUMB);
     const rightHandler = selection.append('circle')
       .attr('cx', sliderSideMargin + (width * normValueRight))
       .attr('cy', sliderTopMargin)
       .attr('r', thumbSize)
       .style('stroke', DARK_GREY)
-      .style('stroke-width', THUMB_STROKE_WIDTH)
+      .style('stroke-width', THUMB_STROKE_MULTIPLY * fontSize)
       .style('fill', COLOR_THUMB);
 
     const leftLockWrapper = selection

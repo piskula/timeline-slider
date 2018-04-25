@@ -9,3 +9,21 @@
     min-height: $upper-slider-height + $scale-height + $lower-slider-height + $scale-height;
   }
 }
+
+// TODO remove
+//.example {
+//  margin-top: 2rem;
+//  margin-left: 2rem;
+//  font-size: 6rem;
+//  color: $grey-middle;
+//
+//  &__row {
+//    padding: 1rem;
+//    display: flex;
+//    text-align: center;
+//
+//    &--column {
+//      width: 7rem;
+//    }
+//  }
+//}

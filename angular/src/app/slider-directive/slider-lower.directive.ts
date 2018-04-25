@@ -10,8 +10,8 @@ import {
   OPACITY_MIDDLE
 } from './slider-base.directive';
 
-export const LINE_WIDTH = '.5rem';
-export const EMPTY_LINE_WIDTH = '.75rem';
+export const LINE_HEIGHT_MULTIPLY = 0.5;
+export const LINE_EMPTY_HEIGHT_MULTIPLY = 0.75;
 
 @Directive({
   selector: '[appD3SliderLower]'
@@ -136,7 +136,7 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('y2', sliderTopMargin)
       .style('stroke', COLOR_LOWER)
       .style('stroke-linecap', 'round')
-      .style('stroke-width', LINE_WIDTH);
+      .style('stroke-width', LINE_HEIGHT_MULTIPLY * fontSize);
 
     // Line to show the remaining left value
     const emptyLineLeft = selection.append('line')
@@ -147,7 +147,7 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .style('stroke', DARK_GREY)
       .style('opacity', OPACITY_MIDDLE)
       .style('stroke-linecap', 'butt')
-      .style('stroke-width', EMPTY_LINE_WIDTH);
+      .style('stroke-width', LINE_EMPTY_HEIGHT_MULTIPLY * fontSize);
 
     // Line to show the remaining right value
     const emptyLineRight = selection.append('line')
@@ -158,7 +158,7 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .style('stroke', DARK_GREY)
       .style('opacity', OPACITY_MIDDLE)
       .style('stroke-linecap', 'butt')
-      .style('stroke-width', EMPTY_LINE_WIDTH);
+      .style('stroke-width', LINE_EMPTY_HEIGHT_MULTIPLY * fontSize);
 
     let leftHandler;
     let rightHandler;
