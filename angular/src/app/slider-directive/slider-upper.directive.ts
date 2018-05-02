@@ -35,6 +35,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
   createSlider(selection) {
     const that = this;
 
+    // variables, which modify design
     const width = this.getWidth();
     const fontSize = this.getFontSize();
     const sliderSideMargin = this.getSideMargin();
@@ -48,9 +49,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
     let normValueRight = this.getNormValue(this.rangeChosen[1]); // value normalized between 0-1
     let denormValueDrag;
 
-    let selectedValueLeft;
-    let selectedValueRight;
-
+    // after initial click on handler these 'START' methods are called:
     function dragStartLeft() {
       leftHandler.attr('r', thumbSizeClick);
     }
@@ -59,6 +58,29 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       rightHandler.attr('r', thumbSizeClick);
     }
 
+    // after releasing handler these 'END' methods are called:
+    function dragEndLeft() {
+      leftHandler.attr('r', this.thumbSize);
+      if (eventLeft) {
+        eventLeft(normValueLeft);
+      }
+    }
+    function dragEndRight() {
+      rightHandler.attr('r', this.thumbSize);
+      if (eventRight) {
+        eventRight(normValueRight);
+      }
+    }
+
+    function dragEnd() {
+      denormValueDrag = null;
+      if (eventDrag) {
+        eventDrag(normValueLeft, normValueRight);
+      }
+    }
+
+
+    // when you hold handler, each time you make a move, these methods are called:
     function dragLeft() {
       const _normValue = (d3.event['x'] - sliderSideMargin) / width;
       let denormLeft = that.getDenormValue(_normValue);
@@ -81,7 +103,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
 
       // update value
       normValueLeft = that.getNormValue(denormLeft);
-      selectedValueLeft = normValueLeft * width;
+      const selectedValueLeft = normValueLeft * width;
 
       // re-render handler and related elements
       leftHandler.attr('cx', sliderSideMargin + selectedValueLeft);
@@ -116,17 +138,24 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
 
       // update value
       normValueRight = that.getNormValue(denormRight);
-      selectedValueRight = that.getNormValue(denormRight) * width;
+      const selectedValueRight = that.getNormValue(denormRight) * width;
 
       // re-render handler and related elements
       rightHandler.attr('cx', sliderSideMargin + selectedValueRight);
-      rightLockWrapper
-        .attr('x', selectedValueRight + rightLockAddition)
-        .style('display', normValueRight === 1 && !that.isLockSectionHidden ? 'inherit' : 'none');
+      rightLockWrapper.attr('x', selectedValueRight + rightLockAddition);
       valueLine.attr('x2', sliderSideMargin + selectedValueRight);
       emptyLineRight
         .attr('x1', sliderSideMargin + selectedValueRight)
         .attr('x2', sliderSideMargin + width);
+
+      // handle LIVE preview of lock (when you move handler but not release)
+      if (normValueRight === 1 && that.isRightLocked) {
+        rightLock.select('i').classed('fa-unlock', false).classed('fa-lock', true);
+        leftLockWrapper.style('display', 'inherit');
+      } else {
+        rightLock.select('i').classed('fa-unlock', true).classed('fa-lock', false);
+        leftLockWrapper.style('display', 'none');
+      }
 
       d3.event.sourceEvent.stopPropagation();
     }
@@ -157,9 +186,9 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
 
       // update value
       normValueRight = that.getNormValue(denormRight);
-      selectedValueRight = that.getNormValue(denormRight) * width;
+      const selectedValueRight = that.getNormValue(denormRight) * width;
       normValueLeft = that.getNormValue(denormLeft);
-      selectedValueLeft = normValueLeft * width;
+      const selectedValueLeft = normValueLeft * width;
 
       leftHandler.attr('cx', sliderSideMargin + selectedValueLeft);
       leftLockWrapper
@@ -167,8 +196,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
         .style('display', normValueRight === 1 && that.isRightLocked ? 'inherit' : 'none');
       rightHandler.attr('cx', sliderSideMargin + selectedValueRight);
       rightLockWrapper
-        .attr('x', selectedValueRight + rightLockAddition)
-        .style('display', normValueRight === 1 && !that.isLockSectionHidden ? 'inherit' : 'none');
+        .attr('x', selectedValueRight + rightLockAddition);
 
       emptyLineLeft
         .attr('x1', sliderSideMargin)
@@ -180,27 +208,14 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
         .attr('x1', sliderSideMargin + selectedValueRight)
         .attr('x2', sliderSideMargin + width);
 
+      // handle LIVE preview of lock (when you move handler but not release)
+      if (normValueRight === 1 && that.isRightLocked) {
+        rightLock.select('i').classed('fa-unlock', false).classed('fa-lock', true);
+      } else {
+        rightLock.select('i').classed('fa-lock', false).classed('fa-unlock', true);
+      }
+
       d3.event.sourceEvent.stopPropagation();
-    }
-
-    function dragEndLeft() {
-      leftHandler.attr('r', this.thumbSize);
-      if (eventLeft) {
-        eventLeft(normValueLeft);
-      }
-    }
-    function dragEndRight() {
-      rightHandler.attr('r', this.thumbSize);
-      if (eventRight) {
-        eventRight(normValueRight);
-      }
-    }
-
-    function dragEnd() {
-      denormValueDrag = null;
-      if (eventDrag) {
-        eventDrag(normValueLeft, normValueRight);
-      }
     }
 
 
@@ -266,10 +281,6 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .on('click', function () {
         that.leftLockChange.emit(!that.isLeftLocked);
       });
-    // if (!this.isLeftLocked) {
-    //   leftLock.style('opacity', OPACITY_MIDDLE)
-    //     .style('color', DARK_GREY);
-    // }
 
     const rightLockWrapper = selection
       .append('svg:foreignObject')
@@ -279,17 +290,14 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .attr('height', fontSize * LOCKER_ICON_FONT_MULTIPLY)
       .style('font-size', LOCKER_ICON_FONT_MULTIPLY + 'rem')
       .style('cursor', 'pointer')
-      .style('display', normValueRight === 1 && !that.isLockSectionHidden ? 'inherit' : 'none');
+      .style('display', !that.isLockSectionHidden ? 'inherit' : 'none');
+      // .style('display', normValueRight === 1 && !that.isLockSectionHidden ? 'inherit' : 'none');
     const rightLock = rightLockWrapper
       .append('xhtml:div')
       .html(this.isRightLocked ? '<i class="fa fa-lock"></i>' : '<i class="fa fa-unlock"></i>')
       .on('click', function () {
         that.rightLockChange.emit(!that.isRightLocked);
       });
-    // if (!this.isRightLocked) {
-    //   rightLock.style('opacity', OPACITY_MIDDLE)
-    //     .style('color', DARK_GREY);
-    // }
 
     leftHandler.call(d3.drag()
       .on('start', dragStartLeft)

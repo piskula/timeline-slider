@@ -36,7 +36,6 @@ export class TimelineFrameComponent implements OnInit {
 
   ngOnInit() {
     this._timeService.getMax().subscribe(maxValue => {
-      // console.log('came: ' + maxValue);
       this.refreshHeader(this._timeService.getMin().getValue(), maxValue);
     });
   }
