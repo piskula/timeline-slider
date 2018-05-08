@@ -146,11 +146,11 @@ Toto bude úvod.
 \chapter{Kybernetický polygón}
 Podľa Národného bezbečnostného úradu Českej republiky je termínom \textit{kritická informačná infraštruktúra} označený \textit{"systém prvkov tejto infraštruktúry, ktorý pri narušení svojej funkcie môže spôsobiť poškodenie alebo ohrozenie záujmov Českej republiky"}\cite{nbu2012}.
 
-Kybernetický polygón (KYPO) bol zriadený Ministerstvom vnútra Českej republiky za účelom zaistenia kybernetickej bezpečnosti v Českej republike ochranou kritickej informačnej infraštruktúry. Projekt KYPO poskytuje unikátne prostredie pre výskum nových metód, ktoré by v blízkej budúcnosti mohli pomôcť chrániť kritickú informačnú infraštruktúru\cite{dankovvcikova2015konfigurace}. Objekt polygónu bol vybudovaný v roku 2015 vrámci rekonštrukcie Fakulty Informatiky.
+Kybernetický polygón (KYPO) bol zriadený Fakultou Informatiky s podporou Ministerstva vnútra Českej republiky za účelom zaistenia kybernetickej bezpečnosti v Českej republike ochranou kritickej informačnej infraštruktúry. Projekt KYPO poskytuje unikátne prostredie pre výskum nových metód, ktoré by v blízkej budúcnosti mohli pomôcť chrániť kritickú informačnú infraštruktúru\cite{dankovvcikova2015konfigurace}. Objekt polygónu bol vybudovaný v roku 2015 vrámci rekonštrukcie Fakulty Informatiky.
 %V rýchlo sa rozvíjajúcom svete informačných technológií je informačná bezpečnosť najdôležitejším odvetvím informatiky. V dnešnej dobe už nie je veľmi pravdepodobné, aby nás výdobytky techniky ako telefóny a počítače ohrozovali na živote. Hrozba informačnej bezpečnosti sa týka hlavne ochrany informácií. Masarykova Univerzita si uvedomuje vážnosť tejto hrozby a preto sa rozhodla zriadiť výzkumné stredisko v tejto oblasti.
 
 \section{Technológie}
-Prostredie KYPO funguje na princípe cloudového riešenia v ktorom je možné modelovať virtuálnu sieť\cite{eichler2014analytical}. Toto riešenie poskytuje všetky nástroje potrebné k simulácii rôznych sieťových topológií. Prostredie je určené pre výzkum a testovanie rôznych scenárov kybernetických útokov v izolovanom a plne kontrolovateľnom prostredí\cite{vceleda2015kypo}.
+Prostredie KYPO funguje na princípe cloudového riešenia v ktorom je možné modelovať virtuálnu sieť\cite{eichler2014analytical}. Toto riešenie poskytuje všetky nástroje potrebné k simulácii rôznych sieťových topológií. Prostredie je určené pre výzkum a testovanie rôznych scenárov kybernetických útokov v izolovanom a plne kontrolovateľnom prostredí\cite{vceleda2015kypo}. Najčastejšie sa vďaka umiestneniu (priamo v budove Fakulty Informatiky) využíva na kybernetické cvičenia a to vrátane výuky.
 
 Spektrum kybernetických hrozieb vo svete informačných systémov je veľmi široké a každá hrozba má iný spôsob, ktorým narúša kontinuitu iného systému. Medzi časté experimenty vykonávané vrámci KYPO stoja za zmienku DDoS útoky (distributed denial of service), útoky botnet alebo phishing\cite{vcegan2014navrh, celeda2013projekt}.
 
@@ -201,7 +201,7 @@ Dáta, ktoré zaznamenáva SMN sú práve tie dáta, ktoré sa zobrazujú v port
 \section{Potreba analýzy dát}
 Nakoľko simulácie útokov a cvičenia prebiehajú v reálnom čase, vznikla potreba sledovať zmeny v týchto dynamických prostrediach. Priebehy jednotlivých scenárov sa zaznamenávajú aj pre potreby neskoršej analýzy. O túto činnosť sa stará manažment sandboxov (SMN), ktorý sme si opísali v podkapitole \ref{smn} \nameref{smn}.
 
-Portlet časovej osy slúži ako kľúčový element pre filtrovanie týchto dát, či už sa jedná o analýzu starších dát, alebo sledovanie aktuálne pribúdajúcich dát počas práve prebiehajúceho experimentu.
+Portlet časovej osy, ktorý je cieľom tejto práce, slúži ako kľúčový element pre filtrovanie týchto dát, ktoré poskytuje každý jeden SMN cez API. Či už sa jedná o analýzu starších dát, alebo sledovanie aktuálne pribúdajúcich dát počas práve prebiehajúceho experimentu, o zistenie hraničných hodnôt sa bude starať samotný portlet. SMN teda nebude nijakým spôsobom notifikovať portlet o nových dátach, portlet si ich bude musieť "pýtať" sám.
 
 \chapter{Liferay Portal}
 \label{liferay}
@@ -276,8 +276,22 @@ TypeScript tvorí nadstavbu nad JavaScriptom. Výsledkom je teda kód, ktorý sa
 
 Typescript teda môžeme považovať za staticky typovaný jazyk, avšak výzkum Kalifornskej univerzity\cite{ray2014large} ukázal, že približne 50\% všetkých použitých atribútov v bežnom TypeScript kóde má deklarovaný typ \textit{any}, pre ktorý prekladač typovú kontrolu nevykonáva. Je teda na mieste úvaha, či môžeme považovať typovú kontrolu v TypeScripte za plnohodnotnú. Môj názor je, že pri dodržiavaní správnych postupov a zvyklostí pri programovaní je táto kontrola zmysluplná.
 
+\section{DOM}
+DOM - \textit{Document Object Model} je objektovo-orientovaná reprezentácia HTML dokumentu. Reprezentuje HTML dokument ako strom objektov s vlastnosťami (veľkosť, štýly, a pod.) a umožňuje tým JavaScriptu identifikovať, meniť, pridávať a odoberať uzly v tomto strome (prípadne ich vlastnosti) \cite{yang2009topic}. Pomocou DOM je teda možné dynamicky meniť obsah stránok, čo je vo svojej podstate význam JavaScriptu.
+
+DOM nie je špecifický pre Angular ale je to všeobecný štandard konzorcia W3C, ktorý udáva, ako by sa mali značkovacie jazyky ako HTML alebo XML reprezentovať objektovo-orientovaným modelom \cite{wood1999programming}. Tento model je štandardom, ktorý implementuje väčšina prehliadačov, ale nakoľko je tento štandard slobodný, je na každom prehliadači ako dôsledne tento štandard implementuje. Je to jeden z dôvodov, pre ktorý sa stránky môžu správať v jednotlivých prehliadačoch odlišne.
+
+V nasledujúcich častiach svojej práce často používam skratku DOM, ktorá sa vždy odkazuje na spomínaný štandard \textit{Document Object Model} konzorcia W3C.
+
 \section{Architektúra}
-Základným architektonickým prvkom v Angulare je modul. Oficiálna dokumentácia Angularu definuje modul ako \textit{"funkčnú a plnohodnotnú časť aplikácie. Angular aplikácia môže obsahovať niekoľko modulov, najmenej všask jeden"}\cite{angular}. Štruktúru modulu približuje aj obrázok \ref{angular_architecture}
+Základným architektonickým prvkom v Angulare je modul. Oficiálna dokumentácia Angularu definuje modul ako \textit{"funkčnú a plnohodnotnú časť aplikácie. Angular aplikácia môže obsahovať niekoľko modulov, najmenej však jeden"}\cite{angular}. Štruktúru modulu približuje aj obrázok \ref{angular_architecture}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=1.0\linewidth]{angular_architecture}
+	\caption{Štruktúra modulu v Angulare\cite{angular}}
+	\label{angular_architecture}
+\end{figure}
 
 Základným stavebným prvkom stránky je komponent. Skladaním komponent do seba sa vytvára UI, ktoré sa následne vyrenderuje v prehliadači a zobrazí užívateľovi. Komponenty, na rozdiel od portletov na stránke Liferay, môžu v sebe opätovne obsahovať ďalšie komponenty. Každý komponent v kontexte Angularu prislúcha práve jednému modulu a každému komponentu prislúcha práve jeden HTML template.
 
@@ -289,13 +303,6 @@ Táto štruktúra delenia aplikácie do modulov a komponentov sa môže na prvý
 \item[komponenty] sú stavebné prvky stránky, napríklad modul \textit{správa užívateľov} obsahuje komponent \textit{prehľad}, ktorý ďalej obsahuje komponenty \textit{list} a \textit{vyhľadávanie}, ktoré ale môžu byť opätovne použité aj v iných častiach tohto modulu, pretože sú úplne oddelené.
 \item[služby] poskytujú dáta a logiku, pričom nie sú naviazané na template. Napríklad služba UserService by poskytovala list používateľov a detail používateľa pomocou HTTP metód. V našom prípade by komponent \textit{list} alebo komponent \textit{prehľad} mohol využívať túto službu ako zdroj dát.
 \end{description}
-
-\begin{figure}[H]
-	\center
-	\includegraphics[width=1.0\linewidth]{angular_architecture}
-	\caption{Štruktúra modulu v Angulare\cite{angular}}
-	\label{angular_architecture}
-\end{figure}
 
 \subsection{Komponenty}
 Na nasledujúcej ukážke kódu môžeme vidieť, ako sa dáta z komponentu (ukážka \ref{ts_snippet}) dostanú do template (ukážka \ref{html_snippet}) a opačne. Tento proces sa všeobecne nazýva \textit{binding} a v Angulare poznáme štyri typy bindingu (pozri aj Obr. \ref{angular_architecture})
@@ -339,6 +346,7 @@ export class UserDetailComponent implements OnInit {
 Na riadku 9 v ukážke \ref{ts_snippet} si zase všimneme, ako využívame zdieľanú službu, ktorá nám na riadku 12 poskytne dáta o užívateľovi. Viac informácií o zdieľaných službách sa nachádza v podkapitole \ref{sec_di}.
 
 \subsection{Direktívy}
+\label{sec_directives}
 V prípade komponentov zvyčajne definujeme selektor, ktorý je unikátny identifikátor komponentu vrámci modulu a používa sa v template. V ukážke \ref{ts_snippet} sme tak urobili na riadku 2, čím sme umožnili použitie tohto komponentu v inom komponente zadaním HTML tagu \texttt{<user-detail></user-detail>} do template.
 
 Direktívy umožňujú rozšírenú manipuláciu DOM objektov tak, že sa vkladajú do HTML tagov. Poznáme dva typy direktív\cite{angular}:
@@ -346,10 +354,6 @@ Direktívy umožňujú rozšírenú manipuláciu DOM objektov tak, že sa vklada
 \item structural - dokážu ovplyvňovať výsledný layout odstraňovaním a pridávaním DOM objektov, napríklad vstavané direktívy *ngFor, *ngIf
 \item attribute - dokážu len upravovať vlastnosti DOM objektu, napríklad vstavané direktívy *ngClass, *ngStyle
 \end{enumerate}
-
-\begin{quote}
-\textit{\textbf{DOM - Document Object Model} je objektovo-orientovaná reprezentácia HTML dokumentu. Reprezentuje HTML dokument ako strom objektov s vlastnosťami (veľkosť, štýly, a pod.) a umožňuje tým JavaScriptu identifikovať, meniť, pridávať a odoberať uzly v tomto strome \cite{yang2009topic}. Pomocou DOM je teda možné dynamicky meniť obsah stránok, čo je vo svojej podstate význam JavaScriptu.}
-\end{quote}
 
 Nasledujúca jednoduchá ukážka \ref{directive_snippet} nám pomôže porozumieť správaniu direktív:
 \begin{figure}
@@ -394,7 +398,7 @@ Opačným príkladom je direktíva *ngStyle, ktorá v DOM mení len atribúty. V
 
 \subsection{Dependency Injection}
 \label{sec_di}
-Dependency Injection je implementácia dizajnového vzoru IoC\footnote{IoC - Inversion of Control, prvý krát definoval Michael Mattson v roku 1996~\cite{mattsson1996object}} ktorej úlohou je zbavovať komponenty systému priamych závislostí. Cieľom je túto závislosť (dependency) implementovať samostatne ako službu a potom v danom závislom komponente vykonať injection (vloženie služby), ktorým sa komponentu umožní túto službu využiť \cite{chiba2005aspect, yang2008empirical}.
+Dependency Injection je implementácia návrhového vzoru IoC\footnote{IoC - Inversion of Control, prvý krát definoval Michael Mattson v roku 1996~\cite{mattsson1996object}} ktorej úlohou je zbavovať komponenty systému priamych závislostí. Cieľom je túto závislosť (dependency) implementovať samostatne ako službu a potom v danom závislom komponente vykonať injection (vloženie služby), ktorým sa komponentu umožní túto službu využiť \cite{chiba2005aspect, yang2008empirical}.
 
 Komponent sa tým pádom nestará o vytvorenie samotného objektu, ale dostane už hotový objekt, čím sa zbavuje závislosti (na rozdiel od využívania statických metód alebo vytvárania nových objektov pomocou kľúčového slova \textit{new}).
 
@@ -414,6 +418,19 @@ Kybernetický polygón generuje počas experimentu obrovské množstvo dát. Tie
 
 Úlohou modulu interaktívnej časovej osy je poskytnúť užívateľovi intuitívny nástroj, ktorým dokáže z množstva týchto dát vybrať len určitý časový úsek a následne túto informáciu podať všetkým prislúchajúcim portletom na danej stránke. Zároveň bude tento modul spĺňať veľmi špecifické nároky na funkcionalitu, ktorým je venovaná táto kapitola. Jedným z najdôležitejších faktorov je, že celkové možné časové ohraničenie sa môže dynamicky meniť.
 
+\section{Zadefinovanie pojmov}
+V tejto časti by som rád vymedzil niektoré často používané pojmy, ktoré súvisia s funkcionalitou modulu.
+
+Pod pojmom \textit{celkové možné časové ohraničenie} (skrátene časové ohraničenie) rozumieme krajné hodnoty, spomedzi ktorých užívateľ vyberá výsledný interval. Celkové možné časové ohraničenie pozostáva z dvoch časových známok:
+\begin{itemize}
+\item menšej, v tejto práci označovanej ako \textit{minimum} alebo \textit{dolné ohraničenie}
+\item väčšej, označovanej ako \textit{maximum} alebo \textit{horné ohraničenie}.
+\end{itemize}
+
+Pod pojmom \textit{zvolený časový interval} alebo \textit{zvolené rozmedzie} ro\-zu\-mie\-me interval, ktorý svojou činnosťou zvolil užívateľ vrámci celkového možného časového ohraničenia. To znamená, že užívateľ nemá možnosť zvoliť také hodnoty, ktoré nepatria do celkového možného časového ohraničenia.
+
+Pojem \textit{manipulátor} alebo \textit{jazdec} označuje bod na časovej osy (grafický prvok), ktorý užívateľ môže uchopiť a posúvať a ktorý vyznačuje zvolený časový interval. Viac informácií o manipulátoroch sa nachádza v kapitole \ref{sec:slider}.
+
 \section{Vstupy a Výstupy}
 Vstupom tohto modulu bude
 \begin{description}
@@ -427,6 +444,18 @@ Vstupom tohto modulu bude
 \end{description}
 Výstupom tohto modulu budú dve časové známky, kde prvá odpovedá aktuálnej pozícii ľavého manipulátora a druhá pozícii pravého manipulátora.
 
+\section{Existujúce riešenie}
+Existujúci portlet časovej osy pre KYPO bol implementovaný v JavaScripte vrámci diplomovej práce Jiřího Dočkala\cite{dockal2016webovy}. Okrem výberu časového ohraničenia slúžil aj na prehrávanie scenárov, ako je možné vidieť aj na Obr. \ref{old_portlet}.
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=1.0\linewidth]{old_portlet}
+	\caption{Dizajn pôvodného portletu\cite{dockal2016webovy}}
+	\label{old_portlet}
+\end{figure}
+
+V aktuálnych víziách vývojového centra KYPO sa však zrodila požiadavka na odlišný portlet, ktorý bude obsahovať v určitom smere menej funkcionality a bude postavený na odlišnej technológii (použitie frameworku Angular). Všetky tieto požiadavky boli zhrnuté v kapitole \ref{requirements}.
+
 \section{Požiadavky}
 \label{requirements}
 Požiadavky na dizajn a funkcionalitu som vytvoril na základe konzultácií s vedúcim práce RNDr. Radkom Ošlejškom, Ph.D.
@@ -437,7 +466,7 @@ Medzi funkčné požiadavky patria
 \begin{itemize}
 \item Užívateľ si na časovej ose bude môcť zvoliť časový interval, pričom tento interval bude len vrámci povolených hodnôt.
 \item Užívateľ bude schopný z modulu ľahko vyčítať informáciu o práve zvolenom časovom intervale a rovnako aj o rozsahu povolených hodnôt. Ak sa jeho aktivity nezameriavajú na časový interval ale jeden konkrétny okamih, užívateľ vie zvolený okamih taktiež ľahko určiť.
-\item V prípade, že možné ohraničenie sa bude dynamicky meniť, užívateľ bude vedieť definovať, ako a či vôbec sa pri zmene možného ohraničenia zmení zvolený časový interval.
+\item V prípade, že dáta budú pribúdať (maximum sa bude dynamicky meniť), užívateľ bude vedieť definovať, ako a či vôbec sa pri zmene možného ohraničenia zmení zvolený časový interval.
 \item Užívateľ bude informovaný vhodným chybovým hlásením, pokiaľ nastane chyba pri zisťovaní možného časového ohraničenia.
 \end{itemize}
 
@@ -450,34 +479,40 @@ Medzi nefunkčné požiadavky patria
 \item Pri manipulátoroch (jazdcoch) na vrchnej časovej osy sa budú nachádzať klikateľné ukazatele zámkov. Tieto zámky budú implementovať funkčnú požiadavku uvedenú v sekcii \ref{funkcne_poziadavky} a užívateľ pomocou nich bude definovať správanie modulu pri zmene dát. Viac informácií o zámkoch doplňuje sekcia \ref{sec:lockers}.
 \item Výška portletu bude minimalizovaná, aby zaberala čo najmenšiu vertikálnu časť obrazovky.
 \item Modul bude responzívny do takej miery, že pri počiatočnom vyrenderovaní sa prispôsobí šírke samotného portletu. Šírka modulu a zobrazené dáta budú optimalizované pre najčastejšie veľkosti displejov používaných na stolných počítačoch.
-\item hlavná logika modulu bude pokrytá jednotkovými testami, viac informácií o testoch sa nachádza v sekcii \ref{sec:tests}.
-\begin{quote}
-\textit{Pod pojmom \textbf{hlavná logika modulu} rozumieme vzťah a reagovanie na zmeny medzi týmito prvkami modulu: \textbf{pravý zámok}, \textbf{ľavý zámok}, \textbf{maximum} (je maximálna hodnota, ktorú je možné zvoliť na časovej ose), \textbf{minimum} (je minimálne hodnota, ktorú je možné zvoliť na časovej ose), \textbf{dolné zvolené ohraničenie} (pozícia ľavého manipulátora) a \textbf{horné zvolené ohraničenie} (pozícia pravého manipulátora).}
-\end{quote}
-
+\item Hlavná logika modulu bude pokrytá jednotkovými testami, viac informácií o testoch a vymedzenie pojmu \textit{hlavná logika modulu} sa nachádza v sekcii \ref{sec:tests}.
+\item Modul bude možné transformovať na archív typu *.war a nasadiť ho do portálového servera Liferay ako portlet. Toto bude otestované na lokálne spustenom Liferay (nie priamo v KYPO portáli).
 \end{itemize}
 
 \subsection{Funkcia zámkov}
 \label{sec:lockers}
 V prípade, že modul časovej osy bude pracovať s dátami v reálnom čase, horné ohraničenie sa logicky bude zväčšovať. V takomto prípade môžu nastať aj zmeny aktuálneho výberu, ktoré môžu ale nemusia byť pre užívateľa žiadúce.
 
-Z tohto dôvodu vznikla už v minulosti požiadavka, aby sám používateľ portálu mal možnosť toto správanie definovať. Za týmto účelom bude pri oboch manipulátoroch vrchnej časovej osy klikateľný ukazateľ zámku, ktorého správanie opisuje nasledujúca tabuľka možností:
+Z tohto dôvodu vznikla už v minulosti požiadavka, aby sám používateľ portálu mal možnosť toto správanie definovať. Za týmto účelom bude pri oboch manipulátoroch vrchnej časovej osy klikateľný ukazateľ zámku. Jednotlivé stavy, v ktorých sa môžu zámky nachádzať, znázorňuje stavový diagram na obrázku \ref{state_diagram}.
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=1.0\linewidth]{state_diagram}
+	\caption{Stavový diagram zámkov (UML)}
+	\label{state_diagram}
+\end{figure}
+
+Zo stavového diagramu vieme vyčítať, že z pohľadu zámkov sa náš modul môže nachádzať v troch stavoch. Správanie hornej osy pri pribúdaní dát v jednotlivých stavoch nám opisuje nasledujúca tabuľka:
+
 \begin{center}
-  \begin{tabular}{ | c | c || p{6.5cm} | }
-    \hline
-    ľavý zámok & pravý zámok & správanie pri zmene horného ohraničenia \\ \hline \hline
-    odomknutý & odomknutý & výber sa nemení, aktualizuje sa len možné horné ohraničenie viditeľné v hornej osy \\ \hline
-    odomknutý & zamknutý & pravý manipulátor sa nastaví na maximum a ľavý sa posunie doprava tak, aby veľkosť zvoleného rozmedzia ostala zachovaná\\ \hline
-    zamknutý & odomknutý & zakázaný stav - ľavý zámok môže byť aktivovaný len ak je aktivovaný zároveň aj pravý \\ \hline
-    zamknutý & zamknutý & pravý manipulátor sa nastaví na maximum a ľavý zostáva, veľkosť zvoleného rozmedzia sa zväčší \\ \hline
-  \end{tabular}
+\tabulinesep=\tabcolsep
+  \begin{tabu}{ X[2,c,m] | X[7,c,m] }
+    \includegraphics[width=1\linewidth]{right_unlock} & výber sa nemení, aktualizuje sa len možné horné ohraničenie viditeľné v hornej osy \\ \hline
+    \includegraphics[width=1\linewidth]{left_unlock} & pravý manipulátor sa nastaví na maximum a ľavý sa posunie doprava tak, aby veľkosť zvoleného rozmedzia ostala zachovaná \\ \hline
+    \includegraphics[width=1\linewidth]{left_lock} & pravý manipulátor sa nastaví na maximum a ľavý zostáva, veľkosť zvoleného rozmedzia sa zväčší \ \
+  \end{tabu}
 \end{center}
 
 \subsection{Rozsah testov}
 \label{sec:tests}
-Modul časovej osy má na prvý pohľad jednoduchú úlohu, t.j. spresňuje časové okno vrámci povolených hodnôt. Avšak pri analýze je možné badať niekoľko rôznych vstupov a premenných ktoré sa navzájom ovplyvňujú a ovplyvňujú tak aj správanie tohto modulu, ktoré už nie je úplne triviálne.
+Modul časovej osy má na prvý pohľad jednoduchú úlohu, t.j. spresňuje časové okno vrámci povolených hodnôt. Avšak pri analýze je možné badať niekoľko rôznych vstupov a premenných ktoré sa navzájom ovplyvňujú a ovplyvňujú tak aj správanie tohto modulu, ktoré už nie je úplne triviálne. V tejto podkapitole sa nachádza zoznam a popis jednotkových testov, ktoré testujú hlavnú logiku modulu.
 
-V tejto podkapitole sa nachádza zoznam a popis jednotkových testov, ktoré testujú hlavnú logiku modulu.
+Pod pojmom \textit{hlavná logika modulu} rozumieme vzťah a reagovanie na zmeny medzi týmito prvkami modulu: \textit{pravý zámok}, \textit{ľavý zámok}, \textit{maximum}, \textit{minimum} a \textit{zvolený časový interval}.
+
 \begin{enumerate}
   \item
   \begin{tabular}{ | p{2.75cm} | p{8cm} | }
@@ -562,22 +597,12 @@ V tejto podkapitole sa nachádza zoznam a popis jednotkových testov, ktoré tes
 
 \end{enumerate}
 
-\section{Existujúce riešenie}
-Existujúci portlet časovej osy pre KYPO bol implementovaný v JavaScripte vrámci diplomovej práce Jiřího Dočkala\cite{dockal2016webovy}. Okrem výberu časového ohraničenia slúžil aj na prehrávanie scenárov, ako je možné vidieť aj na Obr. \ref{old_portlet}.
-
-V aktuálnych víziách vývojového centra KYPO sa však zrodila požiadavka na odlišný portlet, ktorý bude obsahovať v určitom smere menej funkcionality a bude postavený na odlišnej technológii (použitie frameworku Angular). Všetky tieto požiadavky boli zhrnuté v kapitole \ref{requirements}.
-\begin{figure}[H]
-	\center
-	\includegraphics[width=1.0\linewidth]{old_portlet}
-	\caption{Dizajn pôvodného portletu\cite{dockal2016webovy}}
-	\label{old_portlet}
-\end{figure}
-
 \chapter{Implementácia}
 % Vrámci nefunkčných požiadaviek bol pre implementáciu zvolený framework Angular od Google, ktorého verzia v čase tvorby tejto práce bola \angular_version . Tento framework bol v prostredí KYPO zvolený globálne a preto je táto voľba logická...TODO
 Táto kapitola podrobne opisuje štruktúru a implementáciu modulu časovej osy v Angulare, pričom berie do úvahy všetky funkčné aj nefunkčné požiadavky definované v kapitole \ref{requirements}.
 
 \section{Výber vhodného grafického prvku}
+\label{sec:slider}
 Kľúčovou úlohou v raných fázach vývoja bolo zvoliť vhodný prostriedok, ktorým bude možné manipulovať s časovým ohraničením, resp. s časovou osou. Požiadavky sú v tomto smere pomerne jasné a najbližšie k nim je spomedzi všetkých formulárových prvkov jednoznačne \textit{range} (v preklade \textit{rozsah}, môže byť označený aj ako \textit{range slider}). Na obrázku \ref{html_range} môžeme vidieť názornú ukážku, ako takýto ovládací prvok môže vyzerať.
 \begin{figure}[H]
 	\center
@@ -659,7 +684,7 @@ Nefunkčné požiadavky kladú pomerne striktné pokyny pre dizajn. Portlet má 
 \begin{figure}[H]
 	\center
 	\includegraphics[width=1.0\linewidth]{slider_150}
-	\caption{Dizajn modulu pri šírke 1366\,pixelov zväčšený na 150\,\%}
+	\caption{Dizajn modulu pri šírke 1366\,pixelov}
 	\label{slider_150}
 \end{figure}
 
@@ -690,7 +715,7 @@ Na vrchnej časovej ose sa pri obidvoch jazdcoch nachádzajú klikateľné ukaza
 Táto sekcia sa venuje popisu jednotlivých implementovaných častí modulu uvedených v sekcii \ref{design_created}.
 
 \subsection{Riadok s možným časovým rozsahom}
-Tento riadok obsahuje informáciu o celkovom časovom intervale, ktorý je možné zvoliť. Podľa zistených informácií experimenty v KYPO neprebiehajú dlhšie ako 24 hodín. Preto som uprostred umiestnil dátum experimentu a na okraje pri šípkach časové ohraničenie. Informácia o čase je v tomto prípade pre užívateľa dôležitejšia a dátum by ju robil menej čitateľnejšou.
+Tento riadok obsahuje informáciu o celkovom možnom časovom intervale, ktorý je možné zvoliť. Podľa zistených informácií experimenty v KYPO neprebiehajú dlhšie ako 24 hodín. Preto som uprostred umiestnil dátum experimentu a na okraje pri šípkach časové ohraničenie. Informácia o čase je v tomto prípade pre užívateľa dôležitejšia a dátum by ju robil menej čitateľnejšou.
 
 V budúcnosti však existuje možnosť dlhších experimentov, ktoré môžu trvať aj niekoľko dní. Vtedy sa dátumy zobrazia na krajoch ale časy už nie. Je to opäť z dôvodu čitateľnosti. Pri viacdňovom experimente je pre užévateľa dôležitejší dátum začiatku a konca experimentu, ako čas. Navyše informácia o čase sa nachádza v popiskoch hornej časovej osy hneď pod dátumom (stupnica pod osou).
 
@@ -715,6 +740,52 @@ Dolná časová os (resp. jej ohraničenie) vždy reflektuje interval zvolený u
 
 V jazdcoch sa nachádza aj informácia o časovom okamihu, na ktorý sú práve nastavení. Táto informácia je udávaná v hodinách a minútach, avšak pri veľmi malých časových ohraničeniach zobrazuje aj sekundy. Práve tieto časové okamihy podávajú informáciu o práve zvolenom časovom intervale a kvôli kompaktnosti celého modulu sa už nikde inde táto informácia nenachádza.
 
+\section{Architektúra}
+\begin{figure}[H]
+	\center
+	\includegraphics[width=1.0\linewidth]{component_diagram}
+	\caption{Diagram komponentov modulu (UML)}
+	\label{component_diagram}
+\end{figure}
+
+Komponentový diagram na obrázku \ref{component_diagram} zachytáva hrubú štruktúru modulu a závislosti jednotlivých komponent. Medzi základné súčasti modulu patrí \textit{TimelineFrame} komponent a dve zdieľané služby \textit{PossibleTimestampsService} a \textit{ShareTimeService}.
+
+PossibleTimestampsService je služba, ktorej úlohou je zistenie celkového možného časového ohraničenia pomocou HTTP. Túto službu využíva TimelineFrame komponent (v prípade pribúdajúcich dát opakovane), ktorý plní funkciu hlavného komponentu celého modulu a obsahuje v sebe komponenty:
+\begin{itemize}
+\item vrchnú časovú os \textit{timeline-slider-upper}
+\item spodnú časovú os \textit{timeline-slider-lower}
+\item stavový stĺpec \textit{timeline-statusbar}
+\end{itemize}
+
+\subsection{ShareTimeService}
+ShareTimeService je služba, ktorá v sebe nesie kompletnú informáciu o stave modulu. Obsahuje hraničné hodnoty, zvolené rozmedzie a aj informáciu o "{aktívnosti}" jednotlivých zámkov. Ostatné komponenty vedia túto službu využívať pomocou dependency injection.
+%ShareTimeService vykonáva \textit{hlavnú logiku modulu} tak, ako je definované v podkapitole \ref{sec:tests}.
+
+V prípade akejkoľvek zmeny môžu jednotlivé komponenty na tieto zmeny reagovať. To sa deje pomocou tzv. sledovaní (\textit{subscribe}) a vo svojej podstate to nie je nič iné ako implementácia návrhového vzoru \textit{Observer} \cite{rhrjjv1994elements}.
+
+Okrem toho je ShareTimeService zodpovedný aj za \textit{hlavnú logiku modulu} definovanú v podkapitole \ref{sec:tests}. Napríklad pri aktívnych všetkých zámkoch a pribúdajúcich dátach je potrebné aktualizovať aj zvolený časový interval. O to sa postará vnútorná logika ShareTimeService a všetky komponenty, ktoré zvolený časový interval sledujú (\textit{subscribers}), budú v tomto prípade informovaní o zmene. Detailnejší pohľad na architektúru modulu nám poskytne diagram na obrázku \ref{data_diagram}, ktorý kombinuje diagram komponentov s informáciou o toku dát.
+
+Po zelených šípkach putuje informácia o celkovom možnom časovom ohraničení. V prípade pribúdajúcich dát sa \textit{timeline-frame} komponent stará o periodické zisťovanie ohraničenia opakovanými volaniami, ktoré vykonáva pomocou služby PossibleTimestampsService. Túto informáciu ukladá do ShareTimeService, z ktorého túto informáciu odoberá vrchná časová os (je prihlásená na odber pomocou \textit{subscribe}, preto ShareTimeService vrchnú časovú os notifikuje o zmene).
+
+Červené šípky znázorňujú voľbu užívateľa a teda ním zvolené časové rozmedzie. Na diagrame na obrázku \ref{data_diagram} opäť vidíme, ktoré komponenty môžu túto hodnotu meniť a ktoré ju odoberajú. Analogicky oranžové šípky znázorňujú informáciu o aktivácii a deaktivácii zámkov.
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=1.0\linewidth]{data_diagram}
+	\caption{Diagram toku dát - farebné šípky znázorňujú putovanie informácie do jednotlivých komponentov}
+	\label{data_diagram}
+\end{figure}
+
+\section{Použitie direktív}
+Na obrázku \ref{data_diagram} môžeme vidieť, že TimelineSliderUpper obsahuje HTML \texttt{<div>} tag a v tomto tagu je použitá direktíva \textit{sliderUpper}. Direktívy som predstavil v kapitole \ref{sec_directives} - slúžia na pridávanie/odoberanie DOM elementov z HTML alebo zmenu ich vlastností.
+
+Direktíva sliderUpper je mnou definovaná direktíva, ktorá slúži na to, aby do tohto elementu pridala grafický slider pomocou knižnice D3.js. Tento slider je v skutočnosti vektorový obrázok pozostávajúci z čiar (koľajnica), bodov (manipulátory) a vnorených obrázkov (ukazatele zámkov).
+
+Výhodou takejto implementácie je, že ako autor nie som ničím obmedzovaný. Vzhľad si viem prispôsobiť do najmenších detailov a môžem použiť ľubovoľný počet manipulátorov. Napríklad pri implementácii spodnej osy som do manipulátorov vložil hodnotu, čo je pri štandardnom HTML prvku typu \textit{range} nemožné (prvok sme spomínali v sekcii \ref{sec:slider}).
+
+Nevýhodou je, že celú logiku si musím implementovať sám. Pomocou D3.js metódy \textit{drag} odchytávam udalosť, keď užívateľ posúva niektorým z manipulátorov. Pri tejto udalosti však sám musím ošetriť situácie, keď užívateľ ťahá manipulátor až za hranicu, keď posunie manipulátor o menší úsek, ako je krok alebo keď posunie jeden manipulátor až za druhý. Táto implementácia bola mierne zložitejšia, ale vo výsledku mi umožnila vytvoriť dizajn bez akýchkoľvek obmedzení.
+
+\section{Vytvorenie archívu a nasadenie do Liferay}
 
 %\printbibliography
 

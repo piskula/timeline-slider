@@ -29,6 +29,9 @@ much more simple solution as [previous](#previous-version-i), where I was trying
 
 <a name="previous-version-i"/>
 
+### State Diagram (lockers):
+![State diagram](https://docs.google.com/uc?id=1ENNLMooP0RqMhiwwz5fSsxMaLYrXJlku)
+
 #### Previous version I.
 On this diagram all arrows are used to denote binding. Simple arrow denotes one-way binding, two-way arrow
 denotes two-way binding. Red dashed arrow denotes accessing (reading value in) child component from parent component.
