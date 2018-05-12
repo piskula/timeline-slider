@@ -4,7 +4,7 @@ STATUS=0;
 
 echo "Building Angular application"
 cd angular
-npm install && ng build --prod -vc=true
+npm install && ng build --prod
 
 STATUS=$?
 
@@ -18,11 +18,11 @@ else
   echo '' > ../src/main/webapp/css/main.css
 
   echo "Merging and copying files"
-  cat dist/inline.*.bundle.js \
-      dist/polyfills.*.bundle.js \
-      dist/vendor.*.bundle.js \
-      dist/main.*.bundle.js > ../src/main/webapp/js/main.js && \
-  cat dist/styles.*.bundle.css > ../src/main/webapp/css/main.css
+  cat dist/runtime.*.js \
+      dist/polyfills.*.js \
+      dist/vendor.*.js \
+      dist/main.*.js > ../src/main/webapp/js/main.js && \
+  cat dist/styles.*.css > ../src/main/webapp/css/main.css
   cp -v dist/fontawesome-webfont.* ../src/main/webapp/css/
   STATUS=$?
 fi
