@@ -58,14 +58,10 @@
     title         = {Interaktívna časová os ako modul v Angulare},
     %TeXtitle      = {The Proof of $\mathsf{P}=\mathsf{NP}$},
     TeXtitle      = {Interaktívna časová os ako modul v Angulare},
-    keywords      = {keyword1, keyword2, ...},
-    TeXkeywords   = {keyword1, keyword2, \ldots},
-    abstract      = {This is the abstract of my thesis, which can
-
-                     span multiple paragraphs.},
-    thanks        = {These are the acknowledgements for my thesis, which can
-
-                     span multiple paragraphs.},
+    keywords      = {Angular, KYPO, Liferay, SVG, D3.js, TypeScript, W3C, dynamické prostredie, range slider},
+    TeXkeywords   = {Angular, KYPO, Liferay, SVG, D3.js, TypeScript, W3C, dynamické prostredie, range slider},
+    abstract      = {Cieľom tejto práce je modifikácia existujúceho modulu časovej osy, ktorý sa používa v portáli Kybernetického polygónu Masarykovej univerzity a jeho implementácia vo frameworku Angular. Súčasťou práce je funkčný portlet, ktorý je možné integrovať do Liferay portálu.},
+    thanks        = {Rád by som sa poďakoval vedúcemu práce RNDr. Radkovi Ošlejškovi, Ph.D. za jeho čas a pomoc pri tvorbe tejto práce.},
     %bib           = prace.bib,
 }
 \usepackage{makeidx}      %% The `makeidx` package contains
@@ -137,17 +133,25 @@
 
 \newtheorem{mydef}{Definícia}
 \def \angular_version {5.2.10}
+\newcommand{\inquotes}[1]{{}"{}#1{}"{}}
 
 \begin{document}
 \chapter*{Úvod}
-\addcontentsline{toc}{chapter}{Introduction}
-Toto bude úvod.
+\addcontentsline{toc}{chapter}{Úvod}
+V rýchlo sa rozvíjajúcom svete informačných technológií je informačná bezpečnosť najdôležitejším odvetvím informatiky. V dnešnej dobe už nie je veľmi pravdepodobné, aby nás výdobytky techniky ako telefóny a počítače ohrozovali na živote. Hrozba informačnej bezpečnosti sa týka hlavne ochrany informácií. Masarykova Univerzita si uvedomuje vážnosť tejto hrozby a preto sa rozhodla zriadiť výzkumné stredisko v tejto oblasti.
+
+Kybernetický polygón svoje využitie najčastejšie nachádza vo výuke vo forme kybernetických cvičení. Vývojári vedia zaujať úlohy útočníkov alebo obrancov daného systému a univerzita tak pomáha vychovávať budúcich bezpečnostných expertov. Svojou komplexnosťou je prostredie Kybernetického polygónu schopné vykonávať experimenty v spolupráci s Ministerstvom vnútra Českej republiky alebo zahraničných expertov. Dôležitosť podobných experimentov a cvičení si vyžaduje sledovanie a archivovanie množstva dát, ktoré sa počas týchto cvičení generujú.
+
+Hlavnou úlohou portletu časovej osy, ktorý je cieľom tejto práce, je poskytnúť užívateľovi intuitívny nástroj, pomocou ktorého vie z veľkého časového intervalu vybrať len určitú jeho časť. Tento portlet v portáli Liferay následne notifikuje ostatné vizualizačné a štatistické portlety na danej stránke, ktoré potom zobrazia dáta platné len pre tento užívateľom zvolený interval. Špecifickou vlastnosťou modulu časovej osy je jej schopnosť pracovať nad pribúdajúcimi dátami. Portlet s danou funkcionalitou implementoval Mgr. Jiří Dočkal vo svojej diplomovej práci, na ktorú táto práca čiastočne nadväzuje.
+
+V teoretickej časti tejto práce sa venujem portálovému serveru Liferay a hlavne frameworku Angular. Kapitola \ref{plan} sa venuje detailným funkčným a nefunkčným požiadavkám na modul a taktiež analyzuje predošlé riešenie.
+
+V praktickej časti som sa snažil pomocou knižnice D3.js a vektorovej grafiky vytvoriť pre užívateľa čo najprívetivejšiu aplikáciu. Okrem tohto technického a dizajnového riešenia sa v práci venujem transformácii Angular modulu na portlet, ktorý je možné integrovať do Liferay. Súčasťou práce je taktiež otestovanie funkčnosti aplikácie v portáli Liferay.
 
 \chapter{Kybernetický polygón}
 Podľa Národného bezbečnostného úradu Českej republiky je termínom \textit{kritická informačná infraštruktúra} označený \textit{"systém prvkov tejto infraštruktúry, ktorý pri narušení svojej funkcie môže spôsobiť poškodenie alebo ohrozenie záujmov Českej republiky"}\cite{nbu2012}.
 
 Kybernetický polygón (KYPO) bol zriadený Fakultou Informatiky s podporou Ministerstva vnútra Českej republiky za účelom zaistenia kybernetickej bezpečnosti v Českej republike ochranou kritickej informačnej infraštruktúry. Projekt KYPO poskytuje unikátne prostredie pre výskum nových metód, ktoré by v blízkej budúcnosti mohli pomôcť chrániť kritickú informačnú infraštruktúru\cite{dankovvcikova2015konfigurace}. Objekt polygónu bol vybudovaný v roku 2015 vrámci rekonštrukcie Fakulty Informatiky.
-%V rýchlo sa rozvíjajúcom svete informačných technológií je informačná bezpečnosť najdôležitejším odvetvím informatiky. V dnešnej dobe už nie je veľmi pravdepodobné, aby nás výdobytky techniky ako telefóny a počítače ohrozovali na živote. Hrozba informačnej bezpečnosti sa týka hlavne ochrany informácií. Masarykova Univerzita si uvedomuje vážnosť tejto hrozby a preto sa rozhodla zriadiť výzkumné stredisko v tejto oblasti.
 
 \section{Technológie}
 Prostredie KYPO funguje na princípe cloudového riešenia v ktorom je možné modelovať virtuálnu sieť\cite{eichler2014analytical}. Toto riešenie poskytuje všetky nástroje potrebné k simulácii rôznych sieťových topológií. Prostredie je určené pre výzkum a testovanie rôznych scenárov kybernetických útokov v izolovanom a plne kontrolovateľnom prostredí\cite{vceleda2015kypo}. Najčastejšie sa vďaka umiestneniu (priamo v budove Fakulty Informatiky) využíva na kybernetické cvičenia a to vrátane výuky.
@@ -201,7 +205,7 @@ Dáta, ktoré zaznamenáva SMN sú práve tie dáta, ktoré sa zobrazujú v port
 \section{Potreba analýzy dát}
 Nakoľko simulácie útokov a cvičenia prebiehajú v reálnom čase, vznikla potreba sledovať zmeny v týchto dynamických prostrediach. Priebehy jednotlivých scenárov sa zaznamenávajú aj pre potreby neskoršej analýzy. O túto činnosť sa stará manažment sandboxov (SMN), ktorý sme si opísali v podkapitole \ref{smn} \nameref{smn}.
 
-Portlet časovej osy, ktorý je cieľom tejto práce, slúži ako kľúčový element pre filtrovanie týchto dát, ktoré poskytuje každý jeden SMN cez API. Či už sa jedná o analýzu starších dát, alebo sledovanie aktuálne pribúdajúcich dát počas práve prebiehajúceho experimentu, o zistenie hraničných hodnôt sa bude starať samotný portlet. SMN teda nebude nijakým spôsobom notifikovať portlet o nových dátach, portlet si ich bude musieť "pýtať" sám.
+Portlet časovej osy, ktorý je cieľom tejto práce, slúži ako kľúčový element pre filtrovanie týchto dát, ktoré poskytuje každý jeden SMN cez API. Či už sa jedná o analýzu starších dát, alebo sledovanie aktuálne pribúdajúcich dát počas práve prebiehajúceho experimentu, o zistenie hraničných hodnôt sa bude starať samotný portlet. SMN teda nebude nijakým spôsobom notifikovať portlet o nových dátach, portlet si ich bude musieť \inquotes{pýtať} sám.
 
 \chapter{Liferay Portal}
 \label{liferay}
@@ -255,10 +259,10 @@ Podstatným elementom Liferay sú lokality (Sites), ktoré pomáhajú vytvárať
 Z podkapitoly \ref{liferay_users} však vieme, že lokality sú priradené organizácii a preto nastavenie oprávnení pre organizáciu platí rovnako pre všetkých užívateľov spadajúcich pod danú organizáciu. Aby lokalita mohla užívateľom zobrazovať nejaký obsah, musí obsahovať aspoň jednu stránku.
 
 \chapter{Angular framework}
-Angular je open-source platforma od spoločnosti Google určená pre tvorbu jednostránkových front-end aplikácií. Využíva TypeScript ako odporúčaný programovací jazyk, ale je možné využiť aj JavaScript.
+Angular je open-source platforma od spoločnosti Google určená pre tvorbu jednostránkových front-end aplikácií. Ako programovací jazyk používa TypeScript.
 
 \section{TypeScript}
-TypeScript je programovací jazyk vyvýjaný firmou Microsoft. Prvý krát bol oficiálne predstavený v roku 2012. Jedná sa o implementáciu štandardu ECMAScript 2015 (označovaný aj ES2015 alebo ES6) a vo svojej podstate je to "syntaktický cukor" pridaný do JavaScriptu, ktorý umožňuje využívať typovú kontrolu.
+TypeScript je programovací jazyk vyvýjaný firmou Microsoft. Prvý krát bol oficiálne predstavený v roku 2012. Jedná sa o implementáciu štandardu ECMAScript 2015 (označovaný aj ES2015 alebo ES6) a vo svojej podstate je to \inquotes{syntaktický cukor} pridaný do JavaScriptu, ktorý umožňuje využívať typovú kontrolu.
 
 \subsection{Porovnanie s JavaScriptom}
 JavaScript je dynamicky typovaný jazyk. To znamená, že typ premennej záleží na samotnej hodnote danej premennej. V jednotlivých fázach aplikácie teda môžeme do premennej priradiť hodnoty rôznych typov. To nám v istom smere poskytuje veľkú slobodu, ale zároveň vnáša istú mieru nepresnosti a neurčitosti do kódu, čo môže hlavne v rozsiahlych aplikáciách spôsobiť problémy so spoľahlivosťou.
@@ -293,28 +297,30 @@ Základným architektonickým prvkom v Angulare je modul. Oficiálna dokumentác
 	\label{angular_architecture}
 \end{figure}
 
-Základným stavebným prvkom stránky je komponent. Skladaním komponent do seba sa vytvára UI, ktoré sa následne vyrenderuje v prehliadači a zobrazí užívateľovi. Komponenty, na rozdiel od portletov na stránke Liferay, môžu v sebe opätovne obsahovať ďalšie komponenty. Každý komponent v kontexte Angularu prislúcha práve jednému modulu a každému komponentu prislúcha práve jeden HTML template.
+Základným stavebným prvkom stránky je komponent. Skladaním komponent do seba sa vytvára UI, ktoré sa následne vyrenderuje v prehliadači a zobrazí užívateľovi. Komponenty, na rozdiel od portletov na stránke Liferay, môžu v sebe opätovne obsahovať ďalšie komponenty. Každý komponent v kontexte Angularu prislúcha práve jednému modulu a každému komponentu prislúcha práve jedna HTML šablóna (template).
 
-Medzi základné elementy v Angulare v neposlednom rade patria služby (Services), ktoré ,obdobne ako komponenty, prislúchajú práve jednému modulu. Podľa definície sa \textit{"služby využívajú vtedy, keď potrebujeme medzi komponentami zdieľat dáta alebo funkčnú logiku aplikácie, ktorá nemá priradený žiadny template"}\cite{angular}.
+Medzi základné elementy v Angulare v neposlednom rade patria služby (Services), ktoré ,obdobne ako komponenty, prislúchajú práve jednému modulu. Podľa definície sa \textit{"služby využívajú vtedy, keď potrebujeme medzi komponentami zdieľat dáta alebo funkčnú logiku aplikácie, ktorá nemá priradenú žiadnu šablónu"}\cite{angular}.
 
 Táto štruktúra delenia aplikácie do modulov a komponentov sa môže na prvý pohľad zdať zložitá, preto som zvolil nasledujúci praktický príklad pre lepšie porozumenie:
 \begin{description}
 \item[moduly] sú funkčne oddelené súčasti aplikácie, v prípade internetového obchodu napríklad správa užívateľov, moje objednávky a prehľadávanie.
 \item[komponenty] sú stavebné prvky stránky, napríklad modul \textit{správa užívateľov} obsahuje komponent \textit{prehľad}, ktorý ďalej obsahuje komponenty \textit{list} a \textit{vyhľadávanie}, ktoré ale môžu byť opätovne použité aj v iných častiach tohto modulu, pretože sú úplne oddelené.
-\item[služby] poskytujú dáta a logiku, pričom nie sú naviazané na template. Napríklad služba UserService by poskytovala list používateľov a detail používateľa pomocou HTTP metód. V našom prípade by komponent \textit{list} alebo komponent \textit{prehľad} mohol využívať túto službu ako zdroj dát.
+\item[služby] poskytujú dáta a logiku, pričom nie sú naviazané na šablónu. Napríklad služba UserService by poskytovala zoznam používateľov a detail používateľa pomocou HTTP metód. V našom prípade by komponent \textit{list} alebo komponent \textit{prehľad} mohol využívať túto službu ako zdroj dát.
 \end{description}
 
 \subsection{Komponenty}
-Na nasledujúcej ukážke kódu môžeme vidieť, ako sa dáta z komponentu (ukážka \ref{ts_snippet}) dostanú do template (ukážka \ref{html_snippet}) a opačne. Tento proces sa všeobecne nazýva \textit{binding} a v Angulare poznáme štyri typy bindingu (pozri aj Obr. \ref{angular_architecture})
+Na nasledujúcej ukážke kódu môžeme vidieť, ako sa dáta z komponentu (ukážka \ref{ts_snippet}) dostanú do šablóny (ukážka \ref{html_snippet}) a opačne. Tento proces sa všeobecne nazýva \textit{binding} a v Angulare poznáme štyri typy bindingu (pozri aj Obr. \ref{angular_architecture})
 \begin{description}
-\item[interpolation] - vkladáme hodnotu do elementu pomocou $\{\{\}\}$, v template vidíme na riadku 3
-\item[property binding] - posúvame objekt do komponentu pomocou $[ ]$, v template vidíme na riadku 4. Väčšinou ho vieme nahradiť pomocou interpolation, napríklad nastavenie vstupu children na riadku 4 v template môžeme zapísať aj ako\\
-\texttt{children="\{\{user.children\}\}"}, ale z dôvodu čitateľnosti kódu je vhodné tieto dva typy nezamieňať.
-\item[event binding] - volá metódu komponentu na základe udalosti pomocou $()$, v template vidíme na riadku 2
+\item[interpolation] - vkladáme hodnotu do elementu pomocou $\{\{\}\}$, v~šablóne vidíme na riadku~3
+\item[property binding] - posúvame objekt do~komponentu pomocou $[ ]$, v~šablóne vidíme na riadku~4. Väčšinou ho vieme nahradiť pomocou interpolation, napríklad nastavenie vstupu children na riadku 4 v~šablóne môžeme zapísať aj ako\\
+\texttt{children="\{\{user.children\}\}"}, ale z~dôvodu čitateľnosti kódu je vhodné tieto dva typy nezamieňať.
+\item[event binding] - volá metódu komponentu na~základe udalosti pomocou $()$, v~šablóne vidíme na~riadku~2
 \item[two-way binding] alebo obojsmerný binding - vzniká kombináciou property bindingu a event bindingu, zapisuje sa ako $[( )]$ a využíva sa napríklad vo formulárových komponentoch, kedy môže byť hodnota ovplyvnená nie len užívateľom, ale aj inou aplikačnou logikou a je potrebné túto zmenu užívateľovi zároveň aj zobraziť.
 \end{description}
 
-\begin{lstlisting}[language=HTML,caption={HTML template \textit{user-detail.html}},captionpos=b,label=html_snippet]
+\pagebreak
+
+\begin{lstlisting}[language=HTML,caption={HTML šablóna (template) \textit{user-detail.html}},captionpos=b,label=html_snippet]
 <div>User Details</div>
 <div (click)="callClickMethod()">
   <label>Name: {{ user.name }}</label>
@@ -337,7 +343,7 @@ export class UserDetailComponent implements OnInit {
     this.user = this._userService.getUser();
   }
   
-  public callClickMethod(): {
+  public callClickMethod(): void {
     console.log('clicked on detail');
   }
 }
@@ -347,21 +353,21 @@ Na riadku 9 v ukážke \ref{ts_snippet} si zase všimneme, ako využívame zdie�
 
 \subsection{Direktívy}
 \label{sec_directives}
-V prípade komponentov zvyčajne definujeme selektor, ktorý je unikátny identifikátor komponentu vrámci modulu a používa sa v template. V ukážke \ref{ts_snippet} sme tak urobili na riadku 2, čím sme umožnili použitie tohto komponentu v inom komponente zadaním HTML tagu \texttt{<user-detail></user-detail>} do template.
+V prípade komponentov zvyčajne definujeme selektor, ktorý je unikátny identifikátor komponentu vrámci modulu a používa sa v~šablónach. V~ukážke \ref{ts_snippet} sme tak urobili na~riadku~2, čím sme umožnili použitie tohto komponentu v~inom komponente zadaním HTML tagu \texttt{<user-detail></user-detail>} do šablóny.
 
-Direktívy umožňujú rozšírenú manipuláciu DOM objektov tak, že sa vkladajú do HTML tagov. Poznáme dva typy direktív\cite{angular}:
+Direktívy umožňujú rozšírenú manipuláciu DOM objektov tak, že sa vkladajú do~týchto HTML tagov. Poznáme dva typy direktív\cite{angular}:
 \begin{enumerate}
 \item structural - dokážu ovplyvňovať výsledný layout odstraňovaním a pridávaním DOM objektov, napríklad vstavané direktívy *ngFor, *ngIf
 \item attribute - dokážu len upravovať vlastnosti DOM objektu, napríklad vstavané direktívy *ngClass, *ngStyle
 \end{enumerate}
 
 Nasledujúca jednoduchá ukážka \ref{directive_snippet} nám pomôže porozumieť správaniu direktív:
-\begin{figure}
+\begin{figure}[H]
  \centering
  \begin{minipage}{.59\textwidth}
 
   \centering
-  \begin{lstlisting}[language=HTML,caption={Direktívy použité v template (vľavo) a ako ich vo výsledku vníma prehliadač (vpravo)},label=directive_snippet]
+  \begin{lstlisting}[language=HTML,caption={Direktívy použité v šalóne (vľavo) a ako ich vo~výsledku vníma prehliadač (vpravo)},label=directive_snippet]
 <div *ngIf="true">I am</div>
 <div *ngIf="false">I am not</div>
 
@@ -405,6 +411,7 @@ Komponent sa tým pádom nestará o vytvorenie samotného objektu, ale dostane u
 Framework Angular umožňuje vytvárať inštancie služieb (services) pri bootstrape aplikácie. Bootstrap je jeden z procesov spúšťania, ktorý výslednú aplikáciu vloží do súboru \textit{index.html} \cite{angular} (netreba si mýliť s knižnicou Twitter Bootstrap, ktorá obsahuje HTML a CSS šablóny pre tvorbu responzívnych web stránok \cite{peska2017thesis}). Takto inicializované služby potom vieme využívať naprieč modulmi tak, ako je to znázornené v ukážke \ref{ts_snippet} na strane \pageref{ts_snippet}.
 
 \chapter{Návrh modulu}
+\label{plan}
 %Cieľom tejto práce je vytvoriť modul vo frameworku Angular, ktorý bude nasaditeľný ako samostatný portlet do Liferay portálu a prostredníctvom ktorého bude užívateľ schopný zvoliť si podmnožinu časového ohraničenia.
 
 Kybernetický polygón generuje počas experimentu obrovské množstvo dát. Tieto dáta sa zaznamenávajú do prislúchajúcich časových postupností, z ktorých sa vytvárajú rôznorodé vizualizácie, ktoré umožňujú užívateľovi vnímať tieto dáta z viacerých pohľadov. Príklad takejto vizualizácie môžeme vidieť na obrázku \ref{visualization}.
@@ -640,7 +647,7 @@ Spočiatku som sa snažil využiť niekoľko už existujúcich voľne prístupn�
 
 Najviac času som strávil s komponentom ng2-nouislider\cite{ng2nouislider}, ale postupom času mi ani tento komponent neponúkol také možnosti, ktoré by som potreboval. Všetky knižnice mali z môjho pohľadu tieto dva nedostatky:
 \begin{description}
-\item[neboli pôvodne navrhnuté pre Angular] - väčšina knižníc spolupracovala s Angularom len preto, že niekto \char`\"obalil\char`\" jej existujúceho JavaScriptového predchodcu ako Angular2 komponent, čím plnohodnotne nevyužil všetky možnosti Angularu (ako napríklad obojsmerný binding)
+\item[neboli pôvodne navrhnuté pre Angular] - väčšina knižníc spolupracovala s Angularom len preto, že niekto \inquotes{obalil} jej existujúceho JavaScriptového predchodcu ako Angular2 komponent, čím plnohodnotne nevyužil všetky možnosti Angularu (ako napríklad obojsmerný binding)
 \item[neboli navrhnuté pre tento typ použitia] - boli navrhnuté tak, aby na začiatku boli definované hraničné body (minimum, maximum) a následne po celý zvyšok svojej životnosti už len poskytovali informácie o momentálnej voľbe užívateľa. Ak sa následne zmenili hraničné body, väčšina komponent v lepšom prípade dané hranice len neaktualizovala, v horšom prípade úplne prestala fungovať.
 \end{description}
 
@@ -655,7 +662,7 @@ Dnes je SVG formát široko podporovaný väčšinou webových prehliadačov. Je
 \item Ak obrázok obsahuje text, je možné ho vyhľadať a vedia ho prečítať aj roboty vyhľadávačov, čo je pri weboch veľké plus.
 \end{itemize}
 
-D3.js umožňuje pridávať do DOMu stránky SVG elementy. Týmto spôsobom vieme "programovať", ako sa má grafika zobraziť a odchytávať rôzne typy udalostí ako sú napríklad kliknutia. Toto je hlavný princíp, na ktorom je postavená implementácia modulu.
+D3.js umožňuje pridávať do DOMu stránky SVG elementy. Týmto spôsobom vieme \inquotes{programovať}, ako sa má grafika zobraziť a odchytávať rôzne typy udalostí ako sú napríklad kliknutia. Toto je hlavný princíp, na ktorom je postavená implementácia modulu.
 
 Implementoval som direktívy, ktoré majú niekoľko vstupov, ako napríklad minimum, maximum, zvolený časový úsek a podobne. Na základe týchto informácií direktíva vytvorí SVG element, v ktorom vykreslí koľajnicu a dvoch jazdcov (manipulátory). Udalosť kliknutia a ťahania týchto jazdcov odchytávam a pomocou nich viem upraviť výsledný časový úsek aj vzhľad.
 
@@ -754,12 +761,10 @@ PossibleTimestampsService je služba, ktorej úlohou je zistenie celkového mož
 \begin{itemize}
 \item vrchnú časovú os \textit{timeline-slider-upper}
 \item spodnú časovú os \textit{timeline-slider-lower}
-\item stavový stĺpec \textit{timeline-statusbar}
 \end{itemize}
 
 \subsection{ShareTimeService}
-ShareTimeService je služba, ktorá v sebe nesie kompletnú informáciu o stave modulu. Obsahuje hraničné hodnoty, zvolené rozmedzie a aj informáciu o "{aktívnosti}" jednotlivých zámkov. Ostatné komponenty vedia túto službu využívať pomocou dependency injection.
-%ShareTimeService vykonáva \textit{hlavnú logiku modulu} tak, ako je definované v podkapitole \ref{sec:tests}.
+ShareTimeService je služba, ktorá v sebe nesie kompletnú informáciu o stave modulu. Obsahuje hraničné hodnoty, zvolené rozmedzie a aj informáciu o \inquotes{aktívnosti} jednotlivých zámkov. Ostatné komponenty vedia túto službu využívať pomocou dependency injection.
 
 V prípade akejkoľvek zmeny môžu jednotlivé komponenty na tieto zmeny reagovať. To sa deje pomocou tzv. sledovaní (\textit{subscribe}) a vo svojej podstate to nie je nič iné ako implementácia návrhového vzoru \textit{Observer} \cite{rhrjjv1994elements}.
 
@@ -777,15 +782,48 @@ Po zelených šípkach putuje informácia o celkovom možnom časovom ohraničen
 \end{figure}
 
 \section{Použitie direktív}
-Na obrázku \ref{data_diagram} môžeme vidieť, že TimelineSliderUpper obsahuje HTML \texttt{<div>} tag a v tomto tagu je použitá direktíva \textit{sliderUpper}. Direktívy som predstavil v kapitole \ref{sec_directives} - slúžia na pridávanie/odoberanie DOM elementov z HTML alebo zmenu ich vlastností.
+Na obrázku \ref{data_diagram} môžeme vidieť, že \textit{timeline-slider-upper} obsahuje HTML \texttt{<div>} tag a v tomto tagu je použitá direktíva \textit{sliderUpper}. Direktívy som predstavil v kapitole \ref{sec_directives} - slúžia na pridávanie/odoberanie DOM elementov z HTML alebo zmenu ich vlastností.
 
-Direktíva sliderUpper je mnou definovaná direktíva, ktorá slúži na to, aby do tohto elementu pridala grafický slider pomocou knižnice D3.js. Tento slider je v skutočnosti vektorový obrázok pozostávajúci z čiar (koľajnica), bodov (manipulátory) a vnorených obrázkov (ukazatele zámkov).
+Direktíva sliderUpper je mnou definovaná direktíva (analogicky sliderLower), ktorá slúži na to, aby do tohto elementu pridala grafický slider pomocou knižnice D3.js. Tento slider je v skutočnosti vektorový obrázok pozostávajúci z čiar (koľajnica), bodov (manipulátory) a vnorených obrázkov (ukazatele zámkov).
 
 Výhodou takejto implementácie je, že ako autor nie som ničím obmedzovaný. Vzhľad si viem prispôsobiť do najmenších detailov a môžem použiť ľubovoľný počet manipulátorov. Napríklad pri implementácii spodnej osy som do manipulátorov vložil hodnotu, čo je pri štandardnom HTML prvku typu \textit{range} nemožné (prvok sme spomínali v sekcii \ref{sec:slider}).
 
 Nevýhodou je, že celú logiku si musím implementovať sám. Pomocou D3.js metódy \textit{drag} odchytávam udalosť, keď užívateľ posúva niektorým z manipulátorov. Pri tejto udalosti však sám musím ošetriť situácie, keď užívateľ ťahá manipulátor až za hranicu, keď posunie manipulátor o menší úsek, ako je krok alebo keď posunie jeden manipulátor až za druhý. Táto implementácia bola mierne zložitejšia, ale vo výsledku mi umožnila vytvoriť dizajn bez akýchkoľvek obmedzení.
 
-\section{Vytvorenie archívu a nasadenie do Liferay}
+\section{Ostatné implementačné detaily}
+Podľa najnovších odporúčaní rôznych vývojárskych komunít \cite{Etienne2017} sú v celom projekte používané relatívne jednotky (rem, em) namiesto absolútnych (px, pt, cm). Z tohoto dôvodu sa aj pri veľkom zväčšení modul nedeformuje, ale všetky jeho súčasti sa zväčšujú rovnomerne. Táto funkcia taktiež podporuje zväčšenie písma, ktoré využívajú slabozrakí používatelia.
+
+Spomínané ikony Font-Awesome boli zvolené s ohľadom na užívateľov, ktorí nevedia dobre rozlišovať farby. Ikony aktívneho a neaktívneho zámku sú preto okrem farebného prevedenia aj výrazne tvarovo odlišné. Ikona \textit{refresh}, ktorá indikuje prebiehajúce opakované zisťovania celkového možného ohraničenia, sa pomaly otáča namiesto blikania, čím sa systém stáva použiteľný aj pre používateľov s neurologickými poruchami (epilepsia). Všetky spomínané požiadavky sú prebraté zo štandardu konzorcia W3C \cite{caldwell2008web}.
+
+\chapter{Nasadenie modulu do Liferay}
+V kapitole \ref{liferay} sme sa oboznámili s portálovým serverom Liferay a uviedli, že jeho hlavná výhoda tkvie v možnosti vytvárať a importovať do neho svoje vlastné miniaplikácie, tzv. portlety. Cieľom tejto práce je vytvoriť modul vo frameworku Angular, ktorý však bude možné využiť v Liferay. Táto kapitola sa venuje procesu transformácie projektu v Angulare na archív, ktorý je možné používať ako portlet v Liferay.
+
+\section{Build}
+Ako prvý krok je nutné urobiť \textit{build} našej Angular aplikácie. Build pozostáva z niekoľkých krokov, z ktorých medzi tie najpodstatnejšie patria:
+\begin{description}
+\item[bundling] - Keďže chceme mať v kóde poriadok, náš projekt pozostáva z niekoľkých komponentov, ktoré sú štrukturované do jednotlivých zložiek. Každá komponenta má ďalej svoj controller, template a štýly a okrem komponent používame direktívy, služby, moduly a mnoho ďalších tried. Táto štruktúra je však pre interpreter prehliadača zložitá, preto sa bundling postará o to, aby celú túto štruktúru vtesnal do čo najmenšieho počtu súborov.
+\item[minification] - Pri posielaní stránok do prehliadača je žiadúce, aby tento obsah bol čo najmenší. Tým dosiahneme že sa naša stránka načíta rýchlejšie a pri mobilných používateľoch ušetrí aj množstvo prenesených dát. Proces minifikácie odstráni z našeho kódu všetky nepotrebné znaky, ako sú napríklad nepotrebné medzery, komentáre a pod.
+\item[uglification] - Má rovnakú úlohu ako minifikácia, ale jej princíp je odlišný. Snaží sa zmenšiť počet znakov kódu tým, že premenúva názvy metód a atribútov na čo najkratšie.
+\item[dead code elimination] - Tento proces detekuje všetok kód, ktorý by sa v našej aplikácii nikdy nezavolal. Označuje sa ako \textit{mŕtvy kód} a takto identifikovaný kód sa v tomto kroku zahadzuje.
+\item[Ahead-of-Time compilation (AoT)] - Štandardne sa do prehliadača doručuje JavaScript kód ako plain text (čistý kód), ktorý prehliadač skompiluje a potom vykonáva. AoT je špeciálny proces buildu v Angulare, ktorý túto kompiláciu vykoná (v čase samotného buildu) namiesto prehliadača a renderovanie v prehliadači je vo výsledku rýchlejšie. Súčasťou tohto procesu je aj kompilácia TypeScriptu do JavaScriptu.
+\end{description}
+
+Build spustíme príkazom \texttt{ng build -{}-prod}\footnote{pri použití Angular-CLI, čo je nástroj pre prácu s Angular projektom priamo od Google. Je možné spúšťať build aj pomocou iných nástrojov.} a jeho výsledkom je adresár, v ktorom sa nachádzajú všetky potrebné súčasti našej webovej aplikácie (ako sú napríklad obrázky, HTML template, štýly, JavaScript) vložené do malého množstva súborov.
+
+\section{Vytvorenie archívu}
+Každý portlet je v kontexte Liferay samostatná aplikácia (viac v podkapitole \ref{portlets}). Pre import takejto aplikácie do Liferay je potrebné, aby táto aplikácia bola zabalená do výsledného formátu WAR.
+
+Formát WAR (Web Application Archive) je súbor, ktorý je svojou štruktúrou rovnaký ako JAR (Java Archive) a slúži pre nasadenie webovej aplikácie na server \cite{javaWorld}. Tento archív obsahuje zdrojové súbory aj externé knižnice. Aby bol tento archív kompatibilný a nasaditeľný do Liferay, obsahuje vo svojej štruktúre špecifické JSP a XML súbory, ktoré túto aplikáciu popisujú.
+
+Zabalenie Angular modulu do WAR archívu som nemusel implementovať, pretože v prostredí KYPO už existovalo vzorové riešenie od Bc. Davida Berana, ktoré mi bolo pre tento účel poskytnuté.
+
+\section{Nasadenie archívu do Liferay}
+Úlohou tejto práce okrem implementácie modulu je aj nasadenie hotového portletu na portálový server Liferay. Podľa nefunkčných požiadaviek uvedených v sekcii \ref{requirements} som toto otestovanie vykonal na lokálne bežiacom portálovom serveri Liferay 7.0, ktorý som si stiahol integrovaný do Apache Tomcat (Java Sevrlet kontajner).
+
+Import WAR súboru prebieha dvoma spôsobmi. Prvým je možnosť priamo cez grafické rozhranie v sekcii \inquotes{Konfigurácia} vykonať import a druhým je premiestniť tento súbor do špeciálnej zložky deploy v adresári servera. S portletom sa ďalej pracuje úplne rovnako, ako s ostatnými portletmi.
+
+\chapter{Záver}
+
 
 %\printbibliography
 
@@ -796,8 +834,8 @@ Nevýhodou je, že celú logiku si musím implementovať sám. Pomocou D3.js met
   \addcontentsline{toc}{chapter}{\indexname} %% table of contents.
   \printindex
 
-\appendix %% Start the appendices.
-\chapter{An appendix}
-Here you can insert the appendices of your thesis.
+%\appendix %% Start the appendices.
+%\chapter{An appendix}
+%Here you can insert the appendices of your thesis.
 
 \end{document}
