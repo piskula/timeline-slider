@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/index';
 
 import { ShareTimeService } from '../../time-service/share-time.service';
 
@@ -13,7 +13,8 @@ export class TimelineSliderLowerComponent implements OnInit {
   public step = 20;
   public rangeChosen$: Observable<Number[]>;
 
-  constructor(private _timeService: ShareTimeService) { }
+  constructor(private _timeService: ShareTimeService) {
+  }
 
   ngOnInit() {
     this.rangeChosen$ = this._timeService.getRangeChosen();

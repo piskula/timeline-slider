@@ -1,35 +1,36 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpResponse} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/map';
+import { Observable, of } from 'rxjs/index';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class PossibleTimestampsService {
 
   private counter = 1;
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {
+  }
 
   public getTimestamps(url: string): Observable<TimestampsWithStep> {
     // return this._http
-    //   .get<TimestampsResponse>(url + (this.counter++ % 7))
-    //   .map(response => {
-    //
-    //     const timestamps: number[] = response.timestamps;
-    //     const length = timestamps.length;
-    //
-    //     if (length < 2 || timestamps[0] >= timestamps[1]) {
-    //       throw new Error('Wrong format of timestamps.');
-    //     }
-    //
-    //     return new TimestampsWithStep(
-    //       [timestamps[0], timestamps[length - 1]],
-    //       timestamps[1] - timestamps[0]
-    //     );
-    //   });
-    return Observable.of(this.getMockTimestamps(this.counter++ % 7))
+      // .get<TimestampsResponse>(url + (this.counter++ % 7)).pipe(
+      //   map(response => {
+      //
+      //     const timestamps: number[] = response.timestamps;
+      //     const length = timestamps.length;
+      //
+      //     if (length < 2 || timestamps[0] >= timestamps[1]) {
+      //       throw new Error('Wrong format of timestamps.');
+      //     }
+      //
+      //     return new TimestampsWithStep(
+      //       [timestamps[0], timestamps[length - 1]],
+      //       timestamps[1] - timestamps[0]
+      //     );
+      //   })
+      // );
+    return of(this.getMockTimestamps(this.counter++ % 7))
   }
 
   private getMockTimestamps(index: number): TimestampsWithStep {

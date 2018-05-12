@@ -1,4 +1,4 @@
-import {EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import { EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import * as d3 from 'd3';
 
 export const COLOR_THUMB = '#FAFAFA';
@@ -24,7 +24,8 @@ export class D3SliderBaseDirective implements OnChanges {
   }
 
   // you must override this method
-  createSlider(selection) { }
+  createSlider(selection) {
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     let selection;
@@ -111,7 +112,7 @@ export class D3SliderBaseDirective implements OnChanges {
   }
 
   public getNormStep(): number {
-    let result =  this.getWidth() / ((this.maxValue - this.minValue) / this.step);
+    let result = this.getWidth() / ((this.maxValue - this.minValue) / this.step);
     if (result > this.maxValue) {
       result = 1;
     }

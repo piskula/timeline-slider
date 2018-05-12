@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/index';
 
 import { ShareTimeService } from '../../time-service/share-time.service';
 
@@ -18,7 +18,8 @@ export class TimelineSliderUpperComponent implements OnInit {
   public isLockedLeft$: Observable<Boolean>;
   @Input() public isLiveModeActive = false;
 
-  constructor(private _timeService: ShareTimeService) { }
+  constructor(private _timeService: ShareTimeService) {
+  }
 
   ngOnInit() {
     this.min$ = this._timeService.getMin();

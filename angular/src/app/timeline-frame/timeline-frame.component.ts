@@ -1,17 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-
-import 'rxjs/add/observable/interval';
-import 'rxjs/add/operator/catch'
-import 'rxjs/add/operator/finally'
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/takeWhile';
-
-import {ShareTimeService} from '../time-service/share-time.service';
-import {PossibleTimestampsService, TimestampsWithStep} from '../time-service/possible-timestamps.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import {TimelineConfiguration} from './model/configuration';
+import { Component, OnInit } from '@angular/core';
+import { catchError, finalize, mergeMap, takeWhile } from 'rxjs/internal/operators';
+import { interval } from 'rxjs/index';
 import * as moment from 'moment';
+
+import { ShareTimeService } from '../time-service/share-time.service';
+import { PossibleTimestampsService, TimestampsWithStep } from '../time-service/possible-timestamps.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { TimelineConfiguration } from './model/configuration';
 
 @Component({
   selector: 'app-timeline-frame',
@@ -32,7 +27,8 @@ export class TimelineFrameComponent implements OnInit {
   public rightTitle = '';
 
   constructor(private _timeService: ShareTimeService,
-              private _timestamps: PossibleTimestampsService) { }
+              private _timestamps: PossibleTimestampsService) {
+  }
 
   ngOnInit() {
     this._timeService.getMax().subscribe(maxValue => {
@@ -56,19 +52,19 @@ export class TimelineFrameComponent implements OnInit {
     this.error = null;
 
     this._timestamps
-      .getTimestamps(this.configuration.url)
-      .takeWhile(() => !this.initialized)
-      .finally(() => this.initialized = true)
-      .catch((error: HttpErrorResponse) => {
+      .getTimestamps(this.configuration.url).pipe(
+      takeWhile(() => !this.initialized),
+      finalize(() => this.initialized = true),
+      catchError((error: HttpErrorResponse) => {
         this.error = error.status + ': ' + error.statusText;
         throw error;
       })
-      .subscribe((response: TimestampsWithStep) => {
-        this.setNewData(response);
-        if (this.configuration.period !== 0) {
-          this.initializePeriodicalCheck();
-        }
-      });
+    ).subscribe((response: TimestampsWithStep) => {
+      this.setNewData(response);
+      if (this.configuration.period !== 0) {
+        this.initializePeriodicalCheck();
+      }
+    });
   }
 
   private setNewData(data: TimestampsWithStep): void {
@@ -80,20 +76,19 @@ export class TimelineFrameComponent implements OnInit {
   private initializePeriodicalCheck() {
     this.periodicTaskInProgress = true;
     this.refreshButtonActive = false;
-    Observable
-      .interval(this.configuration.period * 1000)
-      .flatMap((i) => {
+    interval(this.configuration.period * 1000).pipe(
+      mergeMap((i) => {
         return this._timestamps
           .getTimestamps(this.configuration.url);
-      })
-      .catch((error: HttpErrorResponse) => {
+      }),
+      catchError((error: HttpErrorResponse) => {
         this.periodicTaskInProgress = false;
         this.refreshButtonActive = true;
         throw error;
       })
-      .subscribe((response: TimestampsWithStep) => {
-        this._timeService.setMax(response.timestamps[1]);
-      });
+    ).subscribe((response: TimestampsWithStep) => {
+      this._timeService.setMax(response.timestamps[1]);
+    });
   }
 
   private refreshHeader(min: Number, max: Number): void {

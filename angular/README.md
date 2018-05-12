@@ -1,6 +1,6 @@
 # Timeline Slider ![Build Status](https://travis-ci.org/piskula/timeline-slider.svg?branch=master)
 ##### Diploma Thesis on FI MUNI
-Angular (Angular5) module for timeline portlet
+Angular (Angular6) module for timeline portlet
 
 You can try actual state [online here](https://timeline-slider.firebaseapp.com/).
 
