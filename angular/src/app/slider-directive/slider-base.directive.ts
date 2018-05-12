@@ -5,7 +5,7 @@ export const COLOR_THUMB = '#FAFAFA';
 export const COLOR_LOWER = '#BE148E';
 export const COLOR_UPPER = '#0070C7';
 export const DARK_GREY = '#636466';
-export const OPACITY_MIDDLE = 0.325;
+export const GREY_LOW = '#C0C0C0';
 
 export class D3SliderBaseDirective implements OnChanges {
   public id: string;

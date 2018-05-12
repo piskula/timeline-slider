@@ -5,9 +5,8 @@ import { TimelineScaleComponent } from '../timeline-frame/timeline-scale/timelin
 import {
   COLOR_LOWER,
   COLOR_THUMB,
-  DARK_GREY,
   D3SliderBaseDirective,
-  OPACITY_MIDDLE
+  GREY_LOW,
 } from './slider-base.directive';
 
 export const LINE_HEIGHT_MULTIPLY = 0.5;
@@ -144,8 +143,7 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('x2', sliderSideMargin + (width * normValueLeft))
       .attr('y1', sliderTopMargin)
       .attr('y2', sliderTopMargin)
-      .style('stroke', DARK_GREY)
-      .style('opacity', OPACITY_MIDDLE)
+      .style('stroke', GREY_LOW)
       .style('stroke-linecap', 'butt')
       .style('stroke-width', LINE_EMPTY_HEIGHT_MULTIPLY * fontSize);
 
@@ -155,8 +153,7 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('x2', sliderSideMargin + width)
       .attr('y1', sliderTopMargin)
       .attr('y2', sliderTopMargin)
-      .style('stroke', DARK_GREY)
-      .style('opacity', OPACITY_MIDDLE)
+      .style('stroke', GREY_LOW)
       .style('stroke-linecap', 'butt')
       .style('stroke-width', LINE_EMPTY_HEIGHT_MULTIPLY * fontSize);
 
