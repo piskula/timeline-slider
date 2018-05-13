@@ -1,5 +1,5 @@
-import {async, getTestBed, inject, TestBed} from '@angular/core/testing';
-import {ShareTimeService} from './share-time.service';
+import { async, getTestBed, inject, TestBed } from '@angular/core/testing';
+import { ShareTimeService } from './share-time.service';
 
 describe('ShareTimeService', () => {
   let injector: TestBed;
@@ -308,7 +308,7 @@ describe('ShareTimeService', () => {
   it('10 should fit chosen range inside interval, when max is less then previous and right lock is active without left', async(() => {
     service.setRangeChosen([400, 800]);
     // acquiring right lock set range[1] to max:
-    service .setLockedRight(true);
+    service.setLockedRight(true);
     service.setLockedLeft(false);
 
     let actualRangeChosen: Number[];
