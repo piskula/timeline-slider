@@ -15,7 +15,7 @@ then
 else
   # clear JS and CSS
   echo '' > ../src/main/webapp/js/main.js
-  echo '' > ../src/main/webapp/css/main.css
+  # echo '' > ../src/main/webapp/css/main.css
 
   echo "Merging and copying files"
   cat dist/runtime.*.js \
