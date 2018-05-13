@@ -132,7 +132,7 @@
 \def\warning_icon{\includegraphics[scale=0.18]{warning}\hspace{\fontdimen2\font}}
 
 \newtheorem{mydef}{Definícia}
-\def \angular_version {5.2.10}
+\def \angular_version {6.0.1}
 \newcommand{\inquotes}[1]{{}"{}#1{}"{}}
 
 \begin{document}
@@ -410,13 +410,22 @@ Komponent sa tým pádom nestará o vytvorenie samotného objektu, ale dostane u
 
 Framework Angular umožňuje vytvárať inštancie služieb (services) pri bootstrape aplikácie. Bootstrap je jeden z procesov spúšťania, ktorý výslednú aplikáciu vloží do súboru \textit{index.html} \cite{angular} (netreba si mýliť s knižnicou Twitter Bootstrap, ktorá obsahuje HTML a CSS šablóny pre tvorbu responzívnych web stránok \cite{peska2017thesis}). Takto inicializované služby potom vieme využívať naprieč modulmi tak, ako je to znázornené v ukážke \ref{ts_snippet} na strane \pageref{ts_snippet}.
 
+\section{Jednotkové testy}
+Pre písanie jednotkových testov môžeme využiť niekoľko frameworkov pre JavaScript, ako napríklad Mocha, Jasmine alebo Siesta. Samotná Angular dokumentácia \cite{angular} odkazuje pri testovaní na používanie frameworku Jasmine a nakoľko som v praktickej časti svojej práce tento framework použil, v tejto sekcii ho krátko predstavím.
+
+Jasmine je testovací framework, ktorý sa využíva pri Behavior-Driven Development (BDD) \cite{ragonha2013jasmine}. BDD je možné voľne preložiť ako \textit{"vývojový proces riadený správaním"}. To znamená, že pri implementácii novej časti softvéru sa najprv definuje príklad použitia (tzv. \textit{use case}) a k nemu sa navrhnú a vytvoria jednotkové testy, ktoré sú presne špecifikované voči biznis pohľadu zákazníka. Následne sa vytvára samotná implementácia, ktorá týmito testami musí prejsť \cite{nelson2013test}.
+
+Testy sa spúšťajú tak, že do jedného HTML súboru sa okrem hotovej aplikácie vo forme JavaScript súboru vloží aj testovací Jasmine script a výsledný súbor je potom možné spúšťať na jednotlivých prehliadačoch. Tento proces ale nie je úplne prívetivý pre užívateľa, pretože hlavne počas vývoja by bolo nutné tento súbor vytvárať a spúšťať opakovane. Z tohto dôvodu existujú rôzne \inquotes{spúšťače} alebo integrátory do vývojových prostredí, pričom pre Jasmine sa používa Karma Test Runner.
+
+Karma sa správa ako webserver ktorý umožňuje vývojárovi spúšťať Jasmine testy na~jednotlivých prehliadačoch \cite{karma}. Odpadá tak nutnosť manuálnej tvorby HTML testovacieho súboru. Ďalšou výhodou je možnosť mať spustenú Karmu počas vývoja a pri detekovaní zmeny v~implementácii sa testy spustia nanovo, čím vývojár okamžite vidí správnosť svojej implementácie. V~konfigurácii vieme jednoducho nastaviť ignorovanie jednotlivých testov a taktiež prehliadače, v~ktorých tieto testy majú bežať. Veľmi použiteľná funkcionalita je aj možnosť spustiť testy jednorázovo pomocou príkazového riadku, kedy Karma sama naštartuje nakonfigurované prehliadače, spustí testy a následne do~konzoly vypíše jednotlivé výsledky.
+
 \chapter{Návrh modulu}
 \label{plan}
 %Cieľom tejto práce je vytvoriť modul vo frameworku Angular, ktorý bude nasaditeľný ako samostatný portlet do Liferay portálu a prostredníctvom ktorého bude užívateľ schopný zvoliť si podmnožinu časového ohraničenia.
 
 Kybernetický polygón generuje počas experimentu obrovské množstvo dát. Tieto dáta sa zaznamenávajú do prislúchajúcich časových postupností, z ktorých sa vytvárajú rôznorodé vizualizácie, ktoré umožňujú užívateľovi vnímať tieto dáta z viacerých pohľadov. Príklad takejto vizualizácie môžeme vidieť na obrázku \ref{visualization}.
 
-\begin{figure}
+\begin{figure}[H]
 	\center
 	\includegraphics[width=1.0\linewidth]{visualization}
 	\caption{Ukážka vizualizácií\cite{eichler2014analytical}}
@@ -463,6 +472,8 @@ Existujúci portlet časovej osy pre KYPO bol implementovaný v JavaScripte vrá
 
 V aktuálnych víziách vývojového centra KYPO sa však zrodila požiadavka na odlišný portlet, ktorý bude obsahovať v určitom smere menej funkcionality a bude postavený na odlišnej technológii (použitie frameworku Angular). Všetky tieto požiadavky boli zhrnuté v kapitole \ref{requirements}.
 
+\clearpage
+
 \section{Požiadavky}
 \label{requirements}
 Požiadavky na dizajn a funkcionalitu som vytvoril na základe konzultácií s vedúcim práce RNDr. Radkom Ošlejškom, Ph.D.
@@ -481,6 +492,7 @@ Medzi funkčné požiadavky patria
 Medzi nefunkčné požiadavky patria
 \begin{itemize}
 \item Modul bude pracovať s časovými známkami (timestamp), ktoré sú univerzálnym označením časového okamihu v UNIXových operačných systémoch. Výsledný modul tak nebude zohľadňovať časové pásma.
+\item Restové rozhranie bude modulu poskytovať zoznam povolených časových známok, pričom môžeme predpokladať, že rozostup medzi nimi (v práci ďalej označovaný ako \textit{step}) bude vždy zhodný.
 \item Modul bude implementovaný v aktuálnej verzii frameworku Angular, v dobe implementácie sa jedná o verziu \angular_version .
 \item Graficky bude modul prezentovaný ako dve časové osy. Maximum spodnej časovej osy bude vždy odpovedať hornému zvolenému časovému intervalu, analogicky minimum (bude odpovedať dolnému zvolenému časovému intervalu). Vrchná časová os bude vždy reflektovať zvolený časový interval ako \textit{"spojitú"} podmnožinu možného ohraničenia. Jediným účelom spodnej osy bude spresnenie zvoleného intervalu jeho zmenšením.
 \item Pri manipulátoroch (jazdcoch) na vrchnej časovej osy sa budú nachádzať klikateľné ukazatele zámkov. Tieto zámky budú implementovať funkčnú požiadavku uvedenú v sekcii \ref{funkcne_poziadavky} a užívateľ pomocou nich bude definovať správanie modulu pri zmene dát. Viac informácií o zámkoch doplňuje sekcia \ref{sec:lockers}.
@@ -604,7 +616,9 @@ Pod pojmom \textit{hlavná logika modulu} rozumieme vzťah a reagovanie na zmeny
 
 \end{enumerate}
 
+
 \chapter{Implementácia}
+\label{implementation}
 % Vrámci nefunkčných požiadaviek bol pre implementáciu zvolený framework Angular od Google, ktorého verzia v čase tvorby tejto práce bola \angular_version . Tento framework bol v prostredí KYPO zvolený globálne a preto je táto voľba logická...TODO
 Táto kapitola podrobne opisuje štruktúru a implementáciu modulu časovej osy v Angulare, pričom berie do úvahy všetky funkčné aj nefunkčné požiadavky definované v kapitole \ref{requirements}.
 
@@ -823,6 +837,19 @@ Zabalenie Angular modulu do WAR archívu som nemusel implementovať, pretože v 
 Import WAR súboru prebieha dvoma spôsobmi. Prvým je možnosť priamo cez grafické rozhranie v sekcii \inquotes{Konfigurácia} vykonať import a druhým je premiestniť tento súbor do špeciálnej zložky deploy v adresári servera. S portletom sa ďalej pracuje úplne rovnako, ako s ostatnými portletmi.
 
 \chapter{Záver}
+Táto práca skúma framework Angular, ktorý bol vrámci Kybernetického polygónu Masarykovej univerzity zvolený ako frontendový framework, v ktorom sa v budúcnosti budú implementovať webové rozhrania do existujúceho portálu Liferay. Doteraz sa tieto portlety tvorili v jazyku JavaScript a cieľom tejto práce bolo vybraný existujúci portlet implementovať v tomto frameworku.
+
+V práci som sa snažil pomerne presne spísať všetky funkčné a nefunkčné požiadavky, ktoré som konzultoval s vedúcim práce RNDr. Radkom Ošlejškom Ph.D. Nakoľko som s danou technológiou predtým vôbec nepracoval, absolvoval som niekoľko internetových tutoriálov vrátane oficiálneho od Google. Osobne si myslím, že je vďaka tomu tento framework veľmi prístupný začiatočníkom a informácie k nemu je ľahké dohľadať.
+
+Naproti tomu som sa však nevyhol viacerým slepým vývojovým vetvám. Najväčšie problémy mi spôsobovali externé knižnice, ktorými som sa snažil si implementáciu uľahčiť. Následne mi všetko potrebné poskytla knižnica D3.js, ktorá sa stará o zobrazovanie vektorovej grafiky v prehliadačoch.
+
+Svoju implementáciu som opísal v \ref{implementation}. kapitole, kde som uviedol z~môjho pohľadu najdôležitejšie implementačné detaily. Tie sa týkali hlavne architektúry a rozloženia komponent, ale taktiež odôvodnenia použitia jednotlivých grafických prvkov a ich umiestnenia. Vrámci práce som využil metodiku \textit{Continuous Integration} (CI - priebežná integrácia výsledkov), pomocou ktorej som automaticky vytvoril plne funkčnú klikateľnú aplikáciu pri každej zmene kódu v Git repozitári projektu. Toto demo mal zadávateľ (vedúci práce) stále k dispozícii, aby na základe jeho pripomienok bolo možné upraviť funkcionalitu.
+
+Pre overenie funkčnosti som výsledný portlet úspešne nasadil na~lokálne bežiaci portálový server Liferay. Pri transformácii Angular modulu na~archív WAR mi veľmi pomohol projekt Davida Berana (ktorý medzičasom vznikol v~prostredí KYPO). Musel som ho však na~viacerých miestach upraviť z dôvodu použitia novšej verzie Angularu (\angular_version ). Po nasadení do portálu bol modul plne funkčný, objavili sa však problémy s dedičnosťou štýlov, ktoré čiastočne výsledný vzhľad deformovali.
+
+Keďže niektoré stavy, ktoré si drží modul (stav zámkov, minima, maxima, zvoleného intervalu) sa môžu navzájom ovplyvňovať, implementoval som 10 jednotkových testov, ktoré pokrývajú väčšinu možných scenárov. Tieto udalosti môžu byť vyvolané buď príchodom nových dát (zmenou možného ohraničenia), alebo činnosťou užívateľa.
+
+Vhodným pokračovaním tejto práce by bolo nasadenie portletu do produkčnej verzie Liferay portálu a intenzívne užívateľské testovanie, ktoré by mohlo odhaliť slabiny dizajnového riešenia. Takéto testovanie vie priniesť veľmi cenný pohľad koncového používateľa, ktoré ja v~pozícii vývojára nemusím postrehnúť. Za prínos by som určite považoval kontrolu mojej implementácie z hľadiska kvality kódu, nakoľko kód TypeScriptu je o dosť odlišný od programovacích jazykov široko využívaných vrámci fakulty.
 
 
 %\printbibliography
