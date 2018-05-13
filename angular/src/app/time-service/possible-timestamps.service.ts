@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class PossibleTimestampsService {
 
-  private counter = 4;
+  private counter = 1;
 
   constructor(private _http: HttpClient) {
   }
