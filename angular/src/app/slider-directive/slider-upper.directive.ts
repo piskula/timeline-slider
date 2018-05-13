@@ -1,4 +1,4 @@
-import {Directive, EventEmitter, Input, Output} from '@angular/core';
+import { Directive, EventEmitter, Input, Output } from '@angular/core';
 import * as d3 from 'd3';
 
 import {
@@ -25,7 +25,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
   @Output() rightLockChange = new EventEmitter();
   @Output() leftLockChange = new EventEmitter();
 
-  constructor () {
+  constructor() {
     super();
     this.id = 'sliderUpper';
 
@@ -67,6 +67,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
         eventLeft(normValueLeft);
       }
     }
+
     function dragEndRight() {
       rightHandler.attr('r', this.thumbSize);
       if (eventRight) {
@@ -277,7 +278,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .style('display', that.isRightLocked && !that.isLockSectionHidden ? 'inherit' : 'none');
     const leftLock = leftLockWrapper
       .append('xhtml:div')
-      .html(this.isLeftLocked ? '<i class="fa fa-lock invisible"></i>' : '<i class="fa fa-unlock"></i>')
+      .html(this.isLeftLocked ? '<i class="fa fa-lock"></i>' : '<i class="fa fa-unlock"></i>')
       .on('click', function () {
         that.leftLockChange.emit(!that.isLeftLocked);
       });
@@ -291,7 +292,6 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .style('font-size', LOCKER_ICON_FONT_MULTIPLY + 'rem')
       .style('cursor', 'pointer')
       .style('display', !that.isLockSectionHidden ? 'inherit' : 'none');
-      // .style('display', normValueRight === 1 && !that.isLockSectionHidden ? 'inherit' : 'none');
     const rightLock = rightLockWrapper
       .append('xhtml:div')
       .html(this.isRightLocked ? '<i class="fa fa-lock"></i>' : '<i class="fa fa-unlock"></i>')

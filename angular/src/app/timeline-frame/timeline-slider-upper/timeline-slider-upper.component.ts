@@ -10,9 +10,9 @@ import { ShareTimeService } from '../../time-service/share-time.service';
 })
 export class TimelineSliderUpperComponent implements OnInit {
 
-  step = 20;
   public min$: Observable<Number>;
   public max$: Observable<Number>;
+  public step$: Observable<Number>;
   public rangeChosen$: Observable<Number[]>;
   public isLockedRight$: Observable<Boolean>;
   public isLockedLeft$: Observable<Boolean>;
@@ -24,6 +24,7 @@ export class TimelineSliderUpperComponent implements OnInit {
   ngOnInit() {
     this.min$ = this._timeService.getMin();
     this.max$ = this._timeService.getMax();
+    this.step$ = this._timeService.getStep();
     this.rangeChosen$ = this._timeService.getRangeChosen();
     this.isLockedRight$ = this._timeService.isLockedRight();
     this.isLockedLeft$ = this._timeService.isLockedLeft();

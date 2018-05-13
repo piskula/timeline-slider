@@ -3,7 +3,7 @@
        id="sliderLower"
        [minValue]="(rangeChosen$ | async)[0]"
        [maxValue]="(rangeChosen$ | async)[1]"
-       [step]="step"
+       [step]="step$ | async"
        [rangeChosen]="rangeChosen$ | async"
        (rangeChosenChange)="onRangeChange($event)">
   </div>

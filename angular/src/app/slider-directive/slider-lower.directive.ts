@@ -26,6 +26,7 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
   createSlider(selection) {
     const that = this;
 
+    // variables, which modify design
     const width = this.getWidth();
     const fontSize = this.getFontSize();
     const sliderSideMargin = this.getSideMargin();
@@ -165,7 +166,6 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('x', sliderSideMargin + (width * normValueLeft) - halfTooltipWidth)
       .attr('y', sliderTopMarginTooltip)
       .attr('rx', tooltipCornerRadius)
-      // .attr('ry', '0.3rem')
       .attr('width', tooltipWidth)
       .attr('height', tooltipHeight)
       .style('fill', COLOR_THUMB)
@@ -175,7 +175,6 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('x', sliderSideMargin + (width * normValueRight) - halfTooltipWidth)
       .attr('y', sliderTopMarginTooltip)
       .attr('rx', tooltipCornerRadius)
-      // .attr('ry', '0.3rem')
       .attr('width', tooltipWidth)
       .attr('height', tooltipHeight)
       .style('fill', COLOR_THUMB)

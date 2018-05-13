@@ -4,7 +4,7 @@
        [class.collapsed]="!isLiveModeActive"
        [minValue]="min$ | async"
        [maxValue]="max$ | async"
-       [step]="step"
+       [step]="step$ | async"
        [rangeChosen]="rangeChosen$ | async"
        [isLockSectionHidden]="!isLiveModeActive"
        [isLeftLocked]="isLockedLeft$ | async"

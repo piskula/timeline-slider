@@ -7,6 +7,7 @@ export class ShareTimeService {
   private rangeChosen$: BehaviorSubject<Number[]> = new BehaviorSubject<Number[]>([]);
   private max$: BehaviorSubject<Number> = new BehaviorSubject<Number>(null);
   private min$: BehaviorSubject<Number> = new BehaviorSubject<Number>(null);
+  private step$: BehaviorSubject<Number> = new BehaviorSubject<Number>(null);
   private isLockedRight$: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(false);
   private isLockedLeft$: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(false);
 
@@ -65,6 +66,14 @@ export class ShareTimeService {
 
   public setMin(value: Number) {
     this.min$.next(value);
+  }
+
+  public getStep(): BehaviorSubject<Number> {
+    return this.step$;
+  }
+
+  public setStep(value: Number) {
+    this.step$.next(value);
   }
 
   public isLockedRight(): BehaviorSubject<Boolean> {

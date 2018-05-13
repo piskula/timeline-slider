@@ -23,7 +23,7 @@ export class D3SliderBaseDirective implements OnChanges {
     this.step = 1;
   }
 
-  // you must override this method
+  // you have to override this method
   createSlider(selection) {
   }
 
@@ -78,7 +78,7 @@ export class D3SliderBaseDirective implements OnChanges {
    */
   getDenormValue(iValue: number): number {
     const denorm = iValue * (this.maxValue - this.minValue) + this.minValue;
-    const remainder = denorm % this.step;
+    const remainder = (denorm - this.minValue) % this.step;
     let result = denorm - remainder;
     // to fit steps we need float from half up
     if (remainder > (this.step * 0.5)) {
@@ -88,10 +88,8 @@ export class D3SliderBaseDirective implements OnChanges {
   }
 
   public getWidth(): number {
-    // const selection = d3.select('#' + this.id).select('svg')._groups[0][0];
     const selection = d3.select('#' + this.id)._groups[0][0];
-    const result = selection.clientWidth - (this.getSideMargin() * 2);
-    return result;
+    return selection.clientWidth - (this.getSideMargin() * 2);
   }
 
   public getFontSize(): number {

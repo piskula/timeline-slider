@@ -70,6 +70,7 @@ export class TimelineFrameComponent implements OnInit {
   private setNewData(data: TimestampsWithStep): void {
     this._timeService.setMin(data.timestamps[0]);
     this._timeService.setMax(data.timestamps[1]);
+    this._timeService.setStep(data.step);
     this._timeService.setRangeChosen([data.timestamps[0], data.timestamps[1]]);
   }
 
@@ -77,10 +78,8 @@ export class TimelineFrameComponent implements OnInit {
     this.periodicTaskInProgress = true;
     this.refreshButtonActive = false;
     interval(this.configuration.period * 1000).pipe(
-      mergeMap((i) => {
-        return this._timestamps
-          .getTimestamps(this.configuration.url);
-      }),
+      mergeMap(() =>
+        this._timestamps.getTimestamps(this.configuration.url)),
       catchError((error: HttpErrorResponse) => {
         this.periodicTaskInProgress = false;
         this.refreshButtonActive = true;
@@ -88,6 +87,7 @@ export class TimelineFrameComponent implements OnInit {
       })
     ).subscribe((response: TimestampsWithStep) => {
       this._timeService.setMax(response.timestamps[1]);
+      this._timeService.setStep(response.step);
     });
   }
 
