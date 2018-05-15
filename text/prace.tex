@@ -138,11 +138,11 @@
 \begin{document}
 \chapter*{Úvod}
 \addcontentsline{toc}{chapter}{Úvod}
-V rýchlo sa rozvíjajúcom svete informačných technológií je informačná bezpečnosť najdôležitejším odvetvím informatiky. V dnešnej dobe už nie je veľmi pravdepodobné, aby nás výdobytky techniky ako telefóny a počítače ohrozovali na živote. Hrozba informačnej bezpečnosti sa týka hlavne ochrany informácií. Masarykova Univerzita si uvedomuje vážnosť tejto hrozby a preto sa rozhodla zriadiť výzkumné stredisko v tejto oblasti.
+V~rýchlo sa rozvíjajúcom svete informačných technológií je informačná bezpečnosť najdôležitejším odvetvím informatiky. V~dnešnej dobe už nie je veľmi pravdepodobné, aby nás výdobytky techniky ako telefóny a počítače ohrozovali na živote. Hrozba informačnej bezpečnosti sa týka hlavne ochrany informácií. Masarykova Univerzita si uvedomuje vážnosť tejto hrozby a preto sa rozhodla zriadiť výzkumné stredisko v~tejto oblasti.
 
-Kybernetický polygón svoje využitie najčastejšie nachádza vo výuke vo forme kybernetických cvičení. Vývojári vedia zaujať úlohy útočníkov alebo obrancov daného systému a univerzita tak pomáha vychovávať budúcich bezpečnostných expertov. Svojou komplexnosťou je prostredie Kybernetického polygónu schopné vykonávať experimenty v spolupráci s Ministerstvom vnútra Českej republiky alebo zahraničných expertov. Dôležitosť podobných experimentov a cvičení si vyžaduje sledovanie a archivovanie množstva dát, ktoré sa počas týchto cvičení generujú.
+Kybernetický polygón svoje využitie najčastejšie nachádza vo~výuke vo~forme kybernetických cvičení. Vývojári vedia zaujať úlohy útočníkov alebo obrancov daného systému a univerzita tak pomáha vychovávať budúcich bezpečnostných expertov. Svojou komplexnosťou je prostredie Kybernetického polygónu schopné vykonávať experimenty v~spolupráci s~Ministerstvom vnútra Českej republiky alebo zahraničných expertov. Dôležitosť podobných experimentov a cvičení si vyžaduje sledovanie a archivovanie množstva dát, ktoré sa počas týchto cvičení generujú.
 
-Hlavnou úlohou portletu časovej osy, ktorý je cieľom tejto práce, je poskytnúť užívateľovi intuitívny nástroj, pomocou ktorého vie z veľkého časového intervalu vybrať len určitú jeho časť. Tento portlet v portáli Liferay následne notifikuje ostatné vizualizačné a štatistické portlety na danej stránke, ktoré potom zobrazia dáta platné len pre tento užívateľom zvolený interval. Špecifickou vlastnosťou modulu časovej osy je jej schopnosť pracovať nad pribúdajúcimi dátami. Portlet s danou funkcionalitou implementoval Mgr. Jiří Dočkal vo svojej diplomovej práci, na ktorú táto práca čiastočne nadväzuje.
+Hlavnou úlohou portletu časovej osy, ktorý je cieľom tejto práce, je poskytnúť užívateľovi intuitívny nástroj, pomocou ktorého vie z~veľkého časového intervalu vybrať len určitú jeho časť. Tento portlet v~portáli Liferay následne notifikuje ostatné vizualizačné a štatistické portlety na~danej stránke, ktoré potom zobrazia dáta platné len pre~tento užívateľom zvolený interval. Špecifickou vlastnosťou modulu časovej osy je jej schopnosť pracovať nad pribúdajúcimi dátami. Portlet s~danou funkcionalitou implementoval Mgr. Jiří Dočkal vo~svojej diplomovej práci, na~ktorú táto práca čiastočne nadväzuje.
 
 V teoretickej časti tejto práce sa venujem portálovému serveru Liferay a hlavne frameworku Angular. Kapitola \ref{plan} sa venuje detailným funkčným a nefunkčným požiadavkám na modul a taktiež analyzuje predošlé riešenie.
 
@@ -151,12 +151,12 @@ V praktickej časti som sa snažil pomocou knižnice D3.js a vektorovej grafiky 
 \chapter{Kybernetický polygón}
 Podľa Národného bezbečnostného úradu Českej republiky je termínom \textit{kritická informačná infraštruktúra} označený \textit{"systém prvkov tejto infraštruktúry, ktorý pri narušení svojej funkcie môže spôsobiť poškodenie alebo ohrozenie záujmov Českej republiky"}\cite{nbu2012}.
 
-Kybernetický polygón (KYPO) bol zriadený Fakultou Informatiky s podporou Ministerstva vnútra Českej republiky za účelom zaistenia kybernetickej bezpečnosti v Českej republike ochranou kritickej informačnej infraštruktúry. Projekt KYPO poskytuje unikátne prostredie pre výskum nových metód, ktoré by v blízkej budúcnosti mohli pomôcť chrániť kritickú informačnú infraštruktúru\cite{dankovvcikova2015konfigurace}. Objekt polygónu bol vybudovaný v roku 2015 vrámci rekonštrukcie Fakulty Informatiky.
+Kybernetický polygón (KYPO) bol zriadený Fakultou Informatiky s podporou Ministerstva vnútra Českej republiky za účelom zaistenia kybernetickej bezpečnosti v Českej republike ochranou kritickej informačnej infraštruktúry. Projekt KYPO poskytuje unikátne prostredie pre výskum nových metód, ktoré by v blízkej budúcnosti mohli pomôcť chrániť kritickú informačnú infraštruktúru\cite{dankovvcikova2015konfigurace}. Objekt polygónu bol vybudovaný v roku 2015 v~rámci rekonštrukcie Fakulty Informatiky.
 
 \section{Technológie}
 Prostredie KYPO funguje na princípe cloudového riešenia v ktorom je možné modelovať virtuálnu sieť\cite{eichler2014analytical}. Toto riešenie poskytuje všetky nástroje potrebné k simulácii rôznych sieťových topológií. Prostredie je určené pre výzkum a testovanie rôznych scenárov kybernetických útokov v izolovanom a plne kontrolovateľnom prostredí\cite{vceleda2015kypo}. Najčastejšie sa vďaka umiestneniu (priamo v budove Fakulty Informatiky) využíva na kybernetické cvičenia a to vrátane výuky.
 
-Spektrum kybernetických hrozieb vo svete informačných systémov je veľmi široké a každá hrozba má iný spôsob, ktorým narúša kontinuitu iného systému. Medzi časté experimenty vykonávané vrámci KYPO stoja za zmienku DDoS útoky (distributed denial of service), útoky botnet alebo phishing\cite{vcegan2014navrh, celeda2013projekt}.
+Spektrum kybernetických hrozieb vo svete informačných systémov je veľmi široké a každá hrozba má iný spôsob, ktorým narúša kontinuitu iného systému. Medzi časté experimenty vykonávané v~rámci KYPO stoja za zmienku DDoS útoky (distributed denial of service), útoky botnet alebo phishing\cite{vcegan2014navrh, celeda2013projekt}.
 
 \section{Architektúra}
 \begin{figure}
@@ -169,10 +169,10 @@ Spektrum kybernetických hrozieb vo svete informačných systémov je veľmi ši
 Prostredie kybernetického polygónu je implementované ako cloudové riešenie modelu Platform as a Service. Obrázok \ref{kypo_structure} znázorňuje jednotlivé vrstvy architektúry:
 
 \begin{description}
-\item[Users] - užívatelia s rôznymi skúsenosťami interagujú so systémom buď cez Portál, alebo priamo s niektorou nižšou vrstvou
-\item[Portal] - Portál je grafické používateľské rozhranie (GUI), ktoré v prípade KYPO využíva portálový server Liferay opísaný v kapitole~\ref{liferay}. Praktická časť tejto práce sa zaoberá tvorbou portletu práve do tejto vrstvy architektúry.
+\item[Users] - užívatelia s~rôznymi skúsenosťami interagujú so~systémom buď cez Portál, alebo priamo s~niektorou nižšou vrstvou
+\item[Portal] - Portál je grafické používateľské rozhranie (GUI), ktoré v~prípade KYPO využíva portálový server Liferay opísaný v~kapitole~\ref{liferay}. Praktická časť tejto práce sa zaoberá tvorbou portletu práve do tejto vrstvy architektúry.
 \item[Scenario and sandbox management API] slúži na konfiguráciu, vytváranie, editovanie a likvidáciu sandboxov. Sandbox je izolovaný súbor virtuálnych strojov a sieťovej konfigurácie, ktorý užívateľovi poskytuje kľúčovú funkcionalitu ako napríklad možnosť opakovať a modifikovať experiment v prostredí KYPO.
-\item[Monitoring API] umožňuje monitorovanie sieťových prepojení a konfigurácie uzlov. Komunikuje buď s OpenNebula alebo priamo s existujúcimi virtuálnymi inštanciami.
+\item[Monitoring API] umožňuje monitorovanie sieťových prepojení a konfigurácie uzlov. Komunikuje buď s~OpenNebula alebo priamo s~existujúcimi virtuálnymi inštanciami.
 \item[Cloud API] slúži ako univerzálne rozhranie pre vyššie vrstvy ktoré abstrahuje od konkrétnej implementácie IaaS\footnote{Infrastructure as a Service} nižších vrstiev, aby bola zabezpečená flexibilita cloudového riešenia.
 \item[OpenNebula platform] implementuje IaaS\cite{sempolinski2010comparison}. Umožňuje manažment rôznorodých výpočtových kapacít (najčastejšie virtualizovaných) a spadá pod správu CERIT Scientific Cloud.
 \item[Computing infrastructure] zahrňuje fyzické objekty, sieťové prvky a všetok potrebný hardvér, ktorý poskytuje pamäť a výpočtovú silu.
@@ -194,11 +194,11 @@ Najčastejše bezpečnostné scenáre ako DDoS útoky, phishing alebo jednoduch�
 \end{figure}
 
 \subsection{Manažment cloudu}
-Cloud Management Node (CMN) je samostatný centrálny uzol v systéme, ktorý je zodpovedný za automatickú inicializáciu sandboxov a ich manažment. CMN spracuje bezpečnostný scenár a postará sa o získanie zdrojov v cloude. Podľa popisu v bezpečnostnom scenári vytvorí jeden až niekoľko sandboxov, čo v závislosti od náročnosti môže trvať niekoľko minút až hodín\cite{eichler2015kypo}.
+Cloud Management Node (CMN) je samostatný centrálny uzol v~systéme, ktorý je zodpovedný za~automatickú inicializáciu sandboxov a ich manažment. CMN spracuje bezpečnostný scenár a postará sa o~získanie zdrojov v~cloude. Podľa popisu v~bezpečnostnom scenári vytvorí jeden až niekoľko sandboxov, čo v~závislosti od~náročnosti môže trvať niekoľko minút až hodín\cite{eichler2015kypo}.
 
 \subsection{Manažment sandboxov}
 \label{smn}
-Všetky činnosti vykonávané vrámci sandboxu, ako napríklad prenosy dát v sieti, vyťaženie procesorov alebo iné dôležité udalosti, sú monitorované, pričom o ukladanie týchto zaznamenaných hodnôt sa stará Sandbox Management Node (SMN). Každý sandbox má priradený vlastný SMN, ktorý zaznamenáva činnosť v danom sandboxe a zároveň plní funkciu akejsi vstupnej brány do prostredia sandboxu\cite{eichler2014analytical}.
+Všetky činnosti vykonávané v~rámci sandboxu, ako napríklad prenosy dát v sieti, vyťaženie procesorov alebo iné dôležité udalosti, sú monitorované, pričom o ukladanie týchto zaznamenaných hodnôt sa stará Sandbox Management Node (SMN). Každý sandbox má priradený vlastný SMN, ktorý zaznamenáva činnosť v danom sandboxe a zároveň plní funkciu akejsi vstupnej brány do prostredia sandboxu\cite{eichler2014analytical}.
 
 Dáta, ktoré zaznamenáva SMN sú práve tie dáta, ktoré sa zobrazujú v portletoch portálu Liferay. Ten z pohľadu logickej štruktúry (na Obr. \ref{kypo_logic_structure}) spadá pod Analytical and Visualization Tool (AVT).
 
@@ -211,7 +211,7 @@ Portlet časovej osy, ktorý je cieľom tejto práce, slúži ako kľúčový el
 \label{liferay}
 V kontexte webových aplikácií môžeme portál definovať \cite{sezov2011liferay} ako \textit{"Samostatne oddelené webové prostredie, z ktorého sú spustiteľné všetky aplikácie užívateľa. Tieto aplikácie sú systematicky integrované na jednom mieste."}
 
-Liferay je portálový server, v ktorom je zmysluplne umožnená spolupráca a zdieľanie informácií rôznym používateľom. Umožňuje vykonávať správu obsahu pomocou WYSIWYG\footnote{WYSIWYG - \textit{what you see is what you get}, teda \textit{"to, čo vidíš je to, čo aj dostaneš"} je intuitívny spôsob vytvárania kódu v 2D grafickom prostredí, pri ktorom sa kód (najčastejšie HTML) generuje bezprostredne na základe našich pokynov. S výslednými elementami pracujeme priamo a kód sa generuje priebežne \cite{guo2011wysiwyg}.} editora. Používateľ tak nepotrebuje žiadnu hlbokú znalosť HTML ani iného programovacieho jazyka. Jednotlivé komponenty stránky si vie jednoducho prispôsobiť a výsledok vidí vždy okamžite \cite{sezov2011liferay}.
+Liferay je portálový server, v ktorom je zmysluplne umožnená spolupráca a zdieľanie informácií rôznym používateľom. Umožňuje vykonávať správu obsahu pomocou WYSIWYG\footnote{WYSIWYG - \textit{what you see is what you get}, teda \textit{"to, čo vidíš je to, čo aj dostaneš"} je intuitívny spôsob vytvárania kódu v 2D grafickom prostredí, pri ktorom sa kód (najčastejšie HTML) generuje bezprostredne na základe našich pokynov. S~výslednými elementami pracujeme priamo a kód sa generuje priebežne \cite{guo2011wysiwyg}.} editora. Používateľ tak nepotrebuje žiadnu hlbokú znalosť HTML ani iného programovacieho jazyka. Jednotlivé komponenty stránky si vie jednoducho prispôsobiť a výsledok vidí vždy okamžite \cite{sezov2011liferay}.
 
 Portálový server Liferay je naprogramovaný v jazyku Java a distribuovaný pod licenciou LGPL. Na jeho beh potrebujeme aplikačný server, alebo aspoň servlet kontajner. Liferay natívne podporuje napríklad Apache Tomcat, GlassFish, JBoss, WebLogic, WebSphere a mnoho ďalších.
 
@@ -220,9 +220,9 @@ Liferay Portal umožňuje spravovať užívateľov a priraďovať im oprávnenia
 
 \subsection{Používatelia}
 \label{liferay_users}
-Do portálov majú prístup užívatelia (Users), ktorý môžu byť priraďovaný do skupín (User Groups). Užívatelia taktiež môžu byť priraďovaný do organizácií (Organizations). Tieto organizácie sú zoskupované do rôznych hierarchických štruktúr, popri ktorých ešte v Liferay existujú komunity (Communities) a tímy (Teams). Detailnejší náhľad do štruktúry nám poskytne obrázok \ref{liferay_structure}.
+Do portálov majú prístup užívatelia (Users), ktorý môžu byť priraďovaný do skupín (User Groups). Užívatelia taktiež môžu byť priraďovaný do~organizácií (Organizations). Tieto organizácie sú zoskupované do~rôznych hierarchických štruktúr, popri ktorých ešte v~Liferay existujú komunity (Communities) a tímy (Teams). Detailnejší náhľad do~štruktúry nám poskytne obrázok \ref{liferay_structure}.
 
-Liferay tak v tomto smere poskytuje pre portálových administrátorov veľmi silný nástroj a taktiež obrovskú škálovateľnosť. Informácie o jednotlivých povoleniach (Permissions) vrámci systému sú pevne definované v rolách (Roles). Užívatelia, skupiny užívateľov, organizácie a komunity môžu byť priraďované do rolí \cite{sezov2010portal}.
+Liferay tak v tomto smere poskytuje pre portálových administrátorov veľmi silný nástroj a taktiež obrovskú škálovateľnosť. Informácie o~jednotlivých povoleniach (Permissions) v~rámci systému sú pevne definované v rolách (Roles). Užívatelia, skupiny užívateľov, organizácie a komunity môžu byť priraďované do rolí \cite{sezov2010portal}.
 
 \begin{figure}[H]
 	\center
@@ -240,17 +240,17 @@ Liferay obsahuje veľké množstvo vopred pripravených portletov, avšak jeho h
 \subsection{Stránky}
 Stránky sú stavebné elementy v Liferay ktoré obsahujú portlety. Podľa viditeľnosti stránok pre používateľov delíme stránky na:
 \begin{description}
-\item[Verejné stránky] - sú viditeľné aj pre užívateľov, ktorí nie sú registrovaný v systéme
+\item[Verejné stránky] - sú viditeľné aj pre~užívateľov, ktorí nie sú registrovaný v~systéme
 \item[Privátne stránky] - vyžadujú sa určité oprávnenia, ktoré musí mať užívateľ priradené
 \begin{itemize}
-\item privátna stránka používateľa - len autor má k nej prístup
-\item stránka používateľskej skupiny - ak je užívateľ priradený do tejto skupiny, má prístup na stránku
-\item privátna stránka portálu - každý prihlásený používateľ má prístup na stránku
+\item privátna stránka používateľa - len autor má k~nej prístup
+\item stránka používateľskej skupiny - ak je užívateľ priradený do~tejto skupiny, má prístup na~stránku
+\item privátna stránka portálu - každý prihlásený používateľ má prístup na~stránku
 \end{itemize}
 \end{description}
 
 \subsection{Lokality}
-Podstatným elementom Liferay sú lokality (Sites), ktoré pomáhajú vytvárať organizovanú štruktúru stránok a používateľov. Na základe nastavení lokality potom môžeme spravovať práva prístupu pre jednotlivých užívateľov. Liferay podporuje tri základné typy lokalít\cite{burska2016portlety}:
+Podstatným elementom Liferay sú lokality (Sites), ktoré pomáhajú vytvárať organizovanú štruktúru stránok a používateľov. Na základe nastavení lokality potom môžeme spravovať práva prístupu pre~jednotlivých užívateľov. Liferay podporuje tri základné typy lokalít\cite{burska2016portlety}:
 \begin{description}
 \item[Otvorené (Open)] - ľubovoľný používateľ sa môže stať členom danej lokality, stačí keď si danú lokalitu nájde v zozname
 \item[Na požiadanie (Retricted)] - členstvo používateľa v danej lokalite musí byť schválené
@@ -259,10 +259,10 @@ Podstatným elementom Liferay sú lokality (Sites), ktoré pomáhajú vytvárať
 Z podkapitoly \ref{liferay_users} však vieme, že lokality sú priradené organizácii a preto nastavenie oprávnení pre organizáciu platí rovnako pre všetkých užívateľov spadajúcich pod danú organizáciu. Aby lokalita mohla užívateľom zobrazovať nejaký obsah, musí obsahovať aspoň jednu stránku.
 
 \chapter{Angular framework}
-Angular je open-source platforma od spoločnosti Google určená pre tvorbu jednostránkových front-end aplikácií. Ako programovací jazyk používa TypeScript.
+Angular je open-source platforma od spoločnosti Google určená pre~tvorbu jednostránkových front-end aplikácií. Ako programovací jazyk používa TypeScript.
 
 \section{TypeScript}
-TypeScript je programovací jazyk vyvýjaný firmou Microsoft. Prvý krát bol oficiálne predstavený v roku 2012. Jedná sa o implementáciu štandardu ECMAScript 2015 (označovaný aj ES2015 alebo ES6) a vo svojej podstate je to \inquotes{syntaktický cukor} pridaný do JavaScriptu, ktorý umožňuje využívať typovú kontrolu.
+TypeScript je programovací jazyk vyvýjaný firmou Microsoft. Prvý krát bol oficiálne predstavený v roku 2012. Jedná sa o implementáciu štandardu ECMAScript 2015 (označovaný aj ES2015 alebo ES6) a vo~svojej podstate je to \inquotes{syntaktický cukor} pridaný do~JavaScriptu, ktorý umožňuje využívať typovú kontrolu.
 
 \subsection{Porovnanie s JavaScriptom}
 JavaScript je dynamicky typovaný jazyk. To znamená, že typ premennej záleží na samotnej hodnote danej premennej. V jednotlivých fázach aplikácie teda môžeme do premennej priradiť hodnoty rôznych typov. To nám v istom smere poskytuje veľkú slobodu, ale zároveň vnáša istú mieru nepresnosti a neurčitosti do kódu, čo môže hlavne v rozsiahlych aplikáciách spôsobiť problémy so spoľahlivosťou.
@@ -297,7 +297,7 @@ Základným architektonickým prvkom v Angulare je modul. Oficiálna dokumentác
 	\label{angular_architecture}
 \end{figure}
 
-Základným stavebným prvkom stránky je komponent. Skladaním komponent do seba sa vytvára UI, ktoré sa následne vyrenderuje v prehliadači a zobrazí užívateľovi. Komponenty, na rozdiel od portletov na stránke Liferay, môžu v sebe opätovne obsahovať ďalšie komponenty. Každý komponent v kontexte Angularu prislúcha práve jednému modulu a každému komponentu prislúcha práve jedna HTML šablóna (template).
+Základným stavebným prvkom stránky je komponent. Skladaním komponent do seba sa vytvára UI, ktoré sa následne vyrenderuje v~prehliadači a zobrazí užívateľovi. Komponenty, na~rozdiel od~portletov na~stránke Liferay, môžu v sebe opätovne obsahovať ďalšie komponenty. Každý komponent v kontexte Angularu prislúcha práve jednému modulu a každému komponentu prislúcha práve jedna HTML šablóna (template).
 
 Medzi základné elementy v Angulare v neposlednom rade patria služby (Services), ktoré ,obdobne ako komponenty, prislúchajú práve jednému modulu. Podľa definície sa \textit{"služby využívajú vtedy, keď potrebujeme medzi komponentami zdieľat dáta alebo funkčnú logiku aplikácie, ktorá nemá priradenú žiadnu šablónu"}\cite{angular}.
 
@@ -349,11 +349,11 @@ export class UserDetailComponent implements OnInit {
 }
 \end{lstlisting}
 
-Na riadku 9 v ukážke \ref{ts_snippet} si zase všimneme, ako využívame zdieľanú službu, ktorá nám na riadku 12 poskytne dáta o užívateľovi. Viac informácií o zdieľaných službách sa nachádza v podkapitole \ref{sec_di}.
+Na riadku 9 v~ukážke \ref{ts_snippet} si zase všimneme, ako využívame zdieľanú službu, ktorá nám na riadku 12 poskytne dáta o~užívateľovi. Viac informácií o~zdieľaných službách sa nachádza v~podkapitole \ref{sec_di}.
 
 \subsection{Direktívy}
 \label{sec_directives}
-V prípade komponentov zvyčajne definujeme selektor, ktorý je unikátny identifikátor komponentu vrámci modulu a používa sa v~šablónach. V~ukážke \ref{ts_snippet} sme tak urobili na~riadku~2, čím sme umožnili použitie tohto komponentu v~inom komponente zadaním HTML tagu \texttt{<user-detail></user-detail>} do šablóny.
+V prípade komponentov zvyčajne definujeme selektor, ktorý je unikátny identifikátor komponentu v~rámci modulu a používa sa v~šablónach. V~ukážke \ref{ts_snippet} sme tak urobili na~riadku~2, čím sme umožnili použitie tohto komponentu v~inom komponente zadaním HTML tagu \texttt{<user-detail></user-detail>} do šablóny.
 
 Direktívy umožňujú rozšírenú manipuláciu DOM objektov tak, že sa vkladajú do~týchto HTML tagov. Poznáme dva typy direktív\cite{angular}:
 \begin{enumerate}
@@ -408,7 +408,7 @@ Dependency Injection je implementácia návrhového vzoru IoC\footnote{IoC - Inv
 
 Komponent sa tým pádom nestará o vytvorenie samotného objektu, ale dostane už hotový objekt, čím sa zbavuje závislosti (na rozdiel od využívania statických metód alebo vytvárania nových objektov pomocou kľúčového slova \textit{new}).
 
-Framework Angular umožňuje vytvárať inštancie služieb (services) pri bootstrape aplikácie. Bootstrap je jeden z procesov spúšťania, ktorý výslednú aplikáciu vloží do súboru \textit{index.html} \cite{angular} (netreba si mýliť s knižnicou Twitter Bootstrap, ktorá obsahuje HTML a CSS šablóny pre tvorbu responzívnych web stránok \cite{peska2017thesis}). Takto inicializované služby potom vieme využívať naprieč modulmi tak, ako je to znázornené v ukážke \ref{ts_snippet} na strane \pageref{ts_snippet}.
+Framework Angular umožňuje vytvárať inštancie služieb (services) pri bootstrape aplikácie. Bootstrap je jeden z procesov spúšťania, ktorý výslednú aplikáciu vloží do súboru \textit{index.html} \cite{angular} (netreba si mýliť s~knižnicou Twitter Bootstrap, ktorá obsahuje HTML a CSS šablóny pre tvorbu responzívnych web stránok \cite{peska2017thesis}). Takto inicializované služby potom vieme využívať naprieč modulmi tak, ako je to znázornené v~ukážke \ref{ts_snippet} na~strane \pageref{ts_snippet}.
 
 \section{Jednotkové testy}
 Pre písanie jednotkových testov môžeme využiť niekoľko frameworkov pre JavaScript, ako napríklad Mocha, Jasmine alebo Siesta. Samotná Angular dokumentácia \cite{angular} odkazuje pri testovaní na používanie frameworku Jasmine a nakoľko som v praktickej časti svojej práce tento framework použil, v tejto sekcii ho krátko predstavím.
@@ -443,7 +443,7 @@ Pod pojmom \textit{celkové možné časové ohraničenie} (skrátene časové o
 \item väčšej, označovanej ako \textit{maximum} alebo \textit{horné ohraničenie}.
 \end{itemize}
 
-Pod pojmom \textit{zvolený časový interval} alebo \textit{zvolené rozmedzie} ro\-zu\-mie\-me interval, ktorý svojou činnosťou zvolil užívateľ vrámci celkového možného časového ohraničenia. To znamená, že užívateľ nemá možnosť zvoliť také hodnoty, ktoré nepatria do celkového možného časového ohraničenia.
+Pod pojmom \textit{zvolený časový interval} alebo \textit{zvolené rozmedzie} ro\-zu\-mie\-me interval, ktorý svojou činnosťou zvolil užívateľ v~rámci celkového možného časového ohraničenia. To znamená, že užívateľ nemá možnosť zvoliť také hodnoty, ktoré nepatria do celkového možného časového ohraničenia.
 
 Pojem \textit{manipulátor} alebo \textit{jazdec} označuje bod na časovej osy (grafický prvok), ktorý užívateľ môže uchopiť a posúvať a ktorý vyznačuje zvolený časový interval. Viac informácií o manipulátoroch sa nachádza v kapitole \ref{sec:slider}.
 
@@ -461,7 +461,7 @@ Vstupom tohto modulu bude
 Výstupom tohto modulu budú dve časové známky, kde prvá odpovedá aktuálnej pozícii ľavého manipulátora a druhá pozícii pravého manipulátora.
 
 \section{Existujúce riešenie}
-Existujúci portlet časovej osy pre KYPO bol implementovaný v JavaScripte vrámci diplomovej práce Jiřího Dočkala\cite{dockal2016webovy}. Okrem výberu časového ohraničenia slúžil aj na prehrávanie scenárov, ako je možné vidieť aj na Obr. \ref{old_portlet}.
+Existujúci portlet časovej osy pre KYPO bol implementovaný v~JavaScripte v~rámci diplomovej práce Jiřího Dočkala\cite{dockal2016webovy}. Okrem výberu časového ohraničenia slúžil aj na prehrávanie scenárov, ako je možné vidieť aj na Obr. \ref{old_portlet}.
 
 \begin{figure}[H]
 	\center
@@ -482,8 +482,8 @@ Požiadavky na dizajn a funkcionalitu som vytvoril na základe konzultácií s v
 \label{funkcne_poziadavky}
 Medzi funkčné požiadavky patria
 \begin{itemize}
-\item Užívateľ si na časovej ose bude môcť zvoliť časový interval, pričom tento interval bude len vrámci povolených hodnôt.
-\item Užívateľ bude schopný z modulu ľahko vyčítať informáciu o práve zvolenom časovom intervale a rovnako aj o rozsahu povolených hodnôt. Ak sa jeho aktivity nezameriavajú na časový interval ale jeden konkrétny okamih, užívateľ vie zvolený okamih taktiež ľahko určiť.
+\item Užívateľ si na časovej ose bude môcť zvoliť časový interval, pričom tento interval bude len v~rámci povolených hodnôt.
+\item Užívateľ bude schopný z modulu ľahko vyčítať informáciu o~práve zvolenom časovom intervale a rovnako aj o~rozsahu povolených hodnôt. Ak sa jeho aktivity nezameriavajú na časový interval ale jeden konkrétny okamih, užívateľ vie zvolený okamih taktiež ľahko určiť.
 \item V prípade, že dáta budú pribúdať (maximum sa bude dynamicky meniť), užívateľ bude vedieť definovať, ako a či vôbec sa pri zmene možného ohraničenia zmení zvolený časový interval.
 \item Užívateľ bude informovaný vhodným chybovým hlásením, pokiaľ nastane chyba pri zisťovaní možného časového ohraničenia.
 \end{itemize}
@@ -520,7 +520,7 @@ Zo stavového diagramu vieme vyčítať, že z pohľadu zámkov sa náš modul m
 \begin{center}
 \tabulinesep=\tabcolsep
   \begin{tabu}{ X[2,c,m] | X[7,c,m] }
-    \includegraphics[width=1\linewidth]{right_unlock} & výber sa nemení, aktualizuje sa len možné horné ohraničenie viditeľné v hornej osy \\ \hline
+    \includegraphics[width=1\linewidth]{right_unlock} & výber sa nemení, aktualizuje sa len možné horné ohraničenie viditeľné v~hornej osy \\ \hline
     \includegraphics[width=1\linewidth]{left_unlock} & pravý manipulátor sa nastaví na maximum a ľavý sa posunie doprava tak, aby veľkosť zvoleného rozmedzia ostala zachovaná \\ \hline
     \includegraphics[width=1\linewidth]{left_lock} & pravý manipulátor sa nastaví na maximum a ľavý zostáva, veľkosť zvoleného rozmedzia sa zväčší \ \
   \end{tabu}
@@ -528,7 +528,7 @@ Zo stavového diagramu vieme vyčítať, že z pohľadu zámkov sa náš modul m
 
 \subsection{Rozsah testov}
 \label{sec:tests}
-Modul časovej osy má na prvý pohľad jednoduchú úlohu, t.j. spresňuje časové okno vrámci povolených hodnôt. Avšak pri analýze je možné badať niekoľko rôznych vstupov a premenných ktoré sa navzájom ovplyvňujú a ovplyvňujú tak aj správanie tohto modulu, ktoré už nie je úplne triviálne. V tejto podkapitole sa nachádza zoznam a popis jednotkových testov, ktoré testujú hlavnú logiku modulu.
+Modul časovej osy má na prvý pohľad jednoduchú úlohu, t.j. spresňuje časové okno v~rámci povolených hodnôt. Avšak pri analýze je možné badať niekoľko rôznych vstupov a premenných ktoré sa navzájom ovplyvňujú a ovplyvňujú tak aj správanie tohto modulu, ktoré už nie je úplne triviálne. V tejto podkapitole sa nachádza zoznam a popis jednotkových testov, ktoré testujú hlavnú logiku modulu.
 
 Pod pojmom \textit{hlavná logika modulu} rozumieme vzťah a reagovanie na zmeny medzi týmito prvkami modulu: \textit{pravý zámok}, \textit{ľavý zámok}, \textit{maximum}, \textit{minimum} a \textit{zvolený časový interval}.
 
@@ -619,12 +619,12 @@ Pod pojmom \textit{hlavná logika modulu} rozumieme vzťah a reagovanie na zmeny
 
 \chapter{Implementácia}
 \label{implementation}
-% Vrámci nefunkčných požiadaviek bol pre implementáciu zvolený framework Angular od Google, ktorého verzia v čase tvorby tejto práce bola \angular_version . Tento framework bol v prostredí KYPO zvolený globálne a preto je táto voľba logická...TODO
-Táto kapitola podrobne opisuje štruktúru a implementáciu modulu časovej osy v Angulare, pričom berie do úvahy všetky funkčné aj nefunkčné požiadavky definované v kapitole \ref{requirements}.
+% V rámci nefunkčných požiadaviek bol pre implementáciu zvolený framework Angular od Google, ktorého verzia v čase tvorby tejto práce bola \angular_version . Tento framework bol v prostredí KYPO zvolený globálne a preto je táto voľba logická...TODO
+Táto kapitola podrobne opisuje štruktúru a implementáciu modulu časovej osy v~Angulare, pričom berie do úvahy všetky funkčné aj nefunkčné požiadavky definované v kapitole \ref{requirements}.
 
 \section{Výber vhodného grafického prvku}
 \label{sec:slider}
-Kľúčovou úlohou v raných fázach vývoja bolo zvoliť vhodný prostriedok, ktorým bude možné manipulovať s časovým ohraničením, resp. s časovou osou. Požiadavky sú v tomto smere pomerne jasné a najbližšie k nim je spomedzi všetkých formulárových prvkov jednoznačne \textit{range} (v preklade \textit{rozsah}, môže byť označený aj ako \textit{range slider}). Na obrázku \ref{html_range} môžeme vidieť názornú ukážku, ako takýto ovládací prvok môže vyzerať.
+Kľúčovou úlohou v raných fázach vývoja bolo zvoliť vhodný prostriedok, ktorým bude možné manipulovať s časovým ohraničením, resp. s~časovou osou. Požiadavky sú v tomto smere pomerne jasné a najbližšie k nim je spomedzi všetkých formulárových prvkov jednoznačne \textit{range} (v preklade \textit{rozsah}, môže byť označený aj ako \textit{range slider}). Na obrázku \ref{html_range} môžeme vidieť názornú ukážku, ako takýto ovládací prvok môže vyzerať.
 \begin{figure}[H]
 	\center
 	\includegraphics{html_range}
@@ -636,7 +636,7 @@ Formulárový prvok typu range sa skladá z koľajnice a jazdca (manipulátora) 
 \begin{enumerate}
 \item umožní užívateľovi vybrať číslo striktne len z daného rozsahu, čím odpadá nutnosť dodatočnej validácie (či je číslo v danom rozsahu)
 \item neumožní užívateľovi zadávať nečíselné znaky, čím odpadá nutnosť ďalšej validácie (či je číslo platné)
-\item užívateľ má pred sebou grafickú informáciu, kde približne sa svojou hodnotou nachádza vrámci povoleného rozsahu, čo je výhodou hlavne pri veľkých číslach.
+\item užívateľ má pred sebou grafickú informáciu, kde približne sa svojou hodnotou nachádza v~rámci povoleného rozsahu, čo je výhodou hlavne pri veľkých číslach.
 \end{enumerate}
 
 Medzi nevýhody formulárového prvku typu range patria:
@@ -671,21 +671,21 @@ Táto JavaScriptová knižnica slúži na dynamické vizualizácie dát v prehli
 SVG alebo Scalable Vector Graphics bol vyvynutý na opis dvojrozmernej statickej aj animovanej grafiky a využíva pritom syntax XML\cite{quint2003scalable}.
 Dnes je SVG formát široko podporovaný väčšinou webových prehliadačov. Je možné vkladať ho priamo do HTML kódu a následne interpretovať. SVG má oproti štandardným rastrovým obrázkom hneď niekoľko výhod, z nich najpodstatnejšie pre webový vývoj sú tieto:
 \begin{itemize}
-\item SVG obrázky sú škálovateľné. Vyplýva to z predpokladu, že hovoríme o vektorovej grafike. Pri rôznych veľkostiach toho istého obrázka nestrácame žiadnu informáciu. Hlavne v oblasti responzívneho dizajnu je to veľmi podstatný faktor.
+\item SVG obrázky sú škálovateľné. Vyplýva to z predpokladu, že hovoríme o vektorovej grafike. Zväčšovaním a zmenšovaním toho istého obrázka nestrácame žiadnu informáciu. Hlavne v~oblasti responzívneho dizajnu je to veľmi podstatný faktor.
 \item Veľkosť - keďže sa jedná o textovú informáciu, výsledný súbor je veľmi malý. Navyše nám pre viacero rozlíšení postačuje jeden a ten istý a nepotrebujeme vytvárať viacero obrázkov pre rôzne veľkosti. Tento faktor je podstatný hlavne v oblasti mobilného vývoja, kde je jednou z požiadaviek aj veľkosť prenášaných dát.
 \item Ak obrázok obsahuje text, je možné ho vyhľadať a vedia ho prečítať aj roboty vyhľadávačov, čo je pri weboch veľké plus.
 \end{itemize}
 
 D3.js umožňuje pridávať do DOMu stránky SVG elementy. Týmto spôsobom vieme \inquotes{programovať}, ako sa má grafika zobraziť a odchytávať rôzne typy udalostí ako sú napríklad kliknutia. Toto je hlavný princíp, na ktorom je postavená implementácia modulu.
 
-Implementoval som direktívy, ktoré majú niekoľko vstupov, ako napríklad minimum, maximum, zvolený časový úsek a podobne. Na základe týchto informácií direktíva vytvorí SVG element, v ktorom vykreslí koľajnicu a dvoch jazdcov (manipulátory). Udalosť kliknutia a ťahania týchto jazdcov odchytávam a pomocou nich viem upraviť výsledný časový úsek aj vzhľad.
+Implementoval som direktívy, ktoré majú niekoľko vstupov, ako napríklad minimum, maximum, zvolený časový úsek a podobne. Na~základe týchto informácií direktíva vytvorí SVG element, v~ktorom vykreslí koľajnicu a dvoch jazdcov (manipulátory). Udalosť kliknutia a ťahania týchto jazdcov odchytávam a pomocou nich viem upraviť výsledný časový úsek aj vzhľad.
 
 Vo výsledku teda môžeme povedať, že dve časové osy, ktoré vidíme v tomto module, sú v podstate dva vektorové obrázky.
 
 \section{Ikony Font-Awesome}
 Súčasťou grafického dizajnu modulu je aj niekoľko stavových ikon. Tieto ikony som nevytváral svojvoľne, ale použil som existujúcu knižnicu Font-Awesome (presnejšie jej voľne dostupnú časť, ktorá je distribuovaná pod licenciou Open Font License).
 
-Font-Awesome, ako vyplýva z názvu, v skutočnosti nie je knižnica obrázkov, ale špeciálneho obrázkového písma (fontu). Takéto využitie písma ako ikon si so sebou nesie všetky výhody SVG vektorovej grafiky, ktoré som spomínal v predchádzajúcej sekcii. Navyše vieme takéto ikony zafarbovať pomocou CSS atribútu \textit{color} a meniť ich veľkosť pomocou atribútu \textit{font-size}. Jedinou nevýhodou je, že takáto ikonka môže vždy byť len jednofarebná.
+Font-Awesome, ako vyplýva z~názvu, v~skutočnosti nie je knižnica obrázkov, ale špeciálneho obrázkového písma (fontu). Takéto využitie písma ako ikon si so sebou nesie všetky výhody SVG vektorovej grafiky, ktoré som spomínal v predchádzajúcej sekcii. Navyše vieme takéto ikony zafarbovať pomocou CSS atribútu \textit{color} a meniť ich veľkosť pomocou atribútu \textit{font-size}. Jedinou nevýhodou je, že takáto ikonka môže vždy byť len jednofarebná.
 
 \begin{figure}
 	\center
@@ -694,9 +694,9 @@ Font-Awesome, ako vyplýva z názvu, v skutočnosti nie je knižnica obrázkov, 
 	\label{icons}
 \end{figure}
 
-Takýchto knižníc je dnes dostupných viacero, medzi najznámejšie patria okrem Font-Awesome napríklad IcoMoon alebo Material Design od Google. Sú navrhnuté tak aby pokryli ikony, ktoré vývojári veľmi často potrebujú, preto pri menej náročných systémoch je možné si s nimi úplne vystačiť. Na obrázku \ref{icons} sú znázornené ikony, ktoré som využil vo svojej implementácii.
+Takýchto knižníc je dnes dostupných viacero, medzi najznámejšie patria okrem Font-Awesome napríklad IcoMoon alebo Material Design od Google. Sú navrhnuté tak aby pokryli ikony, ktoré vývojári veľmi často potrebujú, preto pri menej náročných systémoch je možné si s~nimi úplne vystačiť. Na obrázku \ref{icons} sú znázornené ikony, ktoré som využil vo svojej implementácii.
 
-Knižnicu Font-Awesome som spomedzi ostatných zvolil z toho dôvodu, že poskytuje vhodné ikony aktivného a neaktívneho zámku. Tieto ikony sú v mojej implementácii síce rozlíšené farebne, no podľa WCAG 2.0 (Web Content Accessibility Guidline) by sa kvôli zrakovo znevýhodneným používateľom nemala farebná informácia starať o rozdiel vo vyjadrovacom význame \cite[sekcia~1.4]{caldwell2008web}.
+Knižnicu Font-Awesome som spomedzi ostatných zvolil z toho dôvodu, že poskytuje vhodné ikony aktivného a neaktívneho zámku. Tieto ikony sú v~mojej implementácii síce rozlíšené farebne, no podľa WCAG 2.0 (Web Content Accessibility Guidline) by sa kvôli zrakovo znevýhodneným používateľom nemala farebná informácia starať o~rozdiel vo~vyjadrovacom význame \cite[sekcia~1.4]{caldwell2008web}.
 
 \section{Výsledný vzhľad}
 \label{design_created}
@@ -730,13 +730,13 @@ V hornej časti modulu sa nachádza riadok, ktorý informuje užívateľa o celk
 
 V ľavej časti (obrázok \ref{slider_detail_150_left}) sa nachádza stavový stĺpec, ktorý informuje užívateľa o správnom fungovaní časovej osy.
 
-Na vrchnej časovej ose sa pri obidvoch jazdcoch nachádzajú klikateľné ukazatele zámkov, tak ako to vyžadujú požiadavky uvedené v sekcii \ref{sec:lockers}. Spodná časová os obsahuje v jazdcoch informáciu o práve zvolenom časovom intervale.
+Na vrchnej časovej ose sa pri obidvoch jazdcoch nachádzajú klikateľné ukazatele zámkov, tak ako to vyžadujú požiadavky uvedené v~sekcii \ref{sec:lockers}. Spodná časová os obsahuje v jazdcoch informáciu o práve zvolenom časovom intervale.
 
 \section{Funkcie jednotlivých komponent}
 Táto sekcia sa venuje popisu jednotlivých implementovaných častí modulu uvedených v sekcii \ref{design_created}.
 
 \subsection{Riadok s možným časovým rozsahom}
-Tento riadok obsahuje informáciu o celkovom možnom časovom intervale, ktorý je možné zvoliť. Podľa zistených informácií experimenty v KYPO neprebiehajú dlhšie ako 24 hodín. Preto som uprostred umiestnil dátum experimentu a na okraje pri šípkach časové ohraničenie. Informácia o čase je v tomto prípade pre užívateľa dôležitejšia a dátum by ju robil menej čitateľnejšou.
+Tento riadok obsahuje informáciu o celkovom možnom časovom intervale, ktorý je možné zvoliť. Podľa zistených informácií experimenty v~KYPO neprebiehajú dlhšie ako 24 hodín. Preto som uprostred umiestnil dátum experimentu a na okraje pri šípkach časové ohraničenie. Informácia o čase je v tomto prípade pre užívateľa dôležitejšia a dátum by ju robil menej čitateľnejšou.
 
 V budúcnosti však existuje možnosť dlhších experimentov, ktoré môžu trvať aj niekoľko dní. Vtedy sa dátumy zobrazia na krajoch ale časy už nie. Je to opäť z dôvodu čitateľnosti. Pri viacdňovom experimente je pre užévateľa dôležitejší dátum začiatku a konca experimentu, ako čas. Navyše informácia o čase sa nachádza v popiskoch hornej časovej osy hneď pod dátumom (stupnica pod osou).
 
@@ -750,14 +750,14 @@ Na obrázku \ref{slider_detail_150_left} vidíme dve použité ikony:
 \end{description}
 
 \subsection{Horná časová os}
-Horná časová os ponúka užívateľovi grafickú informáciu o tom, kde sa jeho zvolený časový interval nachádza vrámci povoleného časového ohraničenia. Nad manipulátormi tejto osy sa nachádzajú zámky, ktorými dokáže užívateľ definovať správanie modulu pri zmene možného ohraničenia tak, ako je to definované v požiadavkách \ref{sec:lockers}.
+Horná časová os ponúka užívateľovi grafickú informáciu o tom, kde sa jeho zvolený časový interval nachádza v~rámci povoleného časového ohraničenia. Nad manipulátormi tejto osy sa nachádzajú zámky, ktorými dokáže užívateľ definovať správanie modulu pri zmene možného ohraničenia tak, ako je to definované v požiadavkách \ref{sec:lockers}.
 
 V prípade, že modul pracuje so statickými dátami a nevykonáva periodické volania, z dôvodu kompaktnosti modulu sa tieto zámky vo výsledku vôbec nezobrazia a výška modulu sa vďaka tomu ešte mierne zníži. Pod osou sa nachádza pomocná stupnica, ktorej stupne a rozostupy sa dynamicky prispôsobujú veľkosti intervalu.
 
-Pravý zámok je viditeľný len v situácii, keď je pravý manipulátor na maxime. Rovnako ľavý zámok je viditeľný len vtedy, ak je pravý zámok aktívny. Dôvodom je skutočnosť, že keby bol zobrazený len pravý zámok, užívateľ by mohol byť zmätený, prečo nevidí aj ľavý. Zároveň vidí užívateľ len tie zámky, na ktoré môže aj kliknúť.
+Pravý zámok je staticky umiestnený v pravej časti a je stále viditeľný (nezávisle od pozície pravého manipulátora). Ľavý zámok je viditeľný len vtedy, ak je pravý zámok aktívny a jeho poloha sa mení vzhľadom na pozíciu ľavého manipulátora. Užívateľ tak vždy vidí len tie zámky, na ktoré môže aj kliknúť.
 
 \subsection{Dolná časová os}
-Dolná časová os (resp. jej ohraničenie) vždy reflektuje interval zvolený užívateľom. To znamená, že s výnimkou momentu ťahania niektorého z jazdcov je jej výber vždy roztiahnutý na celú širku.
+Dolná časová os (resp. jej ohraničenie) vždy reflektuje interval zvolený užívateľom. To znamená, že s výnimkou momentu ťahania niektorého z jazdcov je jej výber vždy roztiahnutý na celú šírku.
 
 V jazdcoch sa nachádza aj informácia o časovom okamihu, na ktorý sú práve nastavení. Táto informácia je udávaná v hodinách a minútach, avšak pri veľmi malých časových ohraničeniach zobrazuje aj sekundy. Práve tieto časové okamihy podávajú informáciu o práve zvolenom časovom intervale a kvôli kompaktnosti celého modulu sa už nikde inde táto informácia nenachádza.
 
@@ -780,7 +780,7 @@ PossibleTimestampsService je služba, ktorej úlohou je zistenie celkového mož
 \subsection{ShareTimeService}
 ShareTimeService je služba, ktorá v sebe nesie kompletnú informáciu o stave modulu. Obsahuje hraničné hodnoty, zvolené rozmedzie a aj informáciu o \inquotes{aktívnosti} jednotlivých zámkov. Ostatné komponenty vedia túto službu využívať pomocou dependency injection.
 
-V prípade akejkoľvek zmeny môžu jednotlivé komponenty na tieto zmeny reagovať. To sa deje pomocou tzv. sledovaní (\textit{subscribe}) a vo svojej podstate to nie je nič iné ako implementácia návrhového vzoru \textit{Observer} \cite{rhrjjv1994elements}.
+V prípade akejkoľvek zmeny môžu jednotlivé komponenty na tieto zmeny reagovať. To sa deje pomocou tzv. sledovaní (\textit{subscribe}) a vo~svojej podstate to nie je nič iné ako implementácia návrhového vzoru \textit{Observer} \cite{rhrjjv1994elements}.
 
 Okrem toho je ShareTimeService zodpovedný aj za \textit{hlavnú logiku modulu} definovanú v podkapitole \ref{sec:tests}. Napríklad pri aktívnych všetkých zámkoch a pribúdajúcich dátach je potrebné aktualizovať aj zvolený časový interval. O to sa postará vnútorná logika ShareTimeService a všetky komponenty, ktoré zvolený časový interval sledujú (\textit{subscribers}), budú v tomto prípade informovaní o zmene. Detailnejší pohľad na architektúru modulu nám poskytne diagram na obrázku \ref{data_diagram}, ktorý kombinuje diagram komponentov s informáciou o toku dát.
 
@@ -805,12 +805,12 @@ Výhodou takejto implementácie je, že ako autor nie som ničím obmedzovaný. 
 Nevýhodou je, že celú logiku si musím implementovať sám. Pomocou D3.js metódy \textit{drag} odchytávam udalosť, keď užívateľ posúva niektorým z manipulátorov. Pri tejto udalosti však sám musím ošetriť situácie, keď užívateľ ťahá manipulátor až za hranicu, keď posunie manipulátor o menší úsek, ako je krok alebo keď posunie jeden manipulátor až za druhý. Táto implementácia bola mierne zložitejšia, ale vo výsledku mi umožnila vytvoriť dizajn bez akýchkoľvek obmedzení.
 
 \section{Ostatné implementačné detaily}
-Podľa najnovších odporúčaní rôznych vývojárskych komunít \cite{Etienne2017} sú v celom projekte používané relatívne jednotky (rem, em) namiesto absolútnych (px, pt, cm). Z tohoto dôvodu sa aj pri veľkom zväčšení modul nedeformuje, ale všetky jeho súčasti sa zväčšujú rovnomerne. Táto funkcia taktiež podporuje zväčšenie písma, ktoré využívajú slabozrakí používatelia.
+Podľa najnovších odporúčaní rôznych vývojárskych komunít \cite{Etienne2017} sú v~celom projekte používané relatívne jednotky (rem, em) namiesto absolútnych (px, pt, cm). Z~tohoto dôvodu sa aj pri veľkom zväčšení modul nedeformuje, ale všetky jeho súčasti sa zväčšujú rovnomerne. Táto funkcia taktiež podporuje zväčšenie písma, ktoré využívajú slabozrakí používatelia.
 
 Spomínané ikony Font-Awesome boli zvolené s ohľadom na užívateľov, ktorí nevedia dobre rozlišovať farby. Ikony aktívneho a neaktívneho zámku sú preto okrem farebného prevedenia aj výrazne tvarovo odlišné. Ikona \textit{refresh}, ktorá indikuje prebiehajúce opakované zisťovania celkového možného ohraničenia, sa pomaly otáča namiesto blikania, čím sa systém stáva použiteľný aj pre používateľov s neurologickými poruchami (epilepsia). Všetky spomínané požiadavky sú prebraté zo štandardu konzorcia W3C \cite{caldwell2008web}.
 
 \chapter{Nasadenie modulu do Liferay}
-V kapitole \ref{liferay} sme sa oboznámili s portálovým serverom Liferay a uviedli, že jeho hlavná výhoda tkvie v možnosti vytvárať a importovať do neho svoje vlastné miniaplikácie, tzv. portlety. Cieľom tejto práce je vytvoriť modul vo frameworku Angular, ktorý však bude možné využiť v Liferay. Táto kapitola sa venuje procesu transformácie projektu v Angulare na archív, ktorý je možné používať ako portlet v Liferay.
+V kapitole \ref{liferay} sme sa oboznámili s portálovým serverom Liferay a uviedli, že jeho hlavná výhoda tkvie v možnosti vytvárať a importovať do neho svoje vlastné miniaplikácie, tzv. portlety. Cieľom tejto práce je vytvoriť modul vo frameworku Angular, ktorý však bude možné využiť v Liferay. Táto kapitola sa venuje procesu transformácie projektu v~Angulare na archív, ktorý je možné používať ako portlet v~Liferay.
 
 \section{Build}
 Ako prvý krok je nutné urobiť \textit{build} našej Angular aplikácie. Build pozostáva z niekoľkých krokov, z ktorých medzi tie najpodstatnejšie patria:
@@ -832,24 +832,24 @@ Formát WAR (Web Application Archive) je súbor, ktorý je svojou štruktúrou r
 Zabalenie Angular modulu do WAR archívu som nemusel implementovať, pretože v prostredí KYPO už existovalo vzorové riešenie od Bc. Davida Berana, ktoré mi bolo pre tento účel poskytnuté.
 
 \section{Nasadenie archívu do Liferay}
-Úlohou tejto práce okrem implementácie modulu je aj nasadenie hotového portletu na portálový server Liferay. Podľa nefunkčných požiadaviek uvedených v sekcii \ref{requirements} som toto otestovanie vykonal na lokálne bežiacom portálovom serveri Liferay 7.0, ktorý som si stiahol integrovaný do Apache Tomcat (Java Sevrlet kontajner).
+Úlohou tejto práce okrem implementácie modulu je aj nasadenie hotového portletu na portálový server Liferay. Podľa nefunkčných požiadaviek uvedených v~sekcii \ref{requirements} som toto otestovanie vykonal na~lokálne bežiacom portálovom serveri Liferay 7.0, ktorý som si stiahol integrovaný do Apache Tomcat (Java Sevrlet kontajner).
 
-Import WAR súboru prebieha dvoma spôsobmi. Prvým je možnosť priamo cez grafické rozhranie v sekcii \inquotes{Konfigurácia} vykonať import a druhým je premiestniť tento súbor do špeciálnej zložky deploy v adresári servera. S portletom sa ďalej pracuje úplne rovnako, ako s ostatnými portletmi.
+Import WAR súboru prebieha dvoma spôsobmi. Prvým je možnosť priamo cez grafické rozhranie v sekcii \inquotes{Konfigurácia} vykonať import a druhým je premiestniť tento súbor do špeciálnej zložky deploy v~adresári servera. S portletom sa ďalej pracuje úplne rovnako, ako s~ostatnými portletmi.
 
 \chapter{Záver}
-Táto práca skúma framework Angular, ktorý bol vrámci Kybernetického polygónu Masarykovej univerzity zvolený ako frontendový framework, v ktorom sa v budúcnosti budú implementovať webové rozhrania do existujúceho portálu Liferay. Doteraz sa tieto portlety tvorili v jazyku JavaScript a cieľom tejto práce bolo vybraný existujúci portlet implementovať v tomto frameworku.
+Táto práca skúma framework Angular, ktorý bol v~rámci Kybernetického polygónu Masarykovej univerzity zvolený ako frontendový framework, v ktorom sa v budúcnosti budú implementovať webové rozhrania do existujúceho portálu Liferay. Doteraz sa tieto portlety tvorili v jazyku JavaScript a cieľom tejto práce bolo vybraný existujúci portlet implementovať v tomto frameworku.
 
 V práci som sa snažil pomerne presne spísať všetky funkčné a nefunkčné požiadavky, ktoré som konzultoval s vedúcim práce RNDr. Radkom Ošlejškom Ph.D. Nakoľko som s danou technológiou predtým vôbec nepracoval, absolvoval som niekoľko internetových tutoriálov vrátane oficiálneho od Google. Osobne si myslím, že je vďaka tomu tento framework veľmi prístupný začiatočníkom a informácie k nemu je ľahké dohľadať.
 
 Naproti tomu som sa však nevyhol viacerým slepým vývojovým vetvám. Najväčšie problémy mi spôsobovali externé knižnice, ktorými som sa snažil si implementáciu uľahčiť. Následne mi všetko potrebné poskytla knižnica D3.js, ktorá sa stará o zobrazovanie vektorovej grafiky v prehliadačoch.
 
-Svoju implementáciu som opísal v \ref{implementation}. kapitole, kde som uviedol z~môjho pohľadu najdôležitejšie implementačné detaily. Tie sa týkali hlavne architektúry a rozloženia komponent, ale taktiež odôvodnenia použitia jednotlivých grafických prvkov a ich umiestnenia. Vrámci práce som využil metodiku \textit{Continuous Integration} (CI - priebežná integrácia výsledkov), pomocou ktorej som automaticky vytvoril plne funkčnú klikateľnú aplikáciu pri každej zmene kódu v Git repozitári projektu. Toto demo mal zadávateľ (vedúci práce) stále k dispozícii, aby na základe jeho pripomienok bolo možné upraviť funkcionalitu.
+Svoju implementáciu som opísal v \ref{implementation}. kapitole, kde som uviedol z~môjho pohľadu najdôležitejšie implementačné detaily. Tie sa týkali hlavne architektúry a rozloženia komponent, ale taktiež odôvodnenia použitia jednotlivých grafických prvkov a ich umiestnenia. V~rámci práce som využil metodiku \textit{Continuous Integration} (CI - priebežná integrácia výsledkov), pomocou ktorej som automaticky vytvoril plne funkčnú klikateľnú aplikáciu pri každej zmene kódu v Git repozitári projektu. Toto demo mal zadávateľ (vedúci práce) stále k dispozícii, aby na základe jeho pripomienok bolo možné upraviť funkcionalitu.
 
 Pre overenie funkčnosti som výsledný portlet úspešne nasadil na~lokálne bežiaci portálový server Liferay. Pri transformácii Angular modulu na~archív WAR mi veľmi pomohol projekt Davida Berana (ktorý medzičasom vznikol v~prostredí KYPO). Musel som ho však na~viacerých miestach upraviť z dôvodu použitia novšej verzie Angularu (\angular_version ). Po nasadení do portálu bol modul plne funkčný, objavili sa však problémy s dedičnosťou štýlov, ktoré čiastočne výsledný vzhľad deformovali.
 
-Keďže niektoré stavy, ktoré si drží modul (stav zámkov, minima, maxima, zvoleného intervalu) sa môžu navzájom ovplyvňovať, implementoval som 10 jednotkových testov, ktoré pokrývajú väčšinu možných scenárov. Tieto udalosti môžu byť vyvolané buď príchodom nových dát (zmenou možného ohraničenia), alebo činnosťou užívateľa.
+Keďže niektoré stavy, ktoré si drží modul (stav zámkov, minima, maxima, zvoleného intervalu) sa môžu navzájom ovplyvňovať, vytvoril som jednotkové testy, ktoré pokrývajú netriviálnu logiku implementovanú v~službe ShareTimeService. Tieto udalosti môžu byť vyvolané buď príchodom nových dát (zmenou možného ohraničenia), alebo činnosťou užívateľa.
 
-Vhodným pokračovaním tejto práce by bolo nasadenie portletu do produkčnej verzie Liferay portálu a intenzívne užívateľské testovanie, ktoré by mohlo odhaliť slabiny dizajnového riešenia. Takéto testovanie vie priniesť veľmi cenný pohľad koncového používateľa, ktoré ja v~pozícii vývojára nemusím postrehnúť. Za prínos by som určite považoval kontrolu mojej implementácie z hľadiska kvality kódu, nakoľko kód TypeScriptu je o dosť odlišný od programovacích jazykov široko využívaných vrámci fakulty.
+Vhodným pokračovaním tejto práce by bolo nasadenie portletu do produkčnej verzie Liferay portálu a intenzívne užívateľské testovanie, ktoré by mohlo odhaliť slabiny dizajnového riešenia. Takéto testovanie vie priniesť veľmi cenný pohľad koncového používateľa, ktoré ja v~pozícii vývojára nemusím postrehnúť a ktoré som vykonával len v~neformálnej rovine na~používateľoch mimo KYPO.
 
 
 %\printbibliography
