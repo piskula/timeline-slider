@@ -2,8 +2,8 @@ import { EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/
 import * as d3 from 'd3';
 
 export const COLOR_THUMB = '#FAFAFA';
-export const COLOR_LOWER = '#BE148E';
-export const COLOR_UPPER = '#0070C7';
+export const COLOR_UPPER = '#BE148E';
+export const COLOR_LOWER = '#0070C7';
 export const DARK_GREY = '#636466';
 export const GREY_LOW = '#C0C0C0';
 

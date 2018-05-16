@@ -1,5 +1,9 @@
 @import '../../../scss/global-variables';
 
+$opacity-full: 1;
+$opacity-middle: .75;
+$opacity-low: .325;
+
 .timeline-scale {
   padding: 0;
   height: $scale-height;

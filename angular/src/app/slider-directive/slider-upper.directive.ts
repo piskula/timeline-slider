@@ -11,7 +11,7 @@ import {
 
 export const LINE_HEIGHT_MULTIPLY = 1;
 export const LINE_EMPTY_HEIGHT_MULTIPLY = 0.5;
-export const THUMB_STROKE_MULTIPLY = 0.0625;
+export const THUMB_STROKE_MULTIPLY = 0.125;
 export const LOCKER_ICON_FONT_MULTIPLY = 2;
 
 @Directive({
@@ -43,7 +43,6 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
     const sliderSideMargin = this.getSideMargin();
     const sliderTopMargin = fontSize * (this.isLockSectionHidden ? 1.125 : 2.25);
     const thumbSize = fontSize * 0.5;
-    const thumbSizeClick = fontSize * 0.625;
     const leftLockAddition = fontSize * 0.875;
     const rightLockAddition = fontSize * 2.875;
 
@@ -51,25 +50,14 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
     let normValueRight = this.getNormValue(this.rangeChosen[1]); // value normalized between 0-1
     let denormValueDrag;
 
-    // after initial click on handler these 'START' methods are called:
-    function dragStartLeft() {
-      leftHandler.attr('r', thumbSizeClick);
-    }
-
-    function dragStartRight() {
-      rightHandler.attr('r', thumbSizeClick);
-    }
-
     // after releasing handler these 'END' methods are called:
     function dragEndLeft() {
-      leftHandler.attr('r', this.thumbSize);
       if (eventLeft) {
         eventLeft(normValueLeft);
       }
     }
 
     function dragEndRight() {
-      rightHandler.attr('r', this.thumbSize);
       if (eventRight) {
         eventRight(normValueRight);
       }
@@ -145,7 +133,6 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
 
       // re-render handler and related elements
       rightHandler.attr('cx', sliderSideMargin + selectedValueRight);
-      rightLockWrapper.attr('x', selectedValueRight + rightLockAddition);
       valueLine.attr('x2', sliderSideMargin + selectedValueRight);
       emptyLineRight
         .attr('x1', sliderSideMargin + selectedValueRight)
@@ -153,10 +140,8 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
 
       // handle LIVE preview of lock (when you move handler but not release)
       if (normValueRight === 1 && that.isRightLocked) {
-        rightLock.select('i').classed('fa-unlock', false).classed('fa-lock', true);
         leftLockWrapper.style('display', 'inherit');
       } else {
-        rightLock.select('i').classed('fa-unlock', true).classed('fa-lock', false);
         leftLockWrapper.style('display', 'none');
       }
 
@@ -198,8 +183,6 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
         .attr('x', selectedValueLeft + leftLockAddition)
         .style('display', normValueRight === 1 && that.isRightLocked ? 'inherit' : 'none');
       rightHandler.attr('cx', sliderSideMargin + selectedValueRight);
-      rightLockWrapper
-        .attr('x', selectedValueRight + rightLockAddition);
 
       emptyLineLeft
         .attr('x1', sliderSideMargin)
@@ -256,14 +239,14 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       .attr('cx', sliderSideMargin + (width * normValueLeft))
       .attr('cy', sliderTopMargin)
       .attr('r', thumbSize)
-      .style('stroke', DARK_GREY)
+      .style('stroke', COLOR_UPPER)
       .style('stroke-width', THUMB_STROKE_MULTIPLY * fontSize)
       .style('fill', COLOR_THUMB);
     const rightHandler = selection.append('circle')
       .attr('cx', sliderSideMargin + (width * normValueRight))
       .attr('cy', sliderTopMargin)
       .attr('r', thumbSize)
-      .style('stroke', DARK_GREY)
+      .style('stroke', COLOR_UPPER)
       .style('stroke-width', THUMB_STROKE_MULTIPLY * fontSize)
       .style('fill', COLOR_THUMB);
 
@@ -285,8 +268,7 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
 
     const rightLockWrapper = selection
       .append('svg:foreignObject')
-      .attr('x', (width * normValueRight) + rightLockAddition)
-      // .attr('y', -10)
+      .attr('x', width + rightLockAddition)
       .attr('width', fontSize * LOCKER_ICON_FONT_MULTIPLY)
       .attr('height', fontSize * LOCKER_ICON_FONT_MULTIPLY)
       .style('font-size', LOCKER_ICON_FONT_MULTIPLY + 'rem')
@@ -300,12 +282,10 @@ export class D3SliderUpperDirective extends D3SliderBaseDirective {
       });
 
     leftHandler.call(d3.drag()
-      .on('start', dragStartLeft)
       .on('drag', dragLeft)
       .on('end', dragEndLeft))
       .style('cursor', 'hand');
     rightHandler.call(d3.drag()
-      .on('start', dragStartRight)
       .on('drag', dragRight)
       .on('end', dragEndRight))
       .style('cursor', 'hand');

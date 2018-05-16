@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[
-  digital, %% This option enables the default options for the
+  printed, %% This option enables the default options for the
            %% digital version of a document. Replace with `printed`
            %% to enable the default options for the printed version
            %% of a document.
@@ -58,8 +58,8 @@
     title         = {Interaktívna časová os ako modul v Angulare},
     %TeXtitle      = {The Proof of $\mathsf{P}=\mathsf{NP}$},
     TeXtitle      = {Interaktívna časová os ako modul v Angulare},
-    keywords      = {Angular, KYPO, Liferay, SVG, D3.js, TypeScript, W3C, dynamické prostredie, range slider},
-    TeXkeywords   = {Angular, KYPO, Liferay, SVG, D3.js, TypeScript, W3C, dynamické prostredie, range slider},
+    keywords      = {Angular, KYPO, Liferay, časová os, SVG, D3.js, TypeScript, W3C, dynamické prostredie, range slider},
+    TeXkeywords   = {Angular, KYPO, Liferay, časová os, SVG, D3.js, TypeScript, W3C, dynamické prostredie, range slider},
     abstract      = {Cieľom tejto práce je modifikácia existujúceho modulu časovej osy, ktorý sa používa v portáli Kybernetického polygónu Masarykovej univerzity a jeho implementácia vo frameworku Angular. Súčasťou práce je funkčný portlet, ktorý je možné integrovať do Liferay portálu.},
     thanks        = {Rád by som sa poďakoval vedúcemu práce RNDr. Radkovi Ošlejškovi, Ph.D. za jeho čas a pomoc pri tvorbe tejto práce.},
     %bib           = prace.bib,
@@ -281,14 +281,14 @@ TypeScript tvorí nadstavbu nad JavaScriptom. Výsledkom je teda kód, ktorý sa
 Typescript teda môžeme považovať za staticky typovaný jazyk, avšak výzkum Kalifornskej univerzity\cite{ray2014large} ukázal, že približne 50\% všetkých použitých atribútov v bežnom TypeScript kóde má deklarovaný typ \textit{any}, pre ktorý prekladač typovú kontrolu nevykonáva. Je teda na mieste úvaha, či môžeme považovať typovú kontrolu v TypeScripte za plnohodnotnú. Môj názor je, že pri dodržiavaní správnych postupov a zvyklostí pri programovaní je táto kontrola zmysluplná.
 
 \section{DOM}
-DOM - \textit{Document Object Model} je objektovo-orientovaná reprezentácia HTML dokumentu. Reprezentuje HTML dokument ako strom objektov s vlastnosťami (veľkosť, štýly, a pod.) a umožňuje tým JavaScriptu identifikovať, meniť, pridávať a odoberať uzly v tomto strome (prípadne ich vlastnosti) \cite{yang2009topic}. Pomocou DOM je teda možné dynamicky meniť obsah stránok, čo je vo svojej podstate význam JavaScriptu.
+DOM - \textit{Document Object Model} je objektovo-orientovaná reprezentácia HTML dokumentu. Reprezentuje HTML dokument ako strom objektov s vlastnosťami (veľkosť, štýly, a pod.) a umožňuje tým JavaScriptu identifikovať, meniť, pridávať a odoberať uzly v tomto strome (prípadne meniť ich vlastnosti) \cite{yang2009topic}. Pomocou DOM je teda možné dynamicky meniť obsah stránok, čo je vo svojej podstate význam JavaScriptu.
 
 DOM nie je špecifický pre Angular ale je to všeobecný štandard konzorcia W3C, ktorý udáva, ako by sa mali značkovacie jazyky ako HTML alebo XML reprezentovať objektovo-orientovaným modelom \cite{wood1999programming}. Tento model je štandardom, ktorý implementuje väčšina prehliadačov, ale nakoľko je tento štandard slobodný, je na každom prehliadači ako dôsledne tento štandard implementuje. Je to jeden z dôvodov, pre ktorý sa stránky môžu správať v jednotlivých prehliadačoch odlišne.
 
 V nasledujúcich častiach svojej práce často používam skratku DOM, ktorá sa vždy odkazuje na spomínaný štandard \textit{Document Object Model} konzorcia W3C.
 
 \section{Architektúra}
-Základným architektonickým prvkom v Angulare je modul. Oficiálna dokumentácia Angularu definuje modul ako \textit{"funkčnú a plnohodnotnú časť aplikácie. Angular aplikácia môže obsahovať niekoľko modulov, najmenej však jeden"}\cite{angular}. Štruktúru modulu približuje aj obrázok \ref{angular_architecture}
+Základným architektonickým prvkom v Angulare je modul. Oficiálna dokumentácia Angularu definuje modul ako \textit{"funkčnú a plnohodnotnú časť aplikácie. Angular aplikácia môže obsahovať niekoľko modulov, najmenej však jeden"} \cite{angular}. Štruktúru modulu približuje aj obrázok \ref{angular_architecture}
 
 \begin{figure}[H]
 	\center
@@ -299,11 +299,11 @@ Základným architektonickým prvkom v Angulare je modul. Oficiálna dokumentác
 
 Základným stavebným prvkom stránky je komponent. Skladaním komponent do seba sa vytvára UI, ktoré sa následne vyrenderuje v~prehliadači a zobrazí užívateľovi. Komponenty, na~rozdiel od~portletov na~stránke Liferay, môžu v sebe opätovne obsahovať ďalšie komponenty. Každý komponent v kontexte Angularu prislúcha práve jednému modulu a každému komponentu prislúcha práve jedna HTML šablóna (template).
 
-Medzi základné elementy v Angulare v neposlednom rade patria služby (Services), ktoré ,obdobne ako komponenty, prislúchajú práve jednému modulu. Podľa definície sa \textit{"služby využívajú vtedy, keď potrebujeme medzi komponentami zdieľat dáta alebo funkčnú logiku aplikácie, ktorá nemá priradenú žiadnu šablónu"}\cite{angular}.
+Medzi základné elementy v Angulare v neposlednom rade patria služby (Services), ktoré, obdobne ako komponenty, prislúchajú práve jednému modulu. Podľa definície sa \textit{"služby využívajú vtedy, keď potrebujeme medzi komponentami zdieľat dáta alebo funkčnú logiku aplikácie, ktorá nemá priradenú žiadnu šablónu"} \cite{angular}.
 
 Táto štruktúra delenia aplikácie do modulov a komponentov sa môže na prvý pohľad zdať zložitá, preto som zvolil nasledujúci praktický príklad pre lepšie porozumenie:
 \begin{description}
-\item[moduly] sú funkčne oddelené súčasti aplikácie, v prípade internetového obchodu napríklad správa užívateľov, moje objednávky a prehľadávanie.
+\item[moduly] sú funkčne oddelené súčasti aplikácie, v prípade internetového obchodu napríklad správa užívateľov, moje objednávky a katalóg produktov.
 \item[komponenty] sú stavebné prvky stránky, napríklad modul \textit{správa užívateľov} obsahuje komponent \textit{prehľad}, ktorý ďalej obsahuje komponenty \textit{list} a \textit{vyhľadávanie}, ktoré ale môžu byť opätovne použité aj v iných častiach tohto modulu, pretože sú úplne oddelené.
 \item[služby] poskytujú dáta a logiku, pričom nie sú naviazané na šablónu. Napríklad služba UserService by poskytovala zoznam používateľov a detail používateľa pomocou HTTP metód. V našom prípade by komponent \textit{list} alebo komponent \textit{prehľad} mohol využívať túto službu ako zdroj dát.
 \end{description}
@@ -408,7 +408,7 @@ Dependency Injection je implementácia návrhového vzoru IoC\footnote{IoC - Inv
 
 Komponent sa tým pádom nestará o vytvorenie samotného objektu, ale dostane už hotový objekt, čím sa zbavuje závislosti (na rozdiel od využívania statických metód alebo vytvárania nových objektov pomocou kľúčového slova \textit{new}).
 
-Framework Angular umožňuje vytvárať inštancie služieb (services) pri bootstrape aplikácie. Bootstrap je jeden z procesov spúšťania, ktorý výslednú aplikáciu vloží do súboru \textit{index.html} \cite{angular} (netreba si mýliť s~knižnicou Twitter Bootstrap, ktorá obsahuje HTML a CSS šablóny pre tvorbu responzívnych web stránok \cite{peska2017thesis}). Takto inicializované služby potom vieme využívať naprieč modulmi tak, ako je to znázornené v~ukážke \ref{ts_snippet} na~strane \pageref{ts_snippet}.
+Framework Angular umožňuje vytvárať inštancie služieb (services) pri bootstrape aplikácie. Bootstrap je jeden z procesov spúšťania, ktorý výslednú aplikáciu vloží do súboru \textit{index.html} \cite{angular} (netreba si mýliť s~knižnicou Twitter Bootstrap, ktorá obsahuje HTML a CSS šablóny pre tvorbu responzívnych web stránok \cite{peska2017thesis}). Takto inicializované služby potom vieme využívať naprieč komponentami tak, ako je to znázornené v~ukážke \ref{ts_snippet} na~strane \pageref{ts_snippet}.
 
 \section{Jednotkové testy}
 Pre písanie jednotkových testov môžeme využiť niekoľko frameworkov pre JavaScript, ako napríklad Mocha, Jasmine alebo Siesta. Samotná Angular dokumentácia \cite{angular} odkazuje pri testovaní na používanie frameworku Jasmine a nakoľko som v praktickej časti svojej práce tento framework použil, v tejto sekcii ho krátko predstavím.
@@ -423,7 +423,7 @@ Karma sa správa ako webserver ktorý umožňuje vývojárovi spúšťať Jasmin
 \label{plan}
 %Cieľom tejto práce je vytvoriť modul vo frameworku Angular, ktorý bude nasaditeľný ako samostatný portlet do Liferay portálu a prostredníctvom ktorého bude užívateľ schopný zvoliť si podmnožinu časového ohraničenia.
 
-Kybernetický polygón generuje počas experimentu obrovské množstvo dát. Tieto dáta sa zaznamenávajú do prislúchajúcich časových postupností, z ktorých sa vytvárajú rôznorodé vizualizácie, ktoré umožňujú užívateľovi vnímať tieto dáta z viacerých pohľadov. Príklad takejto vizualizácie môžeme vidieť na obrázku \ref{visualization}.
+Kybernetický polygón generuje počas experimentu obrovské množstvo dát. Tieto dáta sa zaznamenávajú do~prislúchajúcich časových postupností, z~ktorých sa vytvárajú rôznorodé vizualizácie, ktoré umožňujú užívateľovi vnímať tieto dáta z~viacerých pohľadov. Príklad takejto vizualizácie môžeme vidieť na~obrázku \ref{visualization}.
 
 \begin{figure}[H]
 	\center
@@ -432,7 +432,7 @@ Kybernetický polygón generuje počas experimentu obrovské množstvo dát. Tie
 	\label{visualization}
 \end{figure}
 
-Úlohou modulu interaktívnej časovej osy je poskytnúť užívateľovi intuitívny nástroj, ktorým dokáže z množstva týchto dát vybrať len určitý časový úsek a následne túto informáciu podať všetkým prislúchajúcim portletom na danej stránke. Zároveň bude tento modul spĺňať veľmi špecifické nároky na funkcionalitu, ktorým je venovaná táto kapitola. Jedným z najdôležitejších faktorov je, že celkové možné časové ohraničenie sa môže dynamicky meniť.
+Úlohou modulu interaktívnej časovej osy je poskytnúť užívateľovi intuitívny nástroj, ktorým dokáže z~množstva týchto dát vybrať len určitý časový úsek a následne túto informáciu podať všetkým prislúchajúcim portletom na~danej stránke. Zároveň bude tento modul spĺňať veľmi špecifické nároky na~funkcionalitu, ktorým je venovaná táto kapitola. Jedným z~najdôležitejších faktorov je, že celkové možné časové ohraničenie sa môže dynamicky meniť.
 
 \section{Zadefinovanie pojmov}
 V tejto časti by som rád vymedzil niektoré často používané pojmy, ktoré súvisia s funkcionalitou modulu.
@@ -452,8 +452,8 @@ Vstupom tohto modulu bude
 \begin{description}
 \item[krok (step)] - najmenšia uvažovaná časová jednotka (získa sa volaním REST rozhrania)
 \item[minimum, maximum] - dolné a horné časové ohraničenie (získa sa volaním REST rozhrania)
-\item[IP adresa] na ktorú budú prebiehať REST volania z predchádzajúcich dvoch bodov (získa sa z konfigurácie portletu)
-\item[perióda] - číselná hodnota v sekundách, ktorá udáva, ako často sa má cez REST znovu overiť časové ohraničenie
+\item[IP adresa] na~ktorú budú prebiehať REST volania z predchádzajúcich dvoch bodov (získa sa z~konfigurácie portletu)
+\item[perióda] - číselná hodnota v~sekundách, ktorá udáva, ako často sa má cez REST znovu overiť časové ohraničenie (získa sa z~konfigurácie portletu)
 \begin{itemize}
 \item ak je perióda nulová, periodické volania sa nevykonávajú a možné časové ohraničenie sa zistí jednorázovo
 \end{itemize}
@@ -461,7 +461,7 @@ Vstupom tohto modulu bude
 Výstupom tohto modulu budú dve časové známky, kde prvá odpovedá aktuálnej pozícii ľavého manipulátora a druhá pozícii pravého manipulátora.
 
 \section{Existujúce riešenie}
-Existujúci portlet časovej osy pre KYPO bol implementovaný v~JavaScripte v~rámci diplomovej práce Jiřího Dočkala\cite{dockal2016webovy}. Okrem výberu časového ohraničenia slúžil aj na prehrávanie scenárov, ako je možné vidieť aj na Obr. \ref{old_portlet}.
+Existujúci portlet časovej osy pre KYPO bol implementovaný v~JavaScripte v~rámci diplomovej práce Jiřího Dočkala\cite{dockal2016webovy}. Okrem výberu časového ohraničenia slúžil aj na prehrávanie scenárov, ako je možné vidieť aj na~Obr. \ref{old_portlet}.
 
 \begin{figure}[H]
 	\center
@@ -470,13 +470,13 @@ Existujúci portlet časovej osy pre KYPO bol implementovaný v~JavaScripte v~r�
 	\label{old_portlet}
 \end{figure}
 
-V aktuálnych víziách vývojového centra KYPO sa však zrodila požiadavka na odlišný portlet, ktorý bude obsahovať v určitom smere menej funkcionality a bude postavený na odlišnej technológii (použitie frameworku Angular). Všetky tieto požiadavky boli zhrnuté v kapitole \ref{requirements}.
+V aktuálnych víziách vývojového centra KYPO sa však zrodila požiadavka na odlišný portlet, ktorý bude obsahovať v určitom smere menej funkcionality a bude postavený na odlišnej technológii (použitie frameworku Angular). Všetky tieto požiadavky boli zhrnuté v~kapitole~\ref{requirements}.
 
 \clearpage
 
 \section{Požiadavky}
 \label{requirements}
-Požiadavky na dizajn a funkcionalitu som vytvoril na základe konzultácií s vedúcim práce RNDr. Radkom Ošlejškom, Ph.D.
+Požiadavky na~dizajn a funkcionalitu som vytvoril na~základe konzultácií s~vedúcim práce RNDr. Radkom Ošlejškom, Ph.D.
 
 \subsection{Funkčné požiadavky}
 \label{funkcne_poziadavky}
@@ -628,7 +628,7 @@ Kľúčovou úlohou v raných fázach vývoja bolo zvoliť vhodný prostriedok, 
 \begin{figure}[H]
 	\center
 	\includegraphics{html_range}
-	\caption{HTML prvok \texttt{<input type=\char`\"range\char`\"/>} v prehliadači Chrome a jeho prednastavený vzhľad}
+	\caption{HTML prvok \texttt{<input type=\char`\"range\char`\">} v prehliadači Chrome a jeho prednastavený vzhľad}
 	\label{html_range}
 \end{figure}
 
@@ -642,10 +642,7 @@ Formulárový prvok typu range sa skladá z koľajnice a jazdca (manipulátora) 
 Medzi nevýhody formulárového prvku typu range patria:
 \begin{enumerate}
 \item nedá sa pohodlne ovládať len klávesnicou, vyžaduje použitie myši alebo touchpadu (pri dotykových obrazovkách dotyk a následné potiahnutie)
-\item zvolená hodnota nemusí byť presná
-\begin{quote}
-\textit{Predstavme si, že pomocou range potrebujeme zadať hodnotu 726,54 ktorá musí byť v rozmedzí 0 až 10\,000. Trafiť sa do tejto hodnoty sa nám vôbec nemusí podariť.}
-\end{quote}
+\item zvolená hodnota nemusí byť presná. Predstavme si, že pomocou range potrebujeme zadať hodnotu 726,54 ktorá musí byť v rozmedzí 0 až 10\,000. Trafiť sa do tejto hodnoty sa nám vôbec nemusí podariť.
 \end{enumerate}
 
 Obe spomínané nevýhody sa nás veľmi netýkajú, nakoľko:
@@ -659,24 +656,24 @@ Pomocou CSS je možné vo viacerých moderných prehliadačoch upraviť prednast
 \subsection{Existujúce implementácie range slidera}
 Spočiatku som sa snažil využiť niekoľko už existujúcich voľne prístupných knižníc (komponent), ktoré riešili implementáciu \textit{range slider}a pre Angular (verzie 2 a vyššej). Väčšina z nich podporovala niekoľko jazdcov na koľajnici a dali sa na nich pomerne jednoducho prepisovať štýly.
 
-Najviac času som strávil s komponentom ng2-nouislider\cite{ng2nouislider}, ale postupom času mi ani tento komponent neponúkol také možnosti, ktoré by som potreboval. Všetky knižnice mali z môjho pohľadu tieto dva nedostatky:
+Najviac času som strávil s komponentom ng2-nouislider \cite{ng2nouislider}, ale postupom času mi ani tento komponent neponúkol také možnosti, ktoré by som potreboval. Všetky knižnice mali z môjho pohľadu tieto dva nedostatky:
 \begin{description}
 \item[neboli pôvodne navrhnuté pre Angular] - väčšina knižníc spolupracovala s Angularom len preto, že niekto \inquotes{obalil} jej existujúceho JavaScriptového predchodcu ako Angular2 komponent, čím plnohodnotne nevyužil všetky možnosti Angularu (ako napríklad obojsmerný binding)
 \item[neboli navrhnuté pre tento typ použitia] - boli navrhnuté tak, aby na začiatku boli definované hraničné body (minimum, maximum) a následne po celý zvyšok svojej životnosti už len poskytovali informácie o momentálnej voľbe užívateľa. Ak sa následne zmenili hraničné body, väčšina komponent v lepšom prípade dané hranice len neaktualizovala, v horšom prípade úplne prestala fungovať.
 \end{description}
 
 \section{D3.js}
-Táto JavaScriptová knižnica slúži na dynamické vizualizácie dát v prehliadačoch. Hlavnou technológiou, na ktorej je postavená táto knižnica, je vektorová grafika a konkrétne značkovací jazyk SVG.
+Táto JavaScriptová knižnica slúži na~dynamické vizualizácie dát v~prehliadačoch. Hlavnou technológiou, na~ktorej je postavená táto knižnica, je vektorová grafika a konkrétne značkovací jazyk SVG.
 
-SVG alebo Scalable Vector Graphics bol vyvynutý na opis dvojrozmernej statickej aj animovanej grafiky a využíva pritom syntax XML\cite{quint2003scalable}.
-Dnes je SVG formát široko podporovaný väčšinou webových prehliadačov. Je možné vkladať ho priamo do HTML kódu a následne interpretovať. SVG má oproti štandardným rastrovým obrázkom hneď niekoľko výhod, z nich najpodstatnejšie pre webový vývoj sú tieto:
+SVG alebo Scalable Vector Graphics bol vyvynutý na~opis dvojrozmernej statickej aj animovanej grafiky a využíva pritom syntax XML\cite{quint2003scalable}.
+Dnes je SVG formát široko podporovaný väčšinou webových prehliadačov. Je možné vkladať ho priamo do~HTML kódu a následne interpretovať. SVG má oproti štandardným rastrovým obrázkom hneď niekoľko výhod, z~nich najpodstatnejšie pre webový vývoj sú tieto:
 \begin{itemize}
 \item SVG obrázky sú škálovateľné. Vyplýva to z predpokladu, že hovoríme o vektorovej grafike. Zväčšovaním a zmenšovaním toho istého obrázka nestrácame žiadnu informáciu. Hlavne v~oblasti responzívneho dizajnu je to veľmi podstatný faktor.
 \item Veľkosť - keďže sa jedná o textovú informáciu, výsledný súbor je veľmi malý. Navyše nám pre viacero rozlíšení postačuje jeden a ten istý a nepotrebujeme vytvárať viacero obrázkov pre rôzne veľkosti. Tento faktor je podstatný hlavne v oblasti mobilného vývoja, kde je jednou z požiadaviek aj veľkosť prenášaných dát.
 \item Ak obrázok obsahuje text, je možné ho vyhľadať a vedia ho prečítať aj roboty vyhľadávačov, čo je pri weboch veľké plus.
 \end{itemize}
 
-D3.js umožňuje pridávať do DOMu stránky SVG elementy. Týmto spôsobom vieme \inquotes{programovať}, ako sa má grafika zobraziť a odchytávať rôzne typy udalostí ako sú napríklad kliknutia. Toto je hlavný princíp, na ktorom je postavená implementácia modulu.
+D3.js umožňuje pridávať SVG elementy do~DOMu stránky. Týmto spôsobom vieme \inquotes{programovať}, ako sa má grafika zobraziť a odchytávať rôzne typy udalostí ako sú napríklad kliknutia. Toto je hlavný princíp, na~ktorom je postavená implementácia modulu.
 
 Implementoval som direktívy, ktoré majú niekoľko vstupov, ako napríklad minimum, maximum, zvolený časový úsek a podobne. Na~základe týchto informácií direktíva vytvorí SVG element, v~ktorom vykreslí koľajnicu a dvoch jazdcov (manipulátory). Udalosť kliknutia a ťahania týchto jazdcov odchytávam a pomocou nich viem upraviť výsledný časový úsek aj vzhľad.
 
@@ -689,7 +686,7 @@ Font-Awesome, ako vyplýva z~názvu, v~skutočnosti nie je knižnica obrázkov, 
 
 \begin{figure}
 	\center
-	\includegraphics[width=.25\linewidth]{icons}
+	\includegraphics[width=.22\linewidth]{icons}
 	\caption{Ikony Font-Awesome použité v implementácii}
 	\label{icons}
 \end{figure}
@@ -764,7 +761,7 @@ V jazdcoch sa nachádza aj informácia o časovom okamihu, na ktorý sú práve 
 \section{Architektúra}
 \begin{figure}[H]
 	\center
-	\includegraphics[width=1.0\linewidth]{component_diagram}
+	\includegraphics[width=0.90\linewidth]{component_diagram}
 	\caption{Diagram komponentov modulu (UML)}
 	\label{component_diagram}
 \end{figure}
@@ -783,10 +780,7 @@ ShareTimeService je služba, ktorá v sebe nesie kompletnú informáciu o stave 
 V prípade akejkoľvek zmeny môžu jednotlivé komponenty na tieto zmeny reagovať. To sa deje pomocou tzv. sledovaní (\textit{subscribe}) a vo~svojej podstate to nie je nič iné ako implementácia návrhového vzoru \textit{Observer} \cite{rhrjjv1994elements}.
 
 Okrem toho je ShareTimeService zodpovedný aj za \textit{hlavnú logiku modulu} definovanú v podkapitole \ref{sec:tests}. Napríklad pri aktívnych všetkých zámkoch a pribúdajúcich dátach je potrebné aktualizovať aj zvolený časový interval. O to sa postará vnútorná logika ShareTimeService a všetky komponenty, ktoré zvolený časový interval sledujú (\textit{subscribers}), budú v tomto prípade informovaní o zmene. Detailnejší pohľad na architektúru modulu nám poskytne diagram na obrázku \ref{data_diagram}, ktorý kombinuje diagram komponentov s informáciou o toku dát.
-
-Po zelených šípkach putuje informácia o celkovom možnom časovom ohraničení. V prípade pribúdajúcich dát sa \textit{timeline-frame} komponent stará o periodické zisťovanie ohraničenia opakovanými volaniami, ktoré vykonáva pomocou služby PossibleTimestampsService. Túto informáciu ukladá do ShareTimeService, z ktorého túto informáciu odoberá vrchná časová os (je prihlásená na odber pomocou \textit{subscribe}, preto ShareTimeService vrchnú časovú os notifikuje o zmene).
-
-Červené šípky znázorňujú voľbu užívateľa a teda ním zvolené časové rozmedzie. Na diagrame na obrázku \ref{data_diagram} opäť vidíme, ktoré komponenty môžu túto hodnotu meniť a ktoré ju odoberajú. Analogicky oranžové šípky znázorňujú informáciu o aktivácii a deaktivácii zámkov.
+\clearpage
 
 \begin{figure}[H]
 	\center
@@ -794,6 +788,10 @@ Po zelených šípkach putuje informácia o celkovom možnom časovom ohraničen
 	\caption{Diagram toku dát - farebné šípky znázorňujú putovanie informácie do jednotlivých komponentov}
 	\label{data_diagram}
 \end{figure}
+
+Po zelených šípkach putuje informácia o celkovom možnom časovom ohraničení. V prípade pribúdajúcich dát sa \textit{timeline-frame} komponent stará o periodické zisťovanie ohraničenia opakovanými volaniami, ktoré vykonáva pomocou služby PossibleTimestampsService. Túto informáciu ukladá do ShareTimeService, z ktorého túto informáciu odoberá vrchná časová os (je prihlásená na odber pomocou \textit{subscribe}, preto ShareTimeService vrchnú časovú os notifikuje o zmene).
+
+Červené šípky znázorňujú voľbu užívateľa a teda ním zvolené časové rozmedzie. Na diagrame na obrázku \ref{data_diagram} opäť vidíme, ktoré komponenty môžu túto hodnotu meniť a ktoré ju odoberajú. Analogicky oranžové šípky znázorňujú informáciu o aktivácii a deaktivácii zámkov.
 
 \section{Použitie direktív}
 Na obrázku \ref{data_diagram} môžeme vidieť, že \textit{timeline-slider-upper} obsahuje HTML \texttt{<div>} tag a v tomto tagu je použitá direktíva \textit{sliderUpper}. Direktívy som predstavil v kapitole \ref{sec_directives} - slúžia na pridávanie/odoberanie DOM elementov z HTML alebo zmenu ich vlastností.
@@ -845,7 +843,7 @@ Naproti tomu som sa však nevyhol viacerým slepým vývojovým vetvám. Najvä�
 
 Svoju implementáciu som opísal v \ref{implementation}. kapitole, kde som uviedol z~môjho pohľadu najdôležitejšie implementačné detaily. Tie sa týkali hlavne architektúry a rozloženia komponent, ale taktiež odôvodnenia použitia jednotlivých grafických prvkov a ich umiestnenia. V~rámci práce som využil metodiku \textit{Continuous Integration} (CI - priebežná integrácia výsledkov), pomocou ktorej som automaticky vytvoril plne funkčnú klikateľnú aplikáciu pri každej zmene kódu v Git repozitári projektu. Toto demo mal zadávateľ (vedúci práce) stále k dispozícii, aby na základe jeho pripomienok bolo možné upraviť funkcionalitu.
 
-Pre overenie funkčnosti som výsledný portlet úspešne nasadil na~lokálne bežiaci portálový server Liferay. Pri transformácii Angular modulu na~archív WAR mi veľmi pomohol projekt Davida Berana (ktorý medzičasom vznikol v~prostredí KYPO). Musel som ho však na~viacerých miestach upraviť z dôvodu použitia novšej verzie Angularu (\angular_version ). Po nasadení do portálu bol modul plne funkčný, objavili sa však problémy s dedičnosťou štýlov, ktoré čiastočne výsledný vzhľad deformovali.
+Pre overenie funkčnosti som výsledný portlet úspešne nasadil na~lokálne bežiaci portálový server Liferay. Pri transformácii Angular modulu na~archív WAR mi veľmi pomohol projekt Davida Berana (ktorý medzičasom vznikol v~prostredí KYPO). Musel som ho však na~viacerých miestach upraviť z dôvodu použitia novšej verzie Angularu (\angular_version ). Po nasadení do portálu bol modul plne funkčný, objavili sa len problémy s dedičnosťou štýlov, ktoré čiastočne výsledný vzhľad deformovali.
 
 Keďže niektoré stavy, ktoré si drží modul (stav zámkov, minima, maxima, zvoleného intervalu) sa môžu navzájom ovplyvňovať, vytvoril som jednotkové testy, ktoré pokrývajú netriviálnu logiku implementovanú v~službe ShareTimeService. Tieto udalosti môžu byť vyvolané buď príchodom nových dát (zmenou možného ohraničenia), alebo činnosťou užívateľa.
 

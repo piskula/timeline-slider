@@ -170,7 +170,7 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('height', tooltipHeight)
       .style('fill', COLOR_THUMB)
       .style('stroke', COLOR_LOWER)
-      .style('stroke-width', 2);
+      .style('stroke-width', tooltipCornerRadius / 2);
     rightHandler = selection.append('rect')
       .attr('x', sliderSideMargin + (width * normValueRight) - halfTooltipWidth)
       .attr('y', sliderTopMarginTooltip)
@@ -179,7 +179,7 @@ export class D3SliderLowerDirective extends D3SliderBaseDirective {
       .attr('height', tooltipHeight)
       .style('fill', COLOR_THUMB)
       .style('stroke', COLOR_LOWER)
-      .style('stroke-width', 2);
+      .style('stroke-width', tooltipCornerRadius);
     leftTooltip = selection.append('text')
       .attr('x', sliderSideMargin + (width * normValueLeft) - halfTooltipWidth)
       .attr('dx', halfTooltipWidth)
