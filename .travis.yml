@@ -15,7 +15,7 @@ before_script:
 
 script:
   - npm i
-  - ng build --env=prod
+  - ng build --prod
 
 after_success:
   - firebase use default
