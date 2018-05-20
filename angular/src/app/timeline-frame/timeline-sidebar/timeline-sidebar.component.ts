@@ -10,6 +10,7 @@ export class TimelineSidebarComponent {
   @Input() isRefreshButtonActive: Boolean;
   @Input() isPeriodicTaskInProgress: Boolean;
   @Input() isInitialized: Boolean;
+  @Input() errorTooltip: String;
   @Output() onRefresh = new EventEmitter();
 
   constructor() { }

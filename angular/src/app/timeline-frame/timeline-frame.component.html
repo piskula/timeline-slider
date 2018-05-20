@@ -8,16 +8,17 @@
   </div>
 
   <div class="d-flex">
-    <app-timeline-sidebar *ngIf="!error && configuration && configuration.period > 0"
+    <app-timeline-sidebar *ngIf="!showErrorInitialScreen && configuration && configuration.period > 0"
                           [isInitialized]="initialized"
                           [isPeriodicTaskInProgress]="periodicTaskInProgress"
                           [isRefreshButtonActive]="refreshButtonActive"
+                          [errorTooltip]="errorTooltip"
                           (onRefresh)="refreshTimeline()">
     </app-timeline-sidebar>
 
     <div class="w-full content" [class.collapsed]="configuration && configuration.period === 0">
       <div *ngIf="initialized; else loader">
-        <div *ngIf="!error; else errorHandler">
+        <div *ngIf="!showErrorInitialScreen; else errorHandler">
           <app-timeline-slider-upper [isLiveModeActive]="configuration.period > 0"></app-timeline-slider-upper>
           <app-timeline-slider-lower></app-timeline-slider-lower>
         </div>
@@ -34,5 +35,5 @@
 </ng-template>
 
 <ng-template #errorHandler>
-  <app-timeline-configuration [errorMsg]="error" (config)="onSubmit($event)"></app-timeline-configuration>
+  <app-timeline-configuration [errorMsg]="errorTooltip" (config)="onSubmit($event)"></app-timeline-configuration>
 </ng-template>

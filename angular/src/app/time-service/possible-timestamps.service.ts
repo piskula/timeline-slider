@@ -13,6 +13,7 @@ export class PossibleTimestampsService {
   }
 
   public getTimestamps(url: string): Observable<TimestampsWithStep> {
+    // UNCOMMENT THIS TO GET REAL HTTP REQUESTS TO WORK (e.g. when using json database)
     // return this._http
     //   .get<TimestampsResponse>(url + (this.counter++ % 7)).pipe(
     //     map(response => {
@@ -21,7 +22,7 @@ export class PossibleTimestampsService {
     //       const length = timestamps.length;
     //
     //       if (length < 2 || timestamps[0] >= timestamps[1]) {
-    //         throw new Error('Wrong format of timestamps.');
+    //         throw {statusText: 'Wrong format of timestamps'};
     //       }
     //
     //       return new TimestampsWithStep(
@@ -31,7 +32,7 @@ export class PossibleTimestampsService {
     //     }),
     //     map(timestamp => this.correctEndTimestampNotFitStep(timestamp))
     //   );
-    return of(this.getMockTimestamps(this.counter++ % 7)).pipe(
+    return of(this.getMockTimestamps(this.counter++ % 6)).pipe(
       map(timestamp => this.correctEndTimestampNotFitStep(timestamp))
     );
   }

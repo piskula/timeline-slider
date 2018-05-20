@@ -18,7 +18,8 @@ export class TimelineFrameComponent implements OnInit {
   public configuration: TimelineConfiguration;
 
   public initialized: Boolean = true;
-  public error: String = 'Please, configure timeline:';
+  public showErrorInitialScreen: Boolean = true;
+  public errorTooltip: String = 'Please, configure timeline:';
   public periodicTaskInProgress: Boolean = false;
   public refreshButtonActive: Boolean = false;
 
@@ -49,14 +50,16 @@ export class TimelineFrameComponent implements OnInit {
 
   public initializeTimeline(): void {
     this.initialized = false;
-    this.error = null;
+    this.errorTooltip = '';
+    this.showErrorInitialScreen = false;
 
     this._timestamps
       .getTimestamps(this.configuration.url).pipe(
       takeWhile(() => !this.initialized),
       finalize(() => this.initialized = true),
-      catchError((error: HttpErrorResponse) => {
-        this.error = error.status + ': ' + error.statusText;
+      catchError(error => {
+        this.errorTooltip = this.getErrorMessageFromThrownException(error);
+        this.showErrorInitialScreen = true;
         throw error;
       })
     ).subscribe((response: TimestampsWithStep) => {
@@ -80,7 +83,8 @@ export class TimelineFrameComponent implements OnInit {
     interval(this.configuration.period * 1000).pipe(
       mergeMap(() =>
         this._timestamps.getTimestamps(this.configuration.url)),
-      catchError((error: HttpErrorResponse) => {
+      catchError(error => {
+        this.errorTooltip = this.getErrorMessageFromThrownException(error);
         this.periodicTaskInProgress = false;
         this.refreshButtonActive = true;
         throw error;
@@ -106,6 +110,15 @@ export class TimelineFrameComponent implements OnInit {
         this.rightTitle = end.format(end.localeData().longDateFormat('LL'));
       }
     }
+  }
+
+  private getErrorMessageFromThrownException(error: any): String {
+    if (error instanceof HttpErrorResponse) {
+      return error.status + ': ' + error.statusText;
+    } else if (error.statusText) {
+      return error.statusText;
+    }
+    return 'Unexpected error occurred.';
   }
 
 }
