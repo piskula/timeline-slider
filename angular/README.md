@@ -10,8 +10,7 @@ First of all run `npm install` to install all dependencies.
 If you have not been using angular-cli before, run also `npm install -g @angular/cli`
 
 Then run `npm run app` for a dev server. This starts also fake REST API, which returns multiple timestamp ranges
-from [db.json](db.json) file. Navigate to [localhost:4200](http://localhost:4200/). The app will automatically
-reload if you change any of the source files.
+from [db.json](db.json) file. Navigate to [localhost:4200](http://localhost:4200/). But you need to uncomment real `getTimestamps(url)` method in [PossibleTimestampsService](src/app/time-service/possible-timestamps.service.ts) due to Travis CI configuration. The app will automatically reload if you change any of the source files. If you do not need fake REST api, command `ng serve` is enough for you.
 
 ## Architecture
 Actual version of timeline-slider uses [ShareTimeService](src/app/time-service/share-time.service.ts) as *Injectable*
